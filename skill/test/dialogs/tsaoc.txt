@@ -1,0 +1,10 @@
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=California
+GuessIntent usstate=Arizona
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Texas
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Georgia
+AMAZON.StopIntent

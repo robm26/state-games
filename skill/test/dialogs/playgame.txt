@@ -1,0 +1,7 @@
+LaunchRequest
+
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Georgia
+GuessIntent usstate=Alabama
+GuessIntent usstate=Ohio
+AMAZON.StopIntent

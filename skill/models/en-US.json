@@ -1,0 +1,95 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "state pop",
+      "intents": [
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
+          "name": "RevenueIntent",
+          "slots": [
+            {
+              "name": "region",
+              "type": "regionType"
+            },
+            {
+              "name": "opportunityType",
+              "type": "opportunityTypeSlot"
+            }
+          ],
+          "samples": [
+            "what is the total revenue {opportunityType} in {region}",
+            "what is the total revenue {opportunityType} ",
+            "how much {opportunityType} revenue in {region}",
+            "how much {opportunityType} revenue"
+          ]
+        },
+        {
+          "name": "BiggestIntent",
+          "slots": [
+            {
+              "name": "region",
+              "type": "regionType"
+            }
+          ],
+          "samples": [
+            "what is the biggest deal in {region}",
+            "what is the biggest deal"
+          ]
+        },
+        {
+          "name": "DetailsIntent",
+          "slots": [],
+          "samples": [
+            "records",
+            "drill down",
+            "show the details",
+            "show details"
+          ]
+        },
+        {
+          "name": "ResetIntent",
+          "slots": [],
+          "samples": [
+            "clear filters",
+            "reset"
+          ]
+        },
+        {
+          "name": "ChartIntent",
+          "slots": [],
+          "samples": [
+            "show the chart",
+            "chart"
+          ]
+        }
+      ]
+    }
+  }
+}
