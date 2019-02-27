@@ -1,0 +1,6 @@
+LaunchRequest
+ProductDetailIntent productName=bigger%20pop
+ProductDetailIntent productName=hint%20pack
+ProductDetailIntent productName=top%20five/leader%20board
+ProductDetailIntent productName=pizza%20slice/
+AMAZON.StopIntent

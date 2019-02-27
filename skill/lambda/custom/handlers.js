@@ -31,6 +31,9 @@ module.exports = {
             const game = sessionAttributes['game'] || '';
             let say = ``;
 
+            const recordCount = await gamehelpers.getUserRecordCount();
+            say += `you are one of ${recordCount} users. `;
+
             if(gameState == `playing`){
                 const stateList = sessionAttributes['stateList'] || [];
                 say = `welcome back.  You left off in the middle of ${game.name}, Let's resume. `;
@@ -40,9 +43,36 @@ module.exports = {
                 say += `welcome to the state games.  Which game would you like to play?  I recommend coast to coast.`;
                 // say = `${JSON.stringify(gameNames)}`;
             }
+
+            const DisplayImg1 = constants.getDisplayImg1();
+            const DisplayImg2 = constants.getDisplayImg2();
+
+            // if (helpers.supportsDisplayAPL(handlerInput)) {
+            //
+            //     const myDocument = require('./apl/main.json');
+            //
+            //     const eventData = {
+            //         "liveData": {
+            //             "type": "object",
+            //             "textIntent": IntentRequest,
+            //             "slots": slotArray,
+            //             "textResponse": speechOutput
+            //         }
+            //     };
+            //
+            //     handlerInput.responseBuilder.addDirective({
+            //         type: 'Alexa.Presentation.APL.RenderDocument',
+            //         version: '1.0',
+            //         document: myDocument,
+            //         datasources: eventData
+            //     })
+            //
+            // }
+
             return handlerInput.responseBuilder
                 .speak(say)
                 .reprompt(say)
+                .withStandardCard('State Games', say, DisplayImg1.url)
                 .getResponse();
 
         }
@@ -88,7 +118,10 @@ module.exports = {
                     say += `Tell me your first state. `;
 
                     let nextStates = gamehelpers.validNextStates([], gameName);
+
+
                     let nextStatesHint = helpers.sayArray(helpers.shuffleArray(nextStates).slice(0,3), 'or');
+
                     say += `you could try ${nextStatesHint} `;
 
                     console.log(`game: ${JSON.stringify(game, null, 2)}`);
@@ -137,6 +170,8 @@ module.exports = {
             } else {
 
                 myState = intent.slots.usstate.value;
+                myState = (myState === 'california' ? 'California' : myState);
+
                 const validCurrentStates = gamehelpers.validNextStates(stateList, game.name);
 
                 if(validCurrentStates.includes(myState)) {
@@ -256,6 +291,40 @@ module.exports = {
                 .speak(`Talk to you later!`)
                 .withShouldEndSession(true)
                 .getResponse();
+        }
+    },
+    'SpeakSpeedHandler' : {
+        canHandle(handlerInput) {
+            return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+                && handlerInput.requestEnvelope.request.intent.name === 'SpeakSpeedIntent';
+        },
+
+        handle(handlerInput) {
+            const speakingSpeedChange = handlerInput.requestEnvelope.request.intent.slots.speakingSpeedChange.value;
+            let say;
+
+            if(typeof speakingSpeedChange === 'undefined') {
+                say = "Sorry, I didn't catch your speak speed.  Say, speak faster, or, speak slower. ";
+
+            } else {
+
+                const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+                let newSpeed = helpers.changeProsody('rate',sessionAttributes['speakingSpeed'],speakingSpeedChange);
+
+                sessionAttributes['speakingSpeed'] = newSpeed;
+                say = "Okay, I will speak " + speakingSpeedChange + " now!";
+
+                handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+                // handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
+                // handlerInput.attributesManager.savePersistentAttributes();  // already saving in ResponseInterceptor
+            }
+            return handlerInput.responseBuilder
+                .speak(say)
+                .reprompt(say)
+                .getResponse();
+
         }
     }
 

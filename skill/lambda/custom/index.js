@@ -5,10 +5,11 @@ const Alexa = require("ask-sdk");
 
 const data      = require('./data.js');
 
-const constants     = require('./constants.js');
-const handlers      = require('./handlers.js');
-const helpers       = require('./helpers.js');
-const interceptors  = require('./interceptors.js');
+const constants        = require('./constants.js');
+const handlers         = require('./handlers.js');
+const producthandlers  = require('./producthandlers.js');
+const helpers          = require('./helpers.js');
+const interceptors     = require('./interceptors.js');
 
 const AWS = constants.AWS;
 const AWS_REGION = constants.AWS_REGION;
@@ -50,9 +51,31 @@ const ErrorHandler = {
             .getResponse();
     },
 };
+const FallbackHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return (
+            request.type === 'IntentRequest'
+            && (request.intent.name === 'AMAZON.FallbackIntent'
+            )
+        );
+    },
+    handle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        console.log('Unhandled request: ');
+        console.log(JSON.stringify(request, null, 2));
+
+        const outputSpeech =  `Sorry , I didn\'t understand that. Please try something else.`;
+
+        return handlerInput.responseBuilder
+            .speak(outputSpeech)
+            .reprompt(outputSpeech)
+            .getResponse();
+    }
+};
 const UnhandledHandler = {
     canHandle(handlerInput) {
-        return true;  // will catch AMAZON.FallbackIntent or any other requests
+        return true;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -77,21 +100,42 @@ exports.handler = skillBuilder
         handlers.ChooseGameHandler,
         handlers.GuessHandler,
         handlers.YesHandler,
+
+
         // handlers.NoHandler,
+        producthandlers.ShoppingHandler,
+        producthandlers.ProductDetailHandler,
+        producthandlers.BuyHandler,
+        producthandlers.BuyResponseHandler,
+        producthandlers.CancelResponseHandler,
+
         handlers.HelpHandler,
         handlers.ExitHandler,
+
+        FallbackHandler,
         UnhandledHandler
     )
 
     .addErrorHandlers(ErrorHandler)
-    .addRequestInterceptors(interceptors.RequestInitializeAttributesInterceptor)
+
+
     // .addRequestInterceptors(interceptors.RequestLogInterceptor)
-    // // .addRequestInterceptors(interceptors.RequestPersistenceInterceptor)
+    .addRequestInterceptors(interceptors.RequestPersistenceInterceptor) // ###
+
+    // .addRequestInterceptors(interceptors.RequestInitializeAttributesInterceptor)
+
     // .addRequestInterceptors(interceptors.RequestGameContinueInterceptor)
+
     .addRequestInterceptors(interceptors.RequestHistoryInterceptor)
-    .addResponseInterceptors(interceptors.ResponsePersistenceInterceptor)
+
+    .addResponseInterceptors(interceptors.ResponsePersistenceInterceptor) // ***
+
+    // .addResponseInterceptors(interceptors.SpeechOutputInterceptor)
+
+    // .addResponseInterceptors(interceptors.AplInterceptor) // ***
 
     .withTableName(DYNAMODB_TABLE)
-    .withAutoCreateTable(true)  // created by SAM deploy
+    .withAutoCreateTable(false)  // created by SAM deploy
+    // .withDynamoDbClient(constants.localDynamoClient)
 
     .lambda();

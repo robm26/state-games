@@ -12,7 +12,12 @@ const handlerName =  'handler';
 let MyDialog = './dialogs/default.txt';
 
 if (process.argv[2]) {
-    MyDialog = './dialogs/' + process.argv[2];
+    let dialog = process.argv[2];
+
+    if(dialog.slice(-4) !== '.txt') {
+        dialog += '.txt';
+    }
+    MyDialog = './dialogs/' + dialog;
 }
 
 // Toggle on or off various debugging outputs

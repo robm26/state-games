@@ -1,0 +1,42 @@
+{
+  "liveData": {
+    "type": "object",
+    "textIntent": "LaunchRequest",
+    "slots": [],
+    "textResponse": "welcome to the state games.  Which game would you like to play?  I recommend coast to coast.",
+    "productsPurchased": [
+      {
+        "type": "Text",
+        "text": "apples",
+        "style": "purchasedStyle"
+      },
+      {
+        "type": "Text",
+        "text": "bananas",
+        "style": "purchasedStyle"
+      },
+      {
+        "type": "Text",
+        "text": "strawberries",
+        "style": "purchasedStyle"
+      }
+    ],
+    "productsAvailable": [
+      {
+        "type": "Text",
+        "text": "pears",
+        "style": "availableStyle"
+      },
+      {
+        "type": "Text",
+        "text": "coconuts",
+        "style": "availableStyle"
+      },
+      {
+        "type": "Text",
+        "text": "limes",
+        "style": "availableStyle"
+      }
+    ]
+  }
+}

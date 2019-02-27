@@ -39,11 +39,13 @@ module.exports = {
     'displayListFormatter': function(arr, type) {
 
         if(type === `card`) {
+
             let list = ``;
             let i = 1;
             arr.forEach(function(item) {
-                list += `${i++}. ${item.name}\n`;
+                list += `${i++}. ${item}\n`;
             });
+
             return list;
 
         } else {
@@ -52,16 +54,14 @@ module.exports = {
             arr.forEach(function(item) {
                 let token = item.name;
 
-                let inlineImg = `<img src='https://s3.amazonaws.com/skill-images-789/cards/${token}.png' width='88' height='68' alt='image' />`;
-//                let inlineImg = `<img src='${module.exports.getImgUrl(item.asin)}' width='88' height='68' alt='image' />`;
-
                 list.push(
                     {
                         "token":token,
                         "textContent": {
                             "primaryText":{
                                 "type":"RichText",
-                                "text":`${inlineImg}${item.name}`
+                                "text": `hello ${token}`
+
                             }
                         }
                     }
@@ -117,8 +117,35 @@ module.exports = {
         });
         return result;
     },
+    'shuffleArray': function(array) {  // Fisher Yates shuffle!
+
+        let currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    },
+
     'stripTags': function(str) {
         return str.replace(/<\/?[^>]+(>|$)/g, "");
+    },
+
+    'getSpeakableListOfProducts' : function(entitleProductsList) {
+        const productNameList = entitleProductsList.map(item => item.name);
+        let productListSpeech = productNameList.join(', '); // Generate a single string with comma separated product names
+        productListSpeech = productListSpeech.replace(/_([^_]*)$/, 'and $1'); // Replace last comma with an 'and '
+        return productListSpeech;
     },
 
     'getSlotValues': function(filledSlots) {
@@ -171,7 +198,6 @@ module.exports = {
         return slotValues;
     },
 
-
     'getRecordCount': function(callback) {
 
         const params = {
@@ -194,25 +220,6 @@ module.exports = {
     },
 
 
-    'shuffleArray': function(array) {  // Fisher Yates shuffle!
-
-        let currentIndex = array.length, temporaryValue, randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    },
 
 
     'incrementArray': function(arr, element) {
@@ -268,6 +275,39 @@ module.exports = {
         }
 
         return arr;
+    },
+
+    'changeProsody' : function(attribute, current, change) {
+        let newValue = '';
+        if (attribute === 'rate') {
+            switch(current + '.' + change) {
+                case 'x-slow.slower':
+                case 'slow.slower':
+                    newValue = 'x-slow';
+                    break;
+                case 'medium.slower':
+                case 'x-slow.faster':
+                    newValue = 'slow';
+                    break;
+                case 'fast.slower':
+                case 'slow.faster':
+                    newValue = 'medium';
+                    break;
+                case 'x-fast.slower':
+                case 'medium.faster':
+                    newValue = 'fast';
+                    break;
+                case 'x-fast.faster':
+                case 'fast.faster':
+                    newValue = 'x-fast';
+                    break;
+                default:
+                    newValue = 'medium';
+
+            }
+        }
+
+        return newValue;
     }
 
 };

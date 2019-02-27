@@ -3,7 +3,34 @@ module.exports = {
     'getGames' : function() {
         return gamelist;
     },
+    // 'getProducts' : function() {
+    //
+    //     const gameProducts = gamelist.map((game) => {
+    //         return game.name;
+    //     });
+    //     const otherProducts = productlist.map((product) => {
+    //         return product.name;
+    //     });
+    //     return gameProducts.concat(otherProducts);
+    //
+    // },
     'getData' : function() {
+
+        // const stateList = [
+        //                     'Massachusetts',
+        //                     'Connecticut',
+        //                     'Rhode Island',
+        //                     'Vermont',
+        //                     'New Hampshire',
+        //                     'Maine', 'New York',
+        //                     'New Jersey',
+        //                     'Delaware', 'Maryland', 'Virginia', 'West Virginia', 'Kentucky',
+        //                     'Pennsylvania', 'Ohio', 'Indiana', 'Illinois',
+        //                     'Missouri', 'Kansas', 'Colorado', 'Utah', 'Nevada', 'California', 'Oregon'
+        // ];
+        //
+        // return stateData.filter((state) => { return stateList.includes(state.Name)});
+
         return stateData;
     }
 
@@ -21,13 +48,16 @@ const gamelist = [
     },
     {
         'name':'bigger pop',
-        'rules': ['state.Population > lastState.Population', 'state.Population > 6000000'],
+        'rules': [
+            'state.Population > lastState.Population'
+           // , 'state.Population > 7000000'
+        ],
         'startsOn': null,
         'endsWhen': null,
         'lowScoreBetter':'false',
         'intro':'Start by naming any state.  Continue naming states, each must have a larger population than the last.',
         'author':'robm'
-    },
+    }
 
 ];
 

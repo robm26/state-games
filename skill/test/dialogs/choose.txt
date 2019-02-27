@@ -5,4 +5,5 @@ AMAZON.YesIntent
 AMAZON.StopIntent
 ChooseGameIntent gameName=bigger%20pop
 GuessIntent usstate=Vermont
+GuessIntent usstate=New%20York
 AMAZON.NoIntent

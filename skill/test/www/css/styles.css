@@ -1,0 +1,41 @@
+.status {background-color:gainsboro; height:30px; float:right; padding:10px}
+.pagetitle{font-size:larger}
+.tablename {font-weight:bold}
+
+.table {background-color: gainsboro; width:800px; font-family:Verdana; }
+.maintableheader {
+    background-color:silver; color:white;
+    border-top:3px solid white;
+    border-bottom:1px solid white;
+    height:10px
+}
+.userIdLink {text-decoration:none !important; cursor:hand;}
+
+.tablecell1 {background-color:dimgray; color:white; padding:3px; border:1px solid lightgrey}
+.tablecell2 {background-color:lightyellow; padding:3px; border:1px solid lightgrey}
+.tablecellNum {background-color:#C8FBC8; padding:3px; border:1px solid lightgrey}
+.tablecellObj {background-color:thistle; padding:3px; border:1px solid lightgrey}
+.tablecellArray {background-color:lavender; padding:3px; border:1px solid lightgrey}
+.tablecellBoolean {background-color:dimgray; color:white; padding:3px; border:1px solid lightgrey}
+
+.tablecellblank1{background-color:silver; color:gray; padding:3px; border:1px solid lightgrey}
+.tablecellblank2{background-color:whitesmoke; color:gray; padding:3px; border:1px solid lightgrey}
+
+.attrTableVisible {display:block; visibility: visible; padding:5px}
+.attrTableHidden {display:none; visibility: hidden; padding:5px}
+
+.attrTableCell {padding:3px}
+
+.historyTableCustom {padding:3px; background-color:orange}
+.historyTableStop {padding:3px; border-bottom: 1px solid grey}
+
+.dateTableRow {font-size:smaller; width:20%}
+.userIdTableRow {width: 20%; background-color: gainsboro}
+
+.lookuppanel {padding:10px; background-color:lightyellow}
+.lookupkey {font-size:larger; padding:5px; width:80px}
+.attrSetKey {color: black; background-color:lightyellow; padding:3px}
+.attrSetVal {color: white; background-color:cornflowerblue; padding:3px}
+
+
+

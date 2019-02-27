@@ -1,0 +1,75 @@
+# !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:vpc/${vpc}'
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Alexa State Games Stack
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  ProjectName:
+    Type: String
+    Default: 'StateGames'
+Metadata:
+  Name: alexa-state-games
+Resources:
+  askLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 'ask-custom-${ProjectName}'
+      CodeUri: ../lambda/state-games.zip
+       # s3://ask-samples-resources/code-packages/proactive-events-skill.zip
+      Description: Alexa Skill Lambda function
+      Handler: index.handler
+      MemorySize: 128
+      Runtime: nodejs8.10
+      Timeout: 7
+      Events:
+        AlexaTrigger:
+          Type: AlexaSkill
+      Environment:
+        Variables:
+          DYNAMODB_TABLE: !Sub 'ask${ProjectName}'
+          DYNAMODB_TABLE_LEADERBOARD: !Sub 'ask${ProjectName}Leaderboard'
+      Policies:
+        -
+          Version: "2012-10-17"
+          Statement:
+            -
+              Effect: "Allow"
+              Action:
+                - "dynamodb:GetItem"
+                - "dynamodb:PutItem"
+                - "dynamodb:UpdateItem"
+                - "dynamodb:DeleteItem"
+              Resource:
+                - !Sub 'arn:aws:dynamodb:*:*:table/ask${ProjectName}'
+
+  DatabaseTable:
+     Type: AWS::Serverless::SimpleTable
+     Properties:
+       TableName: !Sub 'ask${ProjectName}'
+       PrimaryKey:
+         Name: id
+         Type: String
+       ProvisionedThroughput:
+         ReadCapacityUnits: 5
+         WriteCapacityUnits: 5
+
+#  DatabaseTableLeaderboard:
+#     Type: AWS::Serverless::SimpleTable
+#     Properties:
+#       TableName: !Sub 'ask${ProjectName}Leaderboard'
+#       PrimaryKey:
+#         Name: game
+#         Type: String
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: 5
+#         WriteCapacityUnits: 5
+
+Outputs:
+  AlexaSkillFunctionARN:
+    Value: !GetAtt askLambdaFunction.Arn
+    Description: 'Paste this Lambda ARN into your skill endpoint'
+  DynamoDbTable:
+    Value: !Sub 'ask${ProjectName}'
+  DynamoDbTableLeaderboard:
+    Value: !Sub 'ask${ProjectName}Leaderboard'
+

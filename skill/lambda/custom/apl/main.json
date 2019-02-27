@@ -1,0 +1,307 @@
+{
+  "version": "1.0",
+  "type": "APL",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.0.0"
+    }
+  ],
+  "styles": {
+    "textIntentStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "black",
+          "fontWeight": "bold",
+          "paddingRight": "15dp"
+        }
+      ]
+    },
+    "textSlotNameStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "steelblue",
+          "paddingLeft": "15dp"
+        }
+      ]
+    },
+    "textSlotValueStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "green",
+          "fontWeight": "bold",
+          "paddingLeft": "5dp"
+        }
+      ]
+    },
+    "textSlotEmptyStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "gray",
+          "paddingLeft": "5dp"
+        }
+      ]
+    },
+    "textResponseStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "cyan"
+        }
+      ]
+    },
+    "mainFrameStyle": {
+      "values": [
+        {
+          "backgroundColor": "whitesmoke"
+        }
+      ]
+    },
+    "intentFrameStyle": {
+      "values": [
+        {
+          "backgroundColor": "#FFFAEC"
+        }
+      ]
+    },
+    "responseFrameStyle": {
+      "values": [
+        {
+          "backgroundColor": "steelblue"
+        }
+      ]
+    },
+    "SplashStyle": {
+      "values": [
+        {
+          "align": "left",
+          "backgroundColor": "gainsboro",
+
+          "borderColor": "gray",
+          "borderRadius": 20,
+          "borderWidth": 2
+        }
+      ]
+    },
+    "purchasedStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "green",
+          "fontWeight": "bold",
+          "numbering": "normal"
+        }
+      ]
+    },
+    "availableStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "blue",
+          "fontWeight": "bold",
+          "numbering": "normal"
+        }
+      ]
+    },
+    "SplashContainer": {
+      "values": [
+        {
+          "backgroundColor": "yellow",
+          "align": "left"
+        }
+      ]
+    },
+    "ProductListStyle": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "hotpink",
+          "fontWeight": "bold"
+        }
+      ]
+    },
+    "ProductListTitle": {
+      "values": [
+        {
+          "fontSize": 32,
+          "color": "dimgray",
+          "fontWeight": "bold"
+        }
+      ]
+    },
+    "ProductListItems": {
+      "values": [
+        {
+          "fontSize": 24,
+          "color": "dimgray",
+          "fontWeight": "bold",
+          "left":"10dp"
+        }
+      ]
+    }
+  },
+  "layouts": {},
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Frame",
+        "width": "100vw",
+        "height": "100vh",
+        "paddingLeft": "10dp",
+        "paddingRight": "20dp",
+        "paddingTop": "20dp",
+        "paddingBottom": "20dp",
+        "style": "mainFrameStyle",
+        "item": {
+          "when": "${@viewportProfile == @hubLandscapeMedium || @viewportProfile == @hubLandscapeLarge || @viewportProfile == @tvLandscapeXLarge}",
+          "type": "Container",
+          "direction": "column",
+          "width": "98vw",
+          "height": "98vh",
+          "alignItems": "left",
+          "items": [
+            {
+              "type": "Frame",
+              "width": "98vw",
+              "height": "10vh",
+              "paddingLeft": "20dp",
+              "paddingRight": "20dp",
+              "paddingTop": "20dp",
+              "paddingBottom": "20dp",
+              "style": "intentFrameStyle",
+              "item": {
+                "type": "Container",
+                "direction": "row",
+                "paddingLeft": "20dp",
+                "paddingRight": "20dp",
+                "height": "100vh",
+                "alignItems":"stretch",
+                "firstItem": [{
+                  "type": "Text",
+                  "text": "${payload.liveData.textIntent}",
+                  "style": "textIntentStyle"
+                }],
+                "items": ["${payload.liveData.slots}"]
+              }
+            },
+            {
+              "type": "Frame",
+              "width": "98vw",
+              "height": "22vh",
+              "paddingLeft": "20dp",
+              "paddingRight": "20dp",
+              "paddingTop": "20dp",
+              "paddingBottom": "20dp",
+              "style": "responseFrameStyle",
+              "item": {
+                "type": "Container",
+                "direction": "row",
+                "paddingLeft": "20dp",
+                "paddingRight": "20dp",
+                "height": "100vh",
+                "items": [
+                  {
+                    "type": "ScrollView",
+                    "height": "100%",
+                    "grow": 1,
+                    "shrink": 1,
+                    "items": [
+                      {
+                        "type": "Text",
+                        "text": "${payload.liveData.textResponse}",
+                        "style": "textResponseStyle"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+
+            {
+              "type": "Frame",
+              "width": "98vw",
+              "height": "65vh",
+              "paddingLeft": "10dp",
+              "paddingRight": "10dp",
+              "paddingTop": "10dp",
+              "paddingBottom": "10dp",
+              "style": "SplashStyle",
+              "item": {
+                "type": "Container",
+                "direction": "row",
+                "numbered": "true",
+                "paddingLeft": "20dp",
+                "paddingRight": "20dp",
+                "height": "100vh",
+                "style": "SplashContainer",
+                "items": [
+
+                  {
+                    "type": "Image",
+                    "source": "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/gaming/state_games_1200_800._TTH_.png",
+                    "scale": "fill",
+                    "width": 720,
+                    "height": 480,
+                    "align": "left"
+                  },
+
+                  {
+                    "type": "Container",
+                    "direction": "column",
+                    "paddingLeft": "20dp",
+                    "paddingRight": "20dp",
+                    "height": "100vh",
+                    "style": "SplashContainer",
+                    "items": [
+                      {
+                        "type": "Container",
+                        "direction":"column",
+                        "paddingLeft": "20dp",
+                        "paddingRight": "20dp",
+                        "paddingBottom": "30dp",
+                        "grow": 0,
+                        "shrink": 1,
+                        "firstItem": [{
+                          "type": "Text",
+                          "text": "<u>Purchased</u>",
+                          "style": "ProductListTitle"
+                        }],
+                        "items": ["${payload.liveData.productsPurchased}"]
+                      },
+                      {
+                        "type": "Container",
+                        "direction":"column",
+                        "paddingLeft": "20dp",
+                        "paddingRight": "20dp",
+                        "height": "20vh",
+                        "grow": 1,
+                        "shrink": 1,
+                        "firstItem": [{
+                          "type": "Text",
+                          "text": "<u>Available</u>",
+                          "style": "ProductListTitle"
+                        }],
+                        "items": ["${payload.liveData.productsAvailable}"]
+                      }
+                    ]
+                  }
+
+
+                ]
+              }
+            }
+
+
+          ]
+        }
+      }
+    ]
+  }
+}
