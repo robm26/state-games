@@ -1,0 +1,362 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.f15fe8d3-71b5-4534-b6ad-cdaf65a8beed",
+    "application": {
+      "applicationId": "amzn1.ask.skill.4d807c58-0c4b-4e53-8a82-25652d64ce34"
+    },
+    "attributes": {
+      "launchCount": 1,
+      "game": {},
+      "stateList": [],
+      "joinRank": 1,
+      "skillUserCount": 1,
+      "speakingSpeed": "fast",
+      "history": [
+        {
+          "IntentRequest": "Connections.Response"
+        }
+      ],
+      "gameState": "stopped",
+      "currentQuestion": null,
+      "lastUseTimestamp": 0
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AH55UJWU5XQQWCIUJHEMVUM5YCYWNNPZAKWSZT54SNSZ3MKTAJRZINAKC56LZYZLXDFSZGXLMOILZXD2K44QKMFLDNSCN4A5I5KD7E2LZQMWQ6B4TDTNC44TYW7WJ5XWQCPRZEQZZHEZLUSXTGKY5S7DKPVABJTOHZDDDX3HVDXZAQV5ZVATLZY2P74THOH6IEMXP5QBQG65LYI"
+    }
+  },
+  "context": {
+    "Display": {},
+    "Alexa.Presentation.APL": {
+      "token": "",
+      "version": "ARCRenderer-1.0",
+      "componentsVisibleOnScreen": [
+        {
+          "id": "viewport",
+          "position": "1023x600+0+0:0",
+          "type": "mixed",
+          "tags": {
+            "viewport": {}
+          },
+          "visibility": 1,
+          "children": [
+            {
+              "id": ":110",
+              "position": "1023x600+0+0:1",
+              "type": "mixed",
+              "tags": {
+                "focused": false,
+                "spoken": false,
+                "disabled": false
+              },
+              "visibility": 1,
+              "children": [
+                {
+                  "id": ":111",
+                  "position": "1003x587+10+20:2",
+                  "type": "mixed",
+                  "tags": {
+                    "focused": false,
+                    "spoken": false,
+                    "disabled": false
+                  },
+                  "visibility": 0.99,
+                  "children": [
+                    {
+                      "id": ":112",
+                      "position": "1003x60+10+20:3",
+                      "type": "mixed",
+                      "tags": {
+                        "focused": false,
+                        "spoken": false,
+                        "disabled": false
+                      },
+                      "visibility": 1,
+                      "children": [
+                        {
+                          "id": ":113",
+                          "position": "963x600+30+40:4",
+                          "type": "mixed",
+                          "tags": {
+                            "focused": false,
+                            "spoken": false,
+                            "disabled": false
+                          },
+                          "visibility": 0.1,
+                          "entities": []
+                        }
+                      ],
+                      "entities": []
+                    },
+                    {
+                      "id": ":115",
+                      "position": "1003x131+10+80:3",
+                      "type": "mixed",
+                      "tags": {
+                        "focused": false,
+                        "spoken": false,
+                        "disabled": false
+                      },
+                      "visibility": 1,
+                      "children": [
+                        {
+                          "id": ":116",
+                          "position": "963x600+30+100:4",
+                          "type": "mixed",
+                          "tags": {
+                            "focused": false,
+                            "spoken": false,
+                            "disabled": false
+                          },
+                          "visibility": 0.22,
+                          "children": [
+                            {
+                              "id": ":117",
+                              "position": "923x600+50+100:5",
+                              "type": "mixed",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false,
+                                "scrollable": {
+                                  "direction": "vertical",
+                                  "allowForward": false,
+                                  "allowBackwards": false
+                                }
+                              },
+                              "visibility": 0.22,
+                              "children": [
+                                {
+                                  "id": ":118",
+                                  "position": "923x28+50+100:6",
+                                  "type": "text",
+                                  "tags": {
+                                    "focused": false,
+                                    "spoken": false,
+                                    "disabled": false
+                                  },
+                                  "visibility": 1.01,
+                                  "entities": []
+                                }
+                              ],
+                              "entities": []
+                            }
+                          ],
+                          "entities": []
+                        }
+                      ],
+                      "entities": []
+                    },
+                    {
+                      "id": ":119",
+                      "position": "1003x390+10+212:3",
+                      "type": "mixed",
+                      "tags": {
+                        "focused": false,
+                        "spoken": false,
+                        "disabled": false
+                      },
+                      "visibility": 0.99,
+                      "children": [
+                        {
+                          "id": ":120",
+                          "position": "983x600+20+222:4",
+                          "type": "mixed",
+                          "tags": {
+                            "focused": false,
+                            "spoken": false,
+                            "disabled": false
+                          },
+                          "visibility": 0.63,
+                          "children": [
+                            {
+                              "id": ":121",
+                              "position": "720x480+40+222:5",
+                              "type": "graphic",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false,
+                                "ordinal": 1
+                              },
+                              "visibility": 0.79,
+                              "entities": []
+                            },
+                            {
+                              "id": ":122",
+                              "position": "235x600+760+222:5",
+                              "type": "mixed",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false,
+                                "ordinal": 2
+                              },
+                              "visibility": 0.63,
+                              "children": [
+                                {
+                                  "id": ":123",
+                                  "position": "195x126+780+222:6",
+                                  "type": "mixed",
+                                  "tags": {
+                                    "focused": false,
+                                    "spoken": false,
+                                    "disabled": false
+                                  },
+                                  "visibility": 1,
+                                  "children": [
+                                    {
+                                      "id": ":125",
+                                      "position": "155x28+800+261:7",
+                                      "type": "text",
+                                      "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                      },
+                                      "visibility": 1,
+                                      "entities": []
+                                    },
+                                    {
+                                      "id": ":126",
+                                      "position": "155x28+800+289:7",
+                                      "type": "text",
+                                      "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                      },
+                                      "visibility": 1,
+                                      "entities": []
+                                    }
+                                  ],
+                                  "entities": []
+                                },
+                                {
+                                  "id": ":127",
+                                  "position": "195x473+780+348:6",
+                                  "type": "mixed",
+                                  "tags": {
+                                    "focused": false,
+                                    "spoken": false,
+                                    "disabled": false
+                                  },
+                                  "visibility": 0.53,
+                                  "children": [
+                                    {
+                                      "id": ":129",
+                                      "position": "155x28+800+387:7",
+                                      "type": "text",
+                                      "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                      },
+                                      "visibility": 1,
+                                      "entities": []
+                                    }
+                                  ],
+                                  "entities": []
+                                }
+                              ],
+                              "entities": []
+                            }
+                          ],
+                          "entities": []
+                        }
+                      ],
+                      "entities": []
+                    }
+                  ],
+                  "entities": []
+                }
+              ],
+              "entities": []
+            }
+          ],
+          "entities": []
+        }
+      ]
+    },
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.4d807c58-0c4b-4e53-8a82-25652d64ce34"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.AH55UJWU5XQQWCIUJHEMVUM5YCYWNNPZAKWSZT54SNSZ3MKTAJRZINAKC56LZYZLXDFSZGXLMOILZXD2K44QKMFLDNSCN4A5I5KD7E2LZQMWQ6B4TDTNC44TYW7WJ5XWQCPRZEQZZHEZLUSXTGKY5S7DKPVABJTOHZDDDX3HVDXZAQV5ZVATLZY2P74THOH6IEMXP5QBQG65LYI"
+      },
+      "device": {
+        "deviceId": "amzn1.ask.device.AG7KCZSR4UZK6J4QBESZV47R3KWVGKKD745EXOW4S6XMHMVZJ3CXDMLTAPHFZVNMCDA3DTLCAEL53Q46GOWCDNCCIWANIKI5MDCQ2DK3UX7WTQ54KZ77NCAPZFSGGHXBV6J5CVOVP36MTUYMGHPFLCIOT64Q",
+        "supportedInterfaces": {
+          "Display": {
+            "templateVersion": "1.0",
+            "markupVersion": "1.0"
+          },
+          "Alexa.Presentation.APL": {
+            "runtime": {
+              "maxVersion": "1.0"
+            }
+          }
+        }
+      },
+      "apiEndpoint": "https://api.amazonalexa.com",
+      "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjRkODA3YzU4LTBjNGItNGU1My04YTgyLTI1NjUyZDY0Y2UzNCIsImV4cCI6MTU1MTcyODgxOCwiaWF0IjoxNTUxNzI4NTE4LCJuYmYiOjE1NTE3Mjg1MTgsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUc3S0NaU1I0VVpLNko0UUJFU1pWNDdSM0tXVkdLS0Q3NDVFWE9XNFM2WE1ITVZaSjNDWERNTFRBUEhGWlZOTUNEQTNEVExDQUVMNTNRNDZHT1dDRE5DQ0lXQU5JS0k1TURDUTJESzNVWDdXVFE1NEtaNzdOQ0FQWkZTR0dIWEJWNko1Q1ZPVlAzNk1UVVlNR0hQRkxDSU9UNjRRIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUg1NVVKV1U1WFFRV0NJVUpIRU1WVU01WUNZV05OUFpBS1dTWlQ1NFNOU1ozTUtUQUpSWklOQUtDNTZMWllaTFhERlNaR1hMTU9JTFpYRDJLNDRRS01GTEROU0NONEE1STVLRDdFMkxaUU1XUTZCNFREVE5DNDRUWVc3V0o1WFdRQ1BSWkVRWlpIRVpMVVNYVEdLWTVTN0RLUFZBQkpUT0haREREWDNIVkRYWkFRVjVaVkFUTFpZMlA3NFRIT0g2SUVNWFA1UUJRRzY1TFlJIn19.Z7lacGuhi606p0KsavyOcZuEZ9RWGGzgH-pzUOWGcv2EQ90_LkWtwGeY3IGRF_h8wY1rkijvqsm_iG_j0aNBm84IPxoW-EojPbaRe-Wy_3gRZ4On-_-z79OudyK_2NeyH7vOfDs1U-c8P5pB7g2c4oTIe5gwtgOudbT4hUleCpHLxSRY3kCX9JXLfWkJYR54RN7GHFJ0RsS32sDY0ImuhYeXpOn1IJRJ6zNo0oZGR7mPoIXQaBdW2i4Kgey1x5P4rjDceFeH-Z1KA7rIZ3Ix1gJX7kaMZjtU9PqPZmLwDIa2817Cc4VywN8I6hzl1JhOM3kAakQt4mNjtiyImuYs4g"
+    },
+    "Viewport": {
+      "experiences": [
+        {
+          "arcMinuteWidth": 246,
+          "arcMinuteHeight": 144,
+          "canRotate": false,
+          "canResize": false
+        }
+      ],
+      "shape": "RECTANGLE",
+      "pixelWidth": 1024,
+      "pixelHeight": 600,
+      "dpi": 160,
+      "currentPixelWidth": 1024,
+      "currentPixelHeight": 600,
+      "touch": [
+        "SINGLE"
+      ]
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.64f4d47b-4292-4a3c-901b-48929a9f2dad",
+    "timestamp": "2019-03-04T19:41:58Z",
+    "locale": "en-US",
+    "intent": {
+      "name": "BuyIntent",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "productName": {
+          "name": "productName",
+          "value": "hints pack",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.4d807c58-0c4b-4e53-8a82-25652d64ce34.productNames",
+                "status": {
+                  "code": "ER_SUCCESS_MATCH"
+                },
+                "values": [
+                  {
+                    "value": {
+                      "name": "hints pack",
+                      "id": "15913b910ebb407cf7a34cec6a91d64f"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "confirmationStatus": "NONE",
+          "source": "USER"
+        }
+      }
+    }
+  }
+}

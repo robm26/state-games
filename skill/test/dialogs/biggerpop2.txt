@@ -3,6 +3,8 @@ ChooseGameIntent gameName=bigger%20pop
 # GuessIntent usstate=Iowa
 GuessIntent usstate=Minnesota
 GuessIntent usstate=Wisconsin
+AMAZON.StopIntent
+LaunchRequest
 GuessIntent usstate=Michigan
 GuessIntent usstate=Ohio
 GuessIntent usstate=Pennsylvania

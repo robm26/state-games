@@ -3,8 +3,9 @@ const projectName = 'StateGames';
 
 const AWS = require('aws-sdk');
 AWS.config.region = process.env.AWS_REGION || 'us-east-1';
+AWS.config.endpoint = 'http://localhost:8000';
 
-const DYNAMODB_TABLE = process.env.DYNAMODB_TABLE || `ask${projectName}`;
+const DYNAMODB_TABLE_USERS = process.env.DYNAMODB_TABLE || `ask${projectName}`;
 const DYNAMODB_TABLE_LEADERBOARD = process.env.DYNAMODB_TABLE_LEADERBOARD || `ask${projectName}Leaderboard`;
 
 // console.log('DYNAMODB_TABLE ' + DYNAMODB_TABLE);
@@ -15,7 +16,7 @@ const DYNAMODB_TABLE_LEADERBOARD = process.env.DYNAMODB_TABLE_LEADERBOARD || `as
 
 module.exports = {
     'AWS': AWS,
-    'DYNAMODB_TABLE': DYNAMODB_TABLE,
+    'DYNAMODB_TABLE_USERS': DYNAMODB_TABLE_USERS,
     'DYNAMODB_TABLE_LEADERBOARD': DYNAMODB_TABLE_LEADERBOARD,
 
     'invocationName': 'state games',
@@ -26,7 +27,6 @@ module.exports = {
         const memoryAttributes = {
             "history":[],
             "launchCount":0,
-            "foo":"bar",
             "lastUseTimestamp":0,
             "gameState": "stopped",
             "stateList": [],

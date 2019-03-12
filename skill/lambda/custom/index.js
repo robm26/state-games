@@ -9,11 +9,12 @@ const constants        = require('./constants.js');
 const handlers         = require('./handlers.js');
 const producthandlers  = require('./producthandlers.js');
 const helpers          = require('./helpers.js');
+const leaderboard      = require('./leaderboard.js');
 const interceptors     = require('./interceptors.js');
 
 const AWS = constants.AWS;
 const AWS_REGION = constants.AWS_REGION;
-const DYNAMODB_TABLE = constants.DYNAMODB_TABLE;
+const DYNAMODB_TABLE_USERS = constants.DYNAMODB_TABLE_USERS;
 
 
 const ErrorHandler = {
@@ -29,6 +30,17 @@ const ErrorHandler = {
         console.log(stack[0]);
         console.log(stack[1]);
         console.log(stack[2]);
+        // console.log(stack[3]);
+        // console.log(stack[4]);
+        // console.log(stack[5]);
+        // console.log(stack[6]);
+        // console.log(stack[7]);
+        // console.log(stack[8]);
+        // console.log(stack[9]);
+        // console.log(stack[10]);
+        // console.log(stack[11]);
+        // console.log(stack[12]);
+
         if(debug && stack[0].slice(0, 33) === `AskSdk.DynamoDbPersistenceAdapter`) {
             speechOutput = 'DyanamoDB error.  Be sure your table and IAM execution role are setup. ';
         }
@@ -109,6 +121,8 @@ exports.handler = skillBuilder
         producthandlers.BuyResponseHandler,
         producthandlers.CancelResponseHandler,
 
+        leaderboard.LeaderboardHandler,
+
         handlers.HelpHandler,
         handlers.ExitHandler,
 
@@ -122,7 +136,7 @@ exports.handler = skillBuilder
     // .addRequestInterceptors(interceptors.RequestLogInterceptor)
     .addRequestInterceptors(interceptors.RequestPersistenceInterceptor) // ###
 
-    // .addRequestInterceptors(interceptors.RequestInitializeAttributesInterceptor)
+    .addRequestInterceptors(interceptors.RequestJoinRankInterceptor)
 
     // .addRequestInterceptors(interceptors.RequestGameContinueInterceptor)
 
@@ -131,10 +145,9 @@ exports.handler = skillBuilder
     .addResponseInterceptors(interceptors.ResponsePersistenceInterceptor) // ***
 
     // .addResponseInterceptors(interceptors.SpeechOutputInterceptor)
-
     // .addResponseInterceptors(interceptors.AplInterceptor) // ***
 
-    .withTableName(DYNAMODB_TABLE)
+    .withTableName(DYNAMODB_TABLE_USERS)
     .withAutoCreateTable(false)  // created by SAM deploy
     // .withDynamoDbClient(constants.localDynamoClient)
 

@@ -3,7 +3,8 @@
  */
 // Connect to DynamoDB and retieve table rows
 
-const DYNAMODB_TABLE = 'askStateGames';
+const DYNAMODB_TABLE_USERS = 'askStateGames';
+const DYNAMODB_TABLE_LEADERBOARD = DYNAMODB_TABLE_USERS + 'Leaderboard';
 
 
 function setTableTitle() {
@@ -16,6 +17,7 @@ function testy() {
 }
 function cleartable() {
     document.getElementById('maintable').innerHTML = '';
+    document.getElementById('leaderboards').innerHTML = '';
     setStatus('ready');
 
 }
@@ -25,7 +27,8 @@ function setStatus(status) {
 
 function loadtable() {
 
-    document.getElementById('DynamoDBtablename').innerHTML = DYNAMODB_TABLE;
+    document.getElementById('DynamoDBtablename').innerHTML = DYNAMODB_TABLE_USERS;
+    document.getElementById('DynamoDBtablenameLeaderboard').innerHTML = DYNAMODB_TABLE_LEADERBOARD;
 
     cleartable();
 
@@ -34,7 +37,8 @@ function loadtable() {
     // let rows = {};
 
         const params = {
-            TableName: DYNAMODB_TABLE
+            TableName: DYNAMODB_TABLE_USERS,
+            ProjectionExpression: 'id, attributes'
             // FilterExpression : 'Year = :this_year',
             // ExpressionAttributeValues : {':this_year' : 2015}
         };
@@ -48,12 +52,16 @@ function loadtable() {
 
                     let tbl = document.getElementById('maintable');
                     let header = tbl.createTHead();
+
                     let hrow = header.insertRow(0);
                     hrow.className = 'maintableheader';
+
                     let hcell1 = hrow.insertCell(0);
                     hcell1.innerHTML = 'lastUse';
+
                     let hcell2 = hrow.insertCell(1);
                     hcell2.innerHTML = 'userId tail';
+
                     let hcell3 = hrow.insertCell(2);
                     hcell3.innerHTML = 'Persistent Attributes';
 
@@ -68,8 +76,89 @@ function loadtable() {
             }
         });
 
+
+    const paramsLeaderboard = {
+        TableName: DYNAMODB_TABLE_LEADERBOARD,
+        ProjectionExpression: 'id, scores'
+        // FilterExpression : 'Year = :this_year',
+        // ExpressionAttributeValues : {':this_year' : 2015}
+    };
+
+    docClient.scan(paramsLeaderboard, function (err, data) {
+        if (err) console.log(err);
+        else {
+            setStatus(data.Items.length + ' leaderboard records found');
+            if (data.Items.length > 0) {
+                let rowcounter = 1;
+                let leaderboards = document.getElementById('leaderboards');
+
+                // let tbl = document.getElementById('leaderboard');
+                // let header = tbl.createTHead();
+                //
+                // let hrow = header.insertRow(0);
+                // hrow.className = 'maintableheader';
+                //
+                // let hcell1 = hrow.insertCell(0);
+                // hcell1.innerHTML = 'gameTime';
+                //
+                // let hcell2 = hrow.insertCell(1);
+                // hcell2.innerHTML = 'userId tail';
+                //
+                // let hcell3 = hrow.insertCell(2);
+                // hcell3.innerHTML = 'scores';
+                //
+                //
+                for(row in data.Items) {
+                    const item = data.Items[row];
+                    // console.log(`row: ${JSON.stringify(item, null, 2)}`);
+
+                    let br = document.createElement('br');
+                    leaderboards.appendChild(br);
+
+                    const tblTitle = document.createTextNode(`Leaderboard: `);
+
+                    const tblTitleVal = document.createElement('span');
+                    tblTitleVal.innerHTML = `${item.id}`;
+                    tblTitleVal.className = 'tblTitleVal';
+
+                    leaderboards.appendChild(tblTitle);
+                    leaderboards.appendChild(tblTitleVal);
+
+                    let tbl = document.createElement('table');
+                    tbl.setAttribute("id", "leaderboardTable" + row);
+                    tbl.className = 'leaderboardTable';
+
+                    let header = tbl.createTHead();
+
+                    let hrow = header.insertRow(0);
+                    hrow.className = 'maintableheader';
+
+                    let hcell1 = hrow.insertCell(0);
+                    hcell1.innerHTML = 'rank';
+
+                    let hcell2 = hrow.insertCell(1);
+                    hcell2.innerHTML = 'userId tail';
+
+                    let hcell3 = hrow.insertCell(2);
+                    hcell3.innerHTML = 'score';
+
+                    let hcell4 = hrow.insertCell(3);
+                    hcell4.innerHTML = 'stateList';
+
+                    leaderboards.appendChild(tbl);
+
+                    fillLeaderboard(item, rowcounter++, "leaderboardTable" + row);
+
+
+                }
+
+            }
+
+        }
+    });
+
     setTimeout(function () {  // give AWS docClient a moment to connect
-        toggleUserTable(1);
+        // toggleUserTable(1);
     }, 500);
 
 }
@@ -89,20 +178,56 @@ function toggleUserTable(rowId) {
     }
 }
 
+function fillLeaderboard(lb, rowId, tabletarget) {
+    // console.log(` adding newrow ${JSON.stringify(newrow)}`);
+
+    let tbl = document.getElementById(tabletarget);
+
+
+    for(scoreId in lb.scores) {
+        let row = tbl.insertRow(-1);
+
+        const score = lb.scores[scoreId];
+        console.log(`${JSON.stringify(score, null, 2)}`);
+        const userIdshort = score.userId.substring(219, 225);
+
+        let cell1 = row.insertCell();
+        // cell1.className = "dateTableRow";
+        cell1.innerHTML = parseInt(scoreId) + 1;
+
+        let cell2 = row.insertCell();
+        // cell2.className = "dateTableRow";
+        cell2.innerHTML = userIdshort;
+
+        let cell3 = row.insertCell();
+        // cell3.className = "dateTableRow";
+        cell3.innerHTML = score.result.length;
+
+        let cell4 = row.insertCell();
+        cell4.className = "resultList";
+        cell4.innerHTML = score.result.toString();
+
+    }
+    // let row = tbl.insertRow(-1);
+
+}
+
 function addTableRow(newrow, rowId, tabletarget) {
     // rowcells = Object.keys(newrow).map(i => newrow[i]);
 
     let usertable = document.getElementById(tabletarget);
     let userrow = usertable.insertRow(-1);
 
+
     const userIdshort = newrow.id.substring(219, 225);
     //const userIdClick = "<a href='#' onClick='alert(" + userIdshort + ");'>" + userIdshort + "</a>";
+
     const lastUseDatetime = new Date(newrow.attributes.lastUseTimestamp);
     const lastUseDatetimeDisplay = lastUseDatetime.toString().substring(0, 25);
 
-    // var rightnow = new Date();
-    // var tzo = rightnow.getTimezoneOffset();
-    // var utcDate1 = new Date(rightnow.getTime() + (tzo * 60 * 1000));
+    var rightnow = new Date();
+    var tzo = rightnow.getTimezoneOffset();
+    var utcDate1 = new Date(rightnow.getTime() + (tzo * 60 * 1000));
 
     // console.log('rightnow ' + rightnow);
     // console.log('tzo ' + tzo);
@@ -136,12 +261,14 @@ function addTableRow(newrow, rowId, tabletarget) {
     // cell2.innerHTML = userIdshort + ' ' + rowId;
 
     let cell3 = userrow.insertCell();
+    cell3.className = "userIdTableRow";
 
     let attrtable = document.createElement('table');
     attrtable.setAttribute("id", "attrtable" + rowId);
     attrtable.className = 'attrTableHidden';
 
     cell3.setAttribute("id", "attrcell" + rowId);
+
 
     cell3.appendChild(attrTableBuild(newrow.attributes, attrtable));
 

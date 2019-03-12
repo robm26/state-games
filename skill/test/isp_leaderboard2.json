@@ -1,0 +1,352 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": true,
+    "sessionId": "amzn1.echo-api.session.8ab889f4-9401-4efd-9d78-d08a91914e7b",
+    "application": {
+      "applicationId": "amzn1.ask.skill.4d807c58-0c4b-4e53-8a82-25652d64ce34"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AH55UJWU5XQQWCIUJHEMVUM5YCYWNNPZAKWSZT54SNSZ3MKTAJRZINAKC56LZYZLXDFSZGXLMOILZXD2K44QKMFLDNSCN4A5I5KD7E2LZQMWQ6B4TDTNC44TYW7WJ5XWQCPRZEQZZHEZLUSXTGKY5S7DKPVABJTOHZDDDX3HVDXZAQV5ZVATLZY2P74THOH6IEMXP5QBQG65LYI"
+    }
+  },
+  "context": {
+    "Display": {},
+    "Alexa.Presentation.APL": {
+      "token": "",
+      "version": "ARCRenderer-1.0",
+      "componentsVisibleOnScreen": [
+        {
+          "id": "viewport",
+          "position": "1023x600+0+0:0",
+          "type": "mixed",
+          "tags": {
+            "viewport": {}
+          },
+          "visibility": 1,
+          "children": [
+            {
+              "id": ":43",
+              "position": "1023x600+0+0:1",
+              "type": "mixed",
+              "tags": {
+                "focused": false,
+                "spoken": false,
+                "disabled": false
+              },
+              "visibility": 1,
+              "children": [
+                {
+                  "id": ":44",
+                  "position": "1003x587+10+20:2",
+                  "type": "mixed",
+                  "tags": {
+                    "focused": false,
+                    "spoken": false,
+                    "disabled": false
+                  },
+                  "visibility": 0.99,
+                  "children": [
+                    {
+                      "id": ":45",
+                      "position": "1003x60+10+20:3",
+                      "type": "mixed",
+                      "tags": {
+                        "focused": false,
+                        "spoken": false,
+                        "disabled": false
+                      },
+                      "visibility": 1,
+                      "children": [
+                        {
+                          "id": ":46",
+                          "position": "963x600+30+40:4",
+                          "type": "mixed",
+                          "tags": {
+                            "focused": false,
+                            "spoken": false,
+                            "disabled": false
+                          },
+                          "visibility": 0.1,
+                          "children": [
+                            {
+                              "id": ":48",
+                              "position": "170x600+176+40:5",
+                              "type": "text",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false
+                              },
+                              "visibility": 0.1,
+                              "entities": []
+                            },
+                            {
+                              "id": ":49",
+                              "position": "228x600+346+40:5",
+                              "type": "text",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false
+                              },
+                              "visibility": 0.1,
+                              "entities": []
+                            }
+                          ],
+                          "entities": []
+                        }
+                      ],
+                      "entities": []
+                    },
+                    {
+                      "id": ":50",
+                      "position": "1003x131+10+80:3",
+                      "type": "mixed",
+                      "tags": {
+                        "focused": false,
+                        "spoken": false,
+                        "disabled": false
+                      },
+                      "visibility": 1,
+                      "children": [
+                        {
+                          "id": ":51",
+                          "position": "963x600+30+100:4",
+                          "type": "mixed",
+                          "tags": {
+                            "focused": false,
+                            "spoken": false,
+                            "disabled": false
+                          },
+                          "visibility": 0.22,
+                          "children": [
+                            {
+                              "id": ":52",
+                              "position": "923x600+50+100:5",
+                              "type": "mixed",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false,
+                                "scrollable": {
+                                  "direction": "vertical",
+                                  "allowForward": false,
+                                  "allowBackwards": false
+                                }
+                              },
+                              "visibility": 0.22,
+                              "children": [
+                                {
+                                  "id": ":53",
+                                  "position": "923x28+50+100:6",
+                                  "type": "text",
+                                  "tags": {
+                                    "focused": false,
+                                    "spoken": false,
+                                    "disabled": false
+                                  },
+                                  "visibility": 1.01,
+                                  "entities": []
+                                }
+                              ],
+                              "entities": []
+                            }
+                          ],
+                          "entities": []
+                        }
+                      ],
+                      "entities": []
+                    },
+                    {
+                      "id": ":54",
+                      "position": "1003x390+10+212:3",
+                      "type": "mixed",
+                      "tags": {
+                        "focused": false,
+                        "spoken": false,
+                        "disabled": false
+                      },
+                      "visibility": 0.99,
+                      "children": [
+                        {
+                          "id": ":55",
+                          "position": "983x600+20+222:4",
+                          "type": "mixed",
+                          "tags": {
+                            "focused": false,
+                            "spoken": false,
+                            "disabled": false
+                          },
+                          "visibility": 0.63,
+                          "children": [
+                            {
+                              "id": ":56",
+                              "position": "720x480+40+222:5",
+                              "type": "graphic",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false,
+                                "ordinal": 1
+                              },
+                              "visibility": 0.79,
+                              "entities": []
+                            },
+                            {
+                              "id": ":57",
+                              "position": "235x600+760+222:5",
+                              "type": "mixed",
+                              "tags": {
+                                "focused": false,
+                                "spoken": false,
+                                "disabled": false,
+                                "ordinal": 2
+                              },
+                              "visibility": 0.63,
+                              "children": [
+                                {
+                                  "id": ":58",
+                                  "position": "195x97+780+222:6",
+                                  "type": "mixed",
+                                  "tags": {
+                                    "focused": false,
+                                    "spoken": false,
+                                    "disabled": false
+                                  },
+                                  "visibility": 1,
+                                  "children": [
+                                    {
+                                      "id": ":60",
+                                      "position": "155x28+800+261:7",
+                                      "type": "text",
+                                      "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                      },
+                                      "visibility": 1,
+                                      "entities": []
+                                    }
+                                  ],
+                                  "entities": []
+                                },
+                                {
+                                  "id": ":61",
+                                  "position": "195x502+780+319:6",
+                                  "type": "mixed",
+                                  "tags": {
+                                    "focused": false,
+                                    "spoken": false,
+                                    "disabled": false
+                                  },
+                                  "visibility": 0.56,
+                                  "children": [
+                                    {
+                                      "id": ":63",
+                                      "position": "155x28+800+358:7",
+                                      "type": "text",
+                                      "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                      },
+                                      "visibility": 1,
+                                      "entities": []
+                                    },
+                                    {
+                                      "id": ":64",
+                                      "position": "155x28+800+387:7",
+                                      "type": "text",
+                                      "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                      },
+                                      "visibility": 1,
+                                      "entities": []
+                                    }
+                                  ],
+                                  "entities": []
+                                }
+                              ],
+                              "entities": []
+                            }
+                          ],
+                          "entities": []
+                        }
+                      ],
+                      "entities": []
+                    }
+                  ],
+                  "entities": []
+                }
+              ],
+              "entities": []
+            }
+          ],
+          "entities": []
+        }
+      ]
+    },
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.4d807c58-0c4b-4e53-8a82-25652d64ce34"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.AH55UJWU5XQQWCIUJHEMVUM5YCYWNNPZAKWSZT54SNSZ3MKTAJRZINAKC56LZYZLXDFSZGXLMOILZXD2K44QKMFLDNSCN4A5I5KD7E2LZQMWQ6B4TDTNC44TYW7WJ5XWQCPRZEQZZHEZLUSXTGKY5S7DKPVABJTOHZDDDX3HVDXZAQV5ZVATLZY2P74THOH6IEMXP5QBQG65LYI"
+      },
+      "device": {
+        "deviceId": "amzn1.ask.device.AG7KCZSR4UZK6J4QBESZV47R3KWVGKKD745EXOW4S6XMHMVZJ3CXDMLTAPHFZVNMCDA3DTLCAEL53Q46GOWCDNCCIWANIKI5MDCQ2DK3UX7WTQ54KZ77NCAPZFSGGHXBV6J5CVOVP36MTUYMGHPFLCIOT64Q",
+        "supportedInterfaces": {
+          "Display": {
+            "templateVersion": "1.0",
+            "markupVersion": "1.0"
+          },
+          "Alexa.Presentation.APL": {
+            "runtime": {
+              "maxVersion": "1.0"
+            }
+          }
+        }
+      },
+      "apiEndpoint": "https://api.amazonalexa.com",
+      "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjRkODA3YzU4LTBjNGItNGU1My04YTgyLTI1NjUyZDY0Y2UzNCIsImV4cCI6MTU1MTcyODY4MSwiaWF0IjoxNTUxNzI4MzgxLCJuYmYiOjE1NTE3MjgzODEsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUc3S0NaU1I0VVpLNko0UUJFU1pWNDdSM0tXVkdLS0Q3NDVFWE9XNFM2WE1ITVZaSjNDWERNTFRBUEhGWlZOTUNEQTNEVExDQUVMNTNRNDZHT1dDRE5DQ0lXQU5JS0k1TURDUTJESzNVWDdXVFE1NEtaNzdOQ0FQWkZTR0dIWEJWNko1Q1ZPVlAzNk1UVVlNR0hQRkxDSU9UNjRRIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUg1NVVKV1U1WFFRV0NJVUpIRU1WVU01WUNZV05OUFpBS1dTWlQ1NFNOU1ozTUtUQUpSWklOQUtDNTZMWllaTFhERlNaR1hMTU9JTFpYRDJLNDRRS01GTEROU0NONEE1STVLRDdFMkxaUU1XUTZCNFREVE5DNDRUWVc3V0o1WFdRQ1BSWkVRWlpIRVpMVVNYVEdLWTVTN0RLUFZBQkpUT0haREREWDNIVkRYWkFRVjVaVkFUTFpZMlA3NFRIT0g2SUVNWFA1UUJRRzY1TFlJIn19.EAHlKjDXrDnBpks2BI_5OescQohgaUtXh-lr7kFOP7BJ0qlMYb6yxZz3KQREpDodm43F7Swz9i5hmUQqFA5mQ1ufSVxMZ9RmNe1DR2mfKSpXWoFnzBHIeK5y5h2JpupaaleGuHn9rhK9-BEyhnHfG_8Z44u617SlVeLg4k3uvvswXMRafQmZPECps0ro2sLCp3jUJthzdUFjc_IZ1CyBmQfoZgrXD-v0t4jWBemNAMBOT_IapTd3AzegHzIo3y63jfTMmmxShit8n7oOWGIh_Te0-iK97GUAGpD19pM6fAs11jOn22b8ygbyUPS2m8uBYOpoUaZUMSAO5OrXsFxEsA"
+    },
+    "Viewport": {
+      "experiences": [
+        {
+          "arcMinuteWidth": 246,
+          "arcMinuteHeight": 144,
+          "canRotate": false,
+          "canResize": false
+        }
+      ],
+      "shape": "RECTANGLE",
+      "pixelWidth": 1024,
+      "pixelHeight": 600,
+      "dpi": 160,
+      "currentPixelWidth": 1024,
+      "currentPixelHeight": 600,
+      "touch": [
+        "SINGLE"
+      ]
+    }
+  },
+  "request": {
+    "type": "Connections.Response",
+    "requestId": "amzn1.echo-api.request.26b237df-01e5-44a9-a454-aee218e9a087",
+    "timestamp": "2019-03-04T19:39:41Z",
+    "locale": "en-US",
+    "status": {
+      "code": "200",
+      "message": "OK"
+    },
+    "name": "Buy",
+    "payload": {
+      "purchaseResult": "ACCEPTED",
+      "productId": "amzn1.adg.product.6d99a310-6d51-409a-a884-81d8c076ab96"
+    },
+    "token": "correlationToken"
+  }
+}

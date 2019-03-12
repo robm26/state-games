@@ -4,6 +4,7 @@ const constants = require('./constants.js');
 const helpers = require('./helpers.js');
 const gamehelpers = require('./gamehelpers.js');
 const data = require('./data.js');
+const leaderboard = require('./leaderboard.js');
 const games = data.getGames();
 
 module.exports = {
@@ -29,17 +30,36 @@ module.exports = {
             const lastUseTimestamp = sessionAttributes['lastUseTimestamp'];
             const gameState = sessionAttributes['gameState'];
             const game = sessionAttributes['game'] || '';
+            const skillUserCount = sessionAttributes['skillUserCount'];
+
             let say = ``;
 
-            const recordCount = await gamehelpers.getUserRecordCount();
-            say += `you are one of ${recordCount} users. `;
+            // const joinRank = sessionAttributes['joinRank'];
+            const recordCount = await leaderboard.getUserRecordCount();
 
-            if(gameState == `playing`){
-                const stateList = sessionAttributes['stateList'] || [];
-                say = `welcome back.  You left off in the middle of ${game.name}, Let's resume. `;
+            const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
+            // console.log('thisTimeStamp: ' + thisTimeStamp);
+
+            const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
+
+            if (launchCount == 1) {
+                say = `welcome new user! `;
+                   //  + ` You are the <say-as interpret-as="ordinal">${joinRank}</say-as> user to join!`;
+            } else {
+
+                say = `Welcome back! This is session ${launchCount} `
+                    + ` and it has been ${span.timeSpanDesc}. `
+                    + `There are now ${recordCount} skill users. `;
+                    // + ` You joined as the <say-as interpret-as="ordinal">${joinRank}</say-as> user. `;
+            }
+            const stateList = sessionAttributes['stateList'] || [];
+
+            if(gameState == `playing` && stateList.length > 0){
+
+                say = `You left off in the middle of ${game.name}, Let's resume. `;
                 say += `Your state list so far is ${helpers.sayArray(stateList)}.  Say the name of another state.`;
             }  else {
-
+                sessionAttributes['gameState'] = `stopped`;
                 say += `welcome to the state games.  Which game would you like to play?  I recommend coast to coast.`;
                 // say = `${JSON.stringify(gameNames)}`;
             }
@@ -98,8 +118,7 @@ module.exports = {
 
             const gamelist = games.map(a => a.name);
 
-            if  (!intent.slots.gameName || intent.slots.gameName.value === '')
-            {
+            if  (!intent.slots.gameName || intent.slots.gameName.value === '') {
                 say = `sorry, play what game?`;
 
             } else {
@@ -119,12 +138,11 @@ module.exports = {
 
                     let nextStates = gamehelpers.validNextStates([], gameName);
 
-
                     let nextStatesHint = helpers.sayArray(helpers.shuffleArray(nextStates).slice(0,3), 'or');
 
                     say += `you could try ${nextStatesHint} `;
 
-                    console.log(`game: ${JSON.stringify(game, null, 2)}`);
+                    // console.log(`game: ${JSON.stringify(game, null, 2)}`);
                     sessionAttributes['game'] = game;
 
                     // sessionAttributes['gameName'] = gameName;
@@ -150,14 +168,14 @@ module.exports = {
 
         },
         async handle(handlerInput) {
-
+            const userId = handlerInput.requestEnvelope.session.user.userId;
             const responseBuilder = handlerInput.responseBuilder;
             const intent = handlerInput.requestEnvelope.request.intent;
+            const timestamp = handlerInput.requestEnvelope.request.timestamp;
 
             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
             const game = sessionAttributes['game'];
             const gameState = sessionAttributes['gameState'];
-            // console.log(`##### ${game.name} \n@@@@ ${JSON.stringify(game)}`);
 
             let stateList = sessionAttributes['stateList'] || [];
 
@@ -183,9 +201,13 @@ module.exports = {
                     if(validNextStates[0] === 'endsWhen') {
                         sessionAttributes['gameState'] = 'stopped';
 
-                        say = `${helpers.randomArrayElement(['awesome','well done','hooray'])}, ${myState} ends the game. `;
-                        say += `your score is ${stateList.length}. `;
-                        say += `would you like to play again? `;
+                        say = `${helpers.randomArrayElement(['Awesome','Well done','Hooray'])}, ${myState} ends the game. `;
+                        say += `Your score is ${stateList.length}. `;
+                        say += `Would you like to play again? `;
+
+                        const leaderboardResult = await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+
+                        say += `${leaderboardResult} `;
 
                     } else {
                         if (validNextStates.length === 0) {
@@ -196,6 +218,8 @@ module.exports = {
                                 say += `Unfortunately, you didn't reach your target. `;
                             } else {
                                 say += `your score is ${stateList.length}. `;
+                                const leaderboardResult = await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+                                say += `${leaderboardResult} `;
                             }
 
                             say += `would you like to play again?`;

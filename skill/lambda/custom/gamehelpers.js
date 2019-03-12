@@ -1,9 +1,9 @@
 const constants = require('./constants.js');
 const helpers = require('./helpers.js');
 const data = require('./data.js');
-const AWS = constants.AWS;
+// const AWS = constants.AWS;
 
-AWS.config.endpoint = 'http://localhost:8000';
+// AWS.config.endpoint = 'http://localhost:8000';
 
 const dataset = data.getData();
 const games = data.getGames();
@@ -153,17 +153,17 @@ module.exports = {
         console.log('*** bordering ' + state + ' is ' + array.toString() );
 
         return array;
-    },
-    'getUserRecordCount': async function() {
-        console.log(`in getRecordCount`);
-        const params = {
-            TableName: constants.DYNAMODB_TABLE, select: "COUNT"
-        };
-        const docClient = new AWS.DynamoDB.DocumentClient();
-        const recordCount = await docClient.scan(params).promise();
-
-        return recordCount.Count; // recordCount.ScannedCount
-
     }
+    // 'getUserRecordCount': async function() {
+    //     console.log(`in getRecordCount`);
+    //     const params = {
+    //         TableName: constants.DYNAMODB_TABLE, select: "COUNT"
+    //     };
+    //     const docClient = new AWS.DynamoDB.DocumentClient();
+    //     const recordCount = await docClient.scan(params).promise();
+    //
+    //     return recordCount.Count; // recordCount.ScannedCount
+    //
+    // }
 
 };

@@ -10,6 +10,9 @@ let docClient;
 
 const onLine = false;  // false for local DynamoDB debugging
 
+
+AWS.config.endpoint = 'http://localhost:8000';
+
 AWS.config.region = REGION;
 
 if(onLine) {
@@ -25,9 +28,12 @@ if(onLine) {
         region: "us-east-1",
         endpoint: "http://localhost:8000"
     });
-    AWS.config.credentials = {
 
+    AWS.config.credentials = {
+        accessKeyId: 'abc',
+        secretAccessKey: '123'
     };
+    // alert('making a new docClient');
 
     docClient = new AWS.DynamoDB.DocumentClient({endpoint: new AWS.Endpoint('http://localhost:8000') } );
     // AWS.config.credentials = {};

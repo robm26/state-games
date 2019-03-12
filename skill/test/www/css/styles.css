@@ -7,7 +7,7 @@
     background-color:silver; color:white;
     border-top:3px solid white;
     border-bottom:1px solid white;
-    height:10px
+    height:10px;
 }
 .userIdLink {text-decoration:none !important; cursor:hand;}
 
@@ -30,12 +30,17 @@
 .historyTableStop {padding:3px; border-bottom: 1px solid grey}
 
 .dateTableRow {font-size:smaller; width:20%}
-.userIdTableRow {width: 20%; background-color: gainsboro}
+
+.userIdTableRow {width: 20%; background-color: gainsboro; border: 1px solid darkgrey}
 
 .lookuppanel {padding:10px; background-color:lightyellow}
 .lookupkey {font-size:larger; padding:5px; width:80px}
 .attrSetKey {color: black; background-color:lightyellow; padding:3px}
 .attrSetVal {color: white; background-color:cornflowerblue; padding:3px}
 
+.leaderboards {background-color: whitesmoke; font-family:Verdana;}
 
+.leaderboardTable  {background-color: gainsboro; width:800px; font-family:Verdana; }
 
+.resultList {color:grey; font-size:smaller;}
+.tblTitleVal {color: mediumseagreen; font-size:larger; font-weight:bold}

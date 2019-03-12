@@ -4,6 +4,7 @@
 const constants = require('./constants.js');
 const helpers = require('./helpers.js');
 const producthandlers = require('./producthandlers.js');
+const leaderboard = require('./leaderboard.js');
 
 const AWS = constants.AWS;
 AWS.config.region = process.env.AWS_REGION || 'us-east-1';
@@ -17,34 +18,28 @@ module.exports = {
             console.log(handlerInput.requestEnvelope.request);
         }
     },
-    // 'RequestInitializeAttributesInterceptor': {
-    //     process(handlerInput) {
-    //         if(!handlerInput.requestEnvelope.session) {
-    //             handlerInput.requestEnvelope['session'] = {"new": true};  // for Skill Events
-    //         }
-    //
-    //         if(handlerInput.requestEnvelope.session['new']) {
-    //
-    //
-    //             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-    //             if(Object.keys(sessionAttributes).length === 0) {
-    //                 // console.log('--- First Ever Visit for userId ' + handlerInput.requestEnvelope.session.user.userId);
-    //
-    //                 const initialAttributes = constants.getMemoryAttributes();
-    //                 // console.log(`constants.getMemoryAttributes()\n${JSON.stringify(initialAttributes)}`);
-    //                 sessionAttributes = initialAttributes;
-    //
-    //             }
-    //             sessionAttributes['launchCount'] += 1;
-    //
-    //
-    //             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-    //
-    //
-    //         } // end session['new']
-    //
-    //     }
-    // },
+    'RequestJoinRankInterceptor': {
+        process(handlerInput) {
+            if(handlerInput.requestEnvelope.session['new']) {
+
+                // return new Promise((resolve) => {
+                //     leaderboard.getUserRecordCount(skillUserCount => {
+                //         console.log(`****** ${skillUserCount}`);
+                //         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+                //
+                //         if(sessionAttributes['launchCount'] === 1) {
+                //             sessionAttributes['joinRank'] = skillUserCount;
+                //         }
+                //         sessionAttributes['skillUserCount'] = skillUserCount;
+                //         resolve();
+                //
+                //     });
+                // });
+
+            }
+
+        }
+    },
 
     'RequestPersistenceInterceptor': {
         process(handlerInput) {
@@ -389,6 +384,7 @@ module.exports = {
             });
         }
     }
+
 
 };
 

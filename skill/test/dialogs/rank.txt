@@ -1,0 +1,12 @@
+~ 555
+LaunchRequest
+AMAZON.StopIntent
+~ 666
+LaunchRequest
+AMAZON.StopIntent
+~ 777
+LaunchRequest
+AMAZON.StopIntent
+~ 888
+LaunchRequest
+AMAZON.StopIntent

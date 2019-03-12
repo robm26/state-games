@@ -5,18 +5,24 @@
     <title>Skill Console</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js"-->
+            <!--integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="-->
+            <!--crossorigin="anonymous"></script>-->
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+
+      <script src="jquery/dist/jquery.js"></script>
+
+      <script src="bootstrap/3.3.5/js/bootstrap.js"></script>
+
 
     <!--<script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.18.min.js"></script>-->
     <script src="aws-sdk/dist/aws-sdk.js"></script>
 
-      <script src="js/consoledata.js"></script>
     <script src="js/aws_connect.js"></script>
+    <script src="js/consoledata.js"></script>
+
 
       <script >
           function init() {
@@ -31,7 +37,10 @@
   <div class="panel panel-default">
       <div class="panel-heading">
           <span class="pagetitle">Your Skill Console</span>
-          for DynamoDB table: <span id="DynamoDBtablename" class="tablename">alaska</span>
+          for DynamoDB User table: <span id="DynamoDBtablename" class="tablename"></span>,
+          Leaderboard: <span id="DynamoDBtablenameLeaderboard" class="tablename"></span>
+
+
       </div>
       <div class="panel-body">
           <script type="text/babel">
@@ -46,9 +55,11 @@
           <div id="status" class="status">
               status
           </div>
-          <table class="table" id="maintable">
+          <table class="table" id="maintable"></table>
 
-          </table>
+          <br />
+
+          <div id="leaderboards" class="leaderboards"></div>
 
       </div>
   </div>

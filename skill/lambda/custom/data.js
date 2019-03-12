@@ -1,7 +1,16 @@
 
 module.exports = {
-    'getGames' : function() {
-        return gamelist;
+    'getGames' : function(game) {
+        // console.log(`*** in data.getGames, game:\n${JSON.stringify(game)}`);
+
+        if(game) {
+            return gamelist.filter((item) => {
+                return item.name === game;
+            });
+        } else {
+            return gamelist;
+        }
+
     },
     // 'getProducts' : function() {
     //
@@ -42,7 +51,7 @@ const gamelist = [
         'rules': [],
         'startsOn': 'state.Ocean=="Atlantic"',
         'endsWhen': 'state.Ocean=="Pacific"',
-        'lowScoreBetter':'true',
+        'lowScoreBetter':true,
         'intro':'Start by naming an Atlantic Ocean state.  Continue naming states until you get to the Pacific.',
         'author':'robm'
     },
@@ -54,7 +63,7 @@ const gamelist = [
         ],
         'startsOn': null,
         'endsWhen': null,
-        'lowScoreBetter':'false',
+        'lowScoreBetter':false,
         'intro':'Start by naming any state.  Continue naming states, each must have a larger population than the last.',
         'author':'robm'
     }

@@ -198,26 +198,26 @@ module.exports = {
         return slotValues;
     },
 
-    'getRecordCount': function(callback) {
-
-        const params = {
-            TableName: DYNAMODB_TABLE
-        };
-
-        let docClient = new AWS.DynamoDB.DocumentClient();
-
-        docClient.scan(params, (err, data) => {
-            if (err) {
-                console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
-
-            } else {
-                const skillUserCount = data.Items.length;
-
-                callback(skillUserCount);
-            }
-        });
-
-    },
+    // 'getRecordCount': function(callback) {
+    //
+    //     const params = {
+    //         TableName: DYNAMODB_TABLE_USERS
+    //     };
+    //
+    //     let docClient = new AWS.DynamoDB.DocumentClient();
+    //
+    //     docClient.scan(params, (err, data) => {
+    //         if (err) {
+    //             console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+    //
+    //         } else {
+    //             const skillUserCount = data.Items.length;
+    //
+    //             callback(skillUserCount);
+    //         }
+    //     });
+    //
+    // },
 
 
 

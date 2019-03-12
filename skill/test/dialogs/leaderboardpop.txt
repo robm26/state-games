@@ -1,0 +1,4 @@
+LaunchRequest
+ChooseGameIntent gameName=bigger%20pop
+LeaderboardIntent gameName=
+AMAZON.StopIntent

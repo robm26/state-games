@@ -82,6 +82,30 @@
           ]
         },
         {
+          "name": "LeaderboardIntent",
+          "slots": [
+            {
+              "name": "gameName",
+              "type": "gameName"
+            }
+          ],
+          "samples": [
+            "leaderboard",
+            "leader board",
+            "leaderboard {gameName}",
+            "leaderboard for {gameName}",
+            "leader board {gameName}",
+            "leader board for {gameName}",
+            "high scores",
+            "top scores",
+            "top ten",
+            "high scores {gameName}",
+            "top scores {gameName}",
+            "top ten {gameName}"
+
+          ]
+        },
+        {
           "name": "GuessIntent",
           "slots": [
             {
