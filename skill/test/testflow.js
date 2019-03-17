@@ -3,26 +3,35 @@
 // Launch testflow from a Terminal Prompt.  Examples:
 //
 // node testflow
-// node testflow mydialog.txt
+// node testflow mydialog
+
 const fs = require("fs");
 
 const SourceCodeFile = '../lambda/custom/index.js';
 const handlerName =  'handler';
 
-let MyDialog = './dialogs/default.txt';
+let dialog = 'default.txt';
+
+
+let apiAccessToken = `abc123`;
 
 if (process.argv[2]) {
-    let dialog = process.argv[2];
+    dialog = process.argv[2];
 
     if(dialog.slice(-4) !== '.txt') {
         dialog += '.txt';
     }
-    MyDialog = './dialogs/' + dialog;
 }
+let MyDialog = './dialogs/' + dialog;
+
+if (process.argv[3]) {
+    apiAccessToken = process.argv[3];
+}
+
 
 // Toggle on or off various debugging outputs
 const options = {
-    delay        : 0.5,     // seconds between requests
+    delay        : 0,     // seconds between requests
     stdout       : true,    // standard output, show any errors or console.log() messages
     attributes   : 'stateList',   // true, false, or a string with the name of an attribute such as 'history' or 'favoriteColor'
     speechOutput : true,
@@ -55,7 +64,7 @@ if (SourceCodeFile.slice(-2).toLowerCase()  === 'py') {
 
 // console.log();
 // console.log('================================================================================');
-console.log('Running testflow on ' + SourceCodeFile + ' using dialog sequence file ', MyDialog);
+console.log('Running testflow on \x1b[36m\x1b[1m%s\x1b[0m using dialog sequence \x1b[33m\x1b[1m%s\x1b[0m', SourceCodeFile, dialog);
 console.log();
 
 const OriginalConsoleLog = console.log;
@@ -260,9 +269,11 @@ function runSingleTest(myLineArray, currentLine, sa) {
 
     if (requestType =='LaunchRequest') {
         newSession = true;
-        let eventTime = addTime(new Date(options.timestamp), timeOffset);
 
-        request =  {
+        // let eventTime = addTime(new Date(options.timestamp), timeOffset);
+        let eventTime = addTime(new Date(), timeOffset);
+
+        const request =  {
             "type": requestType,
             "locale": locale,
             "requestId": "amzn1.echo-api.request.90e15a67-dd2d-4cf2-93bd-7a1234d0139f",
@@ -400,7 +411,7 @@ function prepareTestRequest(sa, newSession, request){
                         "supportedInterfaces": supportedInterfaces
                     },
                     "apiEndpoint": "https://api.amazonalexa.com",
-                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpJRI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjUwZWY2ZGYyLWZmYjgtNDY5Mi04ZTE4LWM5YjQ4NWNjMDNiMCIsImV4cCI6MTUyMjcwOTI2OSwiaWF0IjoxNTIyNzA1NjY5LCJuYmYiOjE1MjI3MDU2NjksInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZVV05CWjJGU01ERlJKRFdXQTdHU1pRQllYNERCUzUyUlY3Q0hFQ05VVEJDVk1UNldXNVNWTzU2U0xVWjZENlRJSk01SjJTNlhOWEtIQVVVMlJDWFhRS1VJNzVDMzdJT1BWQUE2SENWSzVFNU5WNUVCVkM1WVVGQU1JR0Q0RllaNFhGQTRPRVBETkNKWUNIWE4yUlJHRFFPWllRIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUc0QkVNR0JKSUpZUkFHS1A1WUxZR0pESVNSSVFWUFdPRUFCRDNPUVc2Nk1UUE9GNEpSSExBRUVUSDVUQklPVDY1MkkzS1VZWlNXQTVNQVo1NUdVVElCTEVNVVE0WVFCUEtYVkc0WVNGSExRTDI3VUVDNllRRFhURVlINU1ENE5NSzRNN1VKNEZXVFJQS1RTSUk0UjczM0VYM1RWQzNVS0xLT0JNSFhYTTVDSE9YMlREVVYyV1BGNk5DV0Y1S0xKRVROR1E1WUM3RU9VREJBIn19.dPbWxnmKZb-KCCDIFayLc7JkuFI1LQGsmHPvHMHAX4dnAwO0PmjGejdl-rlTwjXcIIPIDPT5Y65dIIf0D63SgVIYe2LC0M5alW327UhT5FVjJu8TmtEbiPEoVwKYWqmMbGYi95Zyi5q9XFGRTq6u9idaDALZLT7LjBdY_DQLmks5fSeI819n1AGuxPecwCO29s0GRHg6JNrLVyCsovJIMB0_9yvz_KoOzwXOHp9YfkA9jtOkBWuEjXe1_DKq1HM5VfuAyiTrM1IYmfw9yoctVcH2xCfqL0QmmIYL9TCuh3mTd3yK5S-0NC-uFijeT-Qyg0o6hjmr2v0zfG0NgHQpQA"
+                    "apiAccessToken": apiAccessToken
                 }
             },
 

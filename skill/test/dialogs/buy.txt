@@ -1,6 +1,6 @@
 LaunchRequest
 ShoppingIntent
-ProductDetailsIntent productName=bigger%20pop
+ProductDetailIntent productName=bigger%20pop
 BuyIntent productName=bigger%20pop
 AMAZON.StopIntent
 

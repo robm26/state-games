@@ -1,0 +1,2 @@
+LaunchRequest
+LeaderboardIntent gameName=coast%20to%20coast

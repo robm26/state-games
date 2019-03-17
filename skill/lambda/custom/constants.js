@@ -3,15 +3,29 @@ const projectName = 'StateGames';
 
 const AWS = require('aws-sdk');
 AWS.config.region = process.env.AWS_REGION || 'us-east-1';
-AWS.config.endpoint = 'http://localhost:8000';
 
 const DYNAMODB_TABLE_USERS = process.env.DYNAMODB_TABLE || `ask${projectName}`;
 const DYNAMODB_TABLE_LEADERBOARD = process.env.DYNAMODB_TABLE_LEADERBOARD || `ask${projectName}Leaderboard`;
 
-// console.log('DYNAMODB_TABLE ' + DYNAMODB_TABLE);
+// console.log('DYNAMODB_TABLE_USERS:  ' + DYNAMODB_TABLE_USERS);
 
+let debug = false;
 // AWS.config.endpoint = 'http://localhost:8000';
-// const localDynamoClient = new AWS.DynamoDB({apiVersion : 'latest', endpointAddress : 'http://localhost:8000', endpoint : 'http://localhost:8000'});
+
+let epDetails = {apiVersion : 'latest'};
+
+if(
+    //process.mainModule.filename.slice(-11) === 'testflow.js' ||
+    debug
+){
+    debug = true;
+    epDetails = {apiVersion : 'latest', endpointAddress : 'http://localhost:8000', endpoint : 'http://localhost:8000'};
+    console.log(`Using local DynamoDB at localhost:8000`);
+}
+const DynamoDbClient = new AWS.DynamoDB(epDetails);
+
+// const localDynamoDbClient = new AWS.DynamoDB({apiVersion : 'latest', endpointAddress : 'http://localhost:8000', endpoint : 'http://localhost:8000'});
+// const DynamoDbClient = localDynamoDbClient;
 
 
 module.exports = {
@@ -20,10 +34,11 @@ module.exports = {
     'DYNAMODB_TABLE_LEADERBOARD': DYNAMODB_TABLE_LEADERBOARD,
 
     'invocationName': 'state games',
-    'debug':true,
-    // 'localDynamoClient':localDynamoClient,
+    'debug':debug,
+    'DynamoDbClient':DynamoDbClient,
 
     'getMemoryAttributes': function() {
+
         const memoryAttributes = {
             "history":[],
             "launchCount":0,
@@ -34,7 +49,11 @@ module.exports = {
             "currentQuestion": null,
             "joinRank": 1,
             "skillUserCount": 1,
-            "speakingSpeed":"fast" // fast // medium // slow
+
+            "hintCounter": 0,
+            "hintOfferTimestamp":0
+
+            // "speakingSpeed":"fast" // fast // medium // slow
 
         };
 
@@ -67,6 +86,7 @@ module.exports = {
 
         };
     },
+
     'getPurchasableProductsTestData': function() {
 
         const purchasableProductsTest = [

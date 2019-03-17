@@ -1,0 +1,57 @@
+{
+  "version": "1.0",
+  "type": "SUBSCRIPTION",
+  "referenceName": "leaderboard",
+  "subscriptionInformation": {
+    "subscriptionPaymentFrequency": "MONTHLY",
+    "subscriptionTrialPeriodDays": 7
+  },
+  "publishingInformation": {
+    "locales": {
+      "en-US": {
+        "name": "Leader Board",
+        "summary": "The leaderboard is a listing of the top all time scores for each game.  You are charged a monthly subscription to gain access.",
+        "description": "The leaderboard is a listing of the top all time scores for each game.  You can see how you rank if you have one of the top scores.",
+        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a97b/5097ca956c004f519961e3497ed6d629/APP_ICON?versionId=NqwyVrENlgZCNs.h3MKafmd.ZoCq.zYI&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582553&Signature=FB%2BntNz2ygnDkNwXljDkYPGdJhU%3D",
+        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/9b54/a6308004ca2047f3a9e2d8e5b87873e8/APP_ICON_LARGE?versionId=klivdWg0N1qQWIit8VYCA.yFbM2Tt3wU&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582553&Signature=L4fy4DqZLtb0Vw0lJYZbtWXJ2D4%3D",
+        "examplePhrases": [
+          "buy leaderboard",
+          "subscribe to the leaderboard"
+        ],
+        "keywords": [
+          "leaderboard",
+          "leader",
+          "board"
+        ],
+        "customProductPrompts": {
+          "purchasePromptDescription": "Would you like to subscribe to the Leader Board",
+          "boughtCardDescription": "You now have a subscription to the Leader Board"
+        }
+      }
+    },
+    "distributionCountries": [
+      "US"
+    ],
+    "pricing": {
+      "amazon.com": {
+        "releaseDate": "2019-02-13T00:00Z",
+        "defaultPriceListing": {
+          "price": 0.99,
+          "currency": "USD"
+        }
+      }
+    },
+    "taxInformation": {
+      "category": "INFORMATION_SERVICES"
+    }
+  },
+  "privacyAndCompliance": {
+    "locales": {
+      "en-US": {
+        "privacyPolicyUrl": "https://localhost/privacy.html"
+      }
+    }
+  },
+  "testingInstructions": "Test this well.",
+  "purchasableState": "PURCHASABLE"
+}

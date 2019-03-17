@@ -4,6 +4,33 @@
       "invocationName": "state purchase",
       "intents": [
         {
+          "name": "ChooseGameIntent",
+          "slots": [
+            {
+              "name": "gameName",
+              "type": "gameName"
+            }
+          ],
+          "samples": [
+            "{gameName}",
+            "lets play {gameName}",
+            "play {gameName}"
+          ]
+        },
+        {
+          "name": "GuessIntent",
+          "slots": [
+            {
+              "name": "usstate",
+              "type": "AMAZON.US_STATE"
+            }
+          ],
+          "samples": [
+            "{usstate}",
+            "go to {usstate}"
+          ]
+        },
+        {
           "name": "ShoppingIntent",
           "slots": [],
           "samples": [
@@ -14,6 +41,18 @@
             "i want to buy something",
             "what is available to buy",
             "what can i buy"
+          ]
+        },
+        {
+          "name": "ProductDetailIntent",
+          "slots": [
+            {
+              "name": "productName",
+              "type": "productNames"
+            }
+          ],
+          "samples": [
+            "tell me about {productName}"
           ]
         },
         {
@@ -31,54 +70,15 @@
           ]
         },
         {
-          "name": "AMAZON.FallbackIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NavigateHomeIntent",
-          "samples": []
-        },
-        {
-          "name": "HintIntent",
-          "slots": [],
-          "samples": [
-            "hint",
-            "tell me a hint",
-            "give me a hint"
-          ]
-        },
-        {
-          "name": "AMAZON.YesIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.NoIntent",
-          "samples": []
-        },
-        {
-          "name": "ChooseGameIntent",
+          "name": "CancelSubscriptionIntent",
           "slots": [
             {
-              "name": "gameName",
-              "type": "gameName"
+              "name": "productName",
+              "type": "productNames"
             }
           ],
           "samples": [
-            "{gameName}",
-            "lets play {gameName}",
-            "play {gameName}"
+            "cancel {productName}"
           ]
         },
         {
@@ -106,41 +106,88 @@
           ]
         },
         {
-          "name": "GuessIntent",
-          "slots": [
-            {
-              "name": "usstate",
-              "type": "AMAZON.US_STATE"
-            }
-          ],
+          "name": "HintIntent",
+          "slots": [],
           "samples": [
-            "{usstate}",
-            "go to {usstate}"
+            "hint",
+            "tell me a hint",
+            "give me a hint"
           ]
         },
+
         {
-          "name": "CancelPurchaseIntent",
-          "slots": [
-            {
-              "name": "productName",
-              "type": "productNames"
-            }
-          ],
-          "samples": [
-            "cancel {productName}"
-          ]
+          "name": "AMAZON.YesIntent",
+          "samples": []
         },
         {
-          "name": "ProductDetailIntent",
-          "slots": [
-            {
-              "name": "productName",
-              "type": "productNames"
-            }
-          ],
-          "samples": [
-            "tell me about {productName}"
-          ]
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+
+        {
+          "name": "AMAZON.MoreIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateSettingsIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageUpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollRightIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollLeftIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollUpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
         }
       ],
       "types": [

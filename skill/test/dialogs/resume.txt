@@ -1,0 +1,9 @@
+LaunchRequest
+ChooseGameIntent gameName=bigger%20pop
+GuessIntent usstate=Connecticut
+GuessIntent usstate=Massachusetts
+AMAZON.PauseIntent
+
+LaunchRequest
+GuessIntent usstate=New%20York
+AMAZON.StopIntent

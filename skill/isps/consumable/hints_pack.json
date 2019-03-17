@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "type": "CONSUMABLE",
+  "referenceName": "hints_pack",
+  "publishingInformation": {
+    "locales": {
+      "en-US": {
+        "name": "Hints Pack",
+        "summary": "A five pack of hints you can use during the game.",
+        "description": "A five pack of hints you can use if you get stuck during the game.  Each time you use a hint, your inventory of hints will be reduced.  You can say help to hear your inventory.",
+        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/cc03/eb20f63c29ec497a9db698fba7852396/APP_ICON?versionId=tol8RHgxUPQaLqWPrqa8MqrVK2nO3AMD&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582550&Signature=5KiCZmS5UH8NRonB9Nxij1i%2BadI%3D",
+        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/6994/b9623c827f644e0b99aef11def1b336a/APP_ICON_LARGE?versionId=SHC2OQEYT59a6sRm69V0MnAdmm66FPEv&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582550&Signature=ACPt%2F3bvMognx1uqaKftz%2B16Xg0%3D",
+        "examplePhrases": [
+          "buy hint pack"
+        ],
+        "keywords": [
+          "hint",
+          "pack"
+        ],
+        "customProductPrompts": {
+          "purchasePromptDescription": "You may purchase this five pack of hints. ",
+          "boughtCardDescription": "You now have a new five pack of hints."
+        }
+      }
+    },
+    "distributionCountries": [
+      "US"
+    ],
+    "pricing": {
+      "amazon.com": {
+        "releaseDate": "2019-02-13T00:00Z",
+        "defaultPriceListing": {
+          "price": 1.99,
+          "currency": "USD"
+        }
+      }
+    },
+    "taxInformation": {
+      "category": "INFORMATION_SERVICES"
+    }
+  },
+  "privacyAndCompliance": {
+    "locales": {
+      "en-US": {
+        "privacyPolicyUrl": "https://localhost/privacy.html"
+      }
+    }
+  },
+  "testingInstructions": "Test this well",
+  "purchasableState": "PURCHASABLE"
+}

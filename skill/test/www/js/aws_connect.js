@@ -8,10 +8,12 @@ const REGION         = 'us-east-1';
 const cognitoIdentityPoolId = 'us-east-1:583dd84a-7792-49a6-9ce5-5624f80378e7';
 let docClient;
 
-const onLine = false;  // false for local DynamoDB debugging
+const onLine = true;  // false for local DynamoDB debugging
 
+// AWS.config.endpoint = 'http://localhost:8000';
 
-AWS.config.endpoint = 'http://localhost:8000';
+console.log(`onLine: ${onLine}`);
+
 
 AWS.config.region = REGION;
 
@@ -33,12 +35,10 @@ if(onLine) {
         accessKeyId: 'abc',
         secretAccessKey: '123'
     };
-    // alert('making a new docClient');
 
     docClient = new AWS.DynamoDB.DocumentClient({endpoint: new AWS.Endpoint('http://localhost:8000') } );
-    // AWS.config.credentials = {};
-}
 
+}
 
 
 // if(onLine) {
@@ -51,9 +51,12 @@ if(onLine) {
 
 // Initialize the Amazon Cognito credentials provider
 function getAWSCredentials() {
+    console.log(`in getAWSCredentials `);
+
     AWS.config.credentials.refresh(function(err) {
         if (err) console.log(err, err.stack); // an error occurred
         else {                                // successful response);
+            console.log(`in getAWSCredentials, refresh success `);
             onCredentialsAvailable(AWS.config.credentials);
         }
     });
@@ -63,11 +66,6 @@ function onCredentialsAvailable(creds) {
 
     docClient = new AWS.DynamoDB.DocumentClient();
 
-    // loadtable(); // defined in consoledata.js
+    loadtable(); // defined in consoledata.js
 
 }
-//
-// AWS.config.update({
-//     region: "us-west-2",
-//     endpoint: "http://localhost:8000"
-// });

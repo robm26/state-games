@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "type": "ENTITLEMENT",
+  "referenceName": "bigger_pop",
+  "publishingInformation": {
+    "locales": {
+      "en-US": {
+        "name": "Bigger Pop",
+        "summary": "Bigger Pop is a super fun game where you have to name a series of US states.  Each new state you name must have a larger population than the previous state.",
+        "description": "Bigger Pop is a super fun game where you have to name a series of US states.  Each new state you name must have a larger population than the previous state.  Your score is the number of states you can name correctly.",
+        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/717f/70997a3ba01d46ba9b6fed8e8bdc366c/APP_ICON?versionId=C9DqT7ZUpt9IBd9hOaEV3RtPjrYUHGRY&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582552&Signature=0ZxHMpF5PoCUmIw6wIMBq%2FvKOSc%3D",
+        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5f9c/b95ae3f49b1946d58cbf24ba0bb5c2a4/APP_ICON_LARGE?versionId=mAI9Ykgm4KoV.Ki5rRCvHTIl7wUp7vyW&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582552&Signature=blleof1c2gRrpQaDKewDc1ptScg%3D",
+        "examplePhrases": [
+          "buy bigger pop"
+        ],
+        "keywords": [
+          "bigger",
+          "pop",
+          "population",
+          "state",
+          "game"
+        ],
+        "customProductPrompts": {
+          "purchasePromptDescription": "Bigger Pop is a game you may purchase.",
+          "boughtCardDescription": "Thanks for purchasing Bigger Pop!"
+        }
+      }
+    },
+    "distributionCountries": [
+      "US"
+    ],
+    "pricing": {
+      "amazon.com": {
+        "releaseDate": "2019-02-13T00:00Z",
+        "defaultPriceListing": {
+          "price": 0.99,
+          "currency": "USD"
+        }
+      }
+    },
+    "taxInformation": {
+      "category": "INFORMATION_SERVICES"
+    }
+  },
+  "privacyAndCompliance": {
+    "locales": {
+      "en-US": {
+        "privacyPolicyUrl": "https://localhost/privacy.html"
+      }
+    }
+  },
+  "testingInstructions": "Please test this product carefully.",
+  "purchasableState": "PURCHASABLE"
+}

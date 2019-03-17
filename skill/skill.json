@@ -1,0 +1,41 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "TODO: skill summary",
+          "examplePhrases": [
+            "Alexa open state games",
+            "play coast to coast",
+            "play bigger pop"
+          ],
+          "name": "State Purchase",
+          "description": "TODO: skill description"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "TODO: Sample Testing Instructions.",
+      "category": "EDUCATION_AND_REFERENCE",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom"
+        },
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL"
+          },
+          {
+            "type": "RENDER_TEMPLATE",
+            "minimumApmlVersion": "0.2",
+            "minimumTemplateVersion": "1.0"
+          }
+        ]
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": []
+  }
+}

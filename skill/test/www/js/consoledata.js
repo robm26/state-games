@@ -125,9 +125,10 @@ function loadtable() {
                     leaderboards.appendChild(tblTitleVal);
 
                     let tbl = document.createElement('table');
+
                     tbl.setAttribute("id", "leaderboardTable" + row);
                     tbl.className = 'leaderboardTable';
-
+                    tbl.className = 'mainTable';
                     let header = tbl.createTHead();
 
                     let hrow = header.insertRow(0);
@@ -143,7 +144,10 @@ function loadtable() {
                     hcell3.innerHTML = 'score';
 
                     let hcell4 = hrow.insertCell(3);
-                    hcell4.innerHTML = 'stateList';
+                    hcell4.innerHTML = 'Time';
+
+                    let hcell5 = hrow.insertCell(4);
+                    hcell5.innerHTML = 'stateList';
 
                     leaderboards.appendChild(tbl);
 
@@ -192,20 +196,31 @@ function fillLeaderboard(lb, rowId, tabletarget) {
         const userIdshort = score.userId.substring(219, 225);
 
         let cell1 = row.insertCell();
-        // cell1.className = "dateTableRow";
+        cell1.className = "resultList";
         cell1.innerHTML = parseInt(scoreId) + 1;
 
         let cell2 = row.insertCell();
-        // cell2.className = "dateTableRow";
+        cell2.className = "resultList";
         cell2.innerHTML = userIdshort;
 
         let cell3 = row.insertCell();
-        // cell3.className = "dateTableRow";
+        cell3.className = "resultList";
         cell3.innerHTML = score.result.length;
+
+        const thisTimeStamp = new Date().getTime();
+
+        const timeSince = timeDelta(score.timestamp * 1000, thisTimeStamp).timeSpanDesc;
 
         let cell4 = row.insertCell();
         cell4.className = "resultList";
-        cell4.innerHTML = score.result.toString();
+        cell4.innerHTML = timeSince;
+        // cell4.innerHTML += '<br/>' + (thisTimeStamp - (score.timestamp * 1000));
+        // cell4.innerHTML += '<br/>' + thisTimeStamp  + ' : ' + score.timestamp * 1000;
+
+        let cell5 = row.insertCell();
+        cell5.className = "resultList";
+        cell5.innerHTML =  score.result.toString();
+
 
     }
     // let row = tbl.insertRow(-1);
@@ -404,4 +419,33 @@ function renderIntentSlotLine(obj) {
 function shadeColor(color, percent) {
     var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+}
+
+function timeDelta(t1, t2) {
+
+    const dt1 = new Date(t1);
+    const dt2 = new Date(t2);
+
+    const timeSpanMS = dt2.getTime() - dt1.getTime();
+
+    const span = {
+        "timeSpanSEC": Math.floor(timeSpanMS / (1000 )),
+        "timeSpanMIN": Math.floor(timeSpanMS / (1000 * 60 )),
+        "timeSpanHR": Math.floor(timeSpanMS / (1000 * 60 * 60)),
+        "timeSpanDAY": Math.floor(timeSpanMS / (1000 * 60 * 60 * 24)),
+        "timeSpanDesc" : ""
+    };
+
+    if (span.timeSpanMIN < 2) {
+        span.timeSpanDesc = span.timeSpanSEC + " seconds";
+    } else if (span.timeSpanHR < 2) {
+        span.timeSpanDesc = span.timeSpanMIN + " minutes";
+    } else if (span.timeSpanDAY < 2) {
+        span.timeSpanDesc = span.timeSpanHR + " hours";
+    } else {
+        span.timeSpanDesc = span.timeSpanDAY + " days";
+    }
+
+    return span;
+
 }

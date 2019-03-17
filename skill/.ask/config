@@ -1,18 +1,62 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "",
+      "skill_id": "amzn1.ask.skill.26f1570c-6b4b-4da3-b648-5d7d5c6eaf81",
       "was_cloned": false,
       "merge": {
         "manifest": {
           "apis": {
             "custom": {
               "endpoint": {
-                "uri": "ask-state-games"
+                "uri": "arn:aws:lambda:us-east-1:589662381973:function:ask-state-games"
               }
             }
           }
         }
+      },
+      "in_skill_products": [
+        {
+          "deploy_status": "Update",
+          "filePath": "isps/consumable/hints_pack.json",
+          "productId": "amzn1.adg.product.c0db9c7f-7489-49eb-88dd-12432a554c80",
+          "eTag": "436bdd4a5b3db447c07e53bb0481256c"
+        },
+        {
+          "deploy_status": "Update",
+          "filePath": "isps/entitlement/bigger_pop.json",
+          "productId": "amzn1.adg.product.946ba1c5-3db8-44c2-909e-4f59b3355e2c",
+          "eTag": "c36b762e870489aaabe94433af0905af"
+        },
+        {
+          "deploy_status": "Update",
+          "filePath": "isps/subscription/leaderboard.json",
+          "productId": "amzn1.adg.product.8724455c-478a-4485-a113-edbd7f1dc186",
+          "eTag": "f52e98b0ed7813cc36928725f3ad2b05"
+        }
+      ],
+      "resources": {
+        "manifest": {
+          "eTag": "991dc2d8ca721be324e1cda3084f9e71"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "90705a96ed1d4c6702d81850c8eb829d"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:589662381973:function:ask-state-games",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-state-games",
+            "handler": "index.handler",
+            "revisionId": "51712ae7-26fc-4acf-a3f3-11398e3ad519",
+            "runtime": "nodejs8.10"
+          }
+        ]
       }
     }
   }

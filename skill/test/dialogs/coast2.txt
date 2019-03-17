@@ -8,5 +8,6 @@ GuessIntent usstate=Oklahoma
 GuessIntent usstate=New%20Mexico
 GuessIntent usstate=Arizona
 GuessIntent usstate=california
+# ChooseGameIntent gameName=coast%20to%20coast
 AMAZON.StopIntent
 

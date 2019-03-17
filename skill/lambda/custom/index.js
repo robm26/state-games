@@ -1,6 +1,5 @@
 'use strict';
 
-console.log('hello');
 const Alexa = require("ask-sdk");
 
 const data      = require('./data.js');
@@ -42,16 +41,16 @@ const ErrorHandler = {
         // console.log(stack[12]);
 
         if(debug && stack[0].slice(0, 33) === `AskSdk.DynamoDbPersistenceAdapter`) {
-            speechOutput = 'DyanamoDB error.  Be sure your table and IAM execution role are setup. ';
+            speechOutput = 'Dynamo DB error.  Be sure your table and IAM execution role are setup. ';
+        } else {
+            let errorLoc = stack[1].substring(stack[1].lastIndexOf('/') + 1, 900);
+
+            errorLoc = errorLoc.slice(0, -1);
+
+            const file = errorLoc.substring(0, errorLoc.indexOf(':'));
+            let line = errorLoc.substring(errorLoc.indexOf(':') + 1, 900);
+            line = line.substring(0, line.indexOf(':'));
         }
-
-        let errorLoc = stack[1].substring(stack[1].lastIndexOf('/') + 1, 900);
-
-        errorLoc = errorLoc.slice(0, -1);
-
-        const file = errorLoc.substring(0, errorLoc.indexOf(':'));
-        let line = errorLoc.substring(errorLoc.indexOf(':') + 1, 900);
-        line = line.substring(0, line.indexOf(':'));
 
         if(debug) {
             speechOutput +=  error.message + ' in ' + file + ', line ' + line;
@@ -136,19 +135,19 @@ exports.handler = skillBuilder
     // .addRequestInterceptors(interceptors.RequestLogInterceptor)
     .addRequestInterceptors(interceptors.RequestPersistenceInterceptor) // ###
 
-    .addRequestInterceptors(interceptors.RequestJoinRankInterceptor)
 
-    // .addRequestInterceptors(interceptors.RequestGameContinueInterceptor)
+    // .addRequestInterceptors(interceptors.RequestJoinRankInterceptor)
 
     .addRequestInterceptors(interceptors.RequestHistoryInterceptor)
 
     .addResponseInterceptors(interceptors.ResponsePersistenceInterceptor) // ***
 
     // .addResponseInterceptors(interceptors.SpeechOutputInterceptor)
-    // .addResponseInterceptors(interceptors.AplInterceptor) // ***
+
+    .addResponseInterceptors(interceptors.AplInterceptor) // ***
 
     .withTableName(DYNAMODB_TABLE_USERS)
     .withAutoCreateTable(false)  // created by SAM deploy
-    // .withDynamoDbClient(constants.localDynamoClient)
+    .withDynamoDbClient(constants.DynamoDbClient)
 
     .lambda();

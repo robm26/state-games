@@ -27,6 +27,7 @@ module.exports = {
 
                 let cardText = helpers.displayListFormatter(cardList, `card`);
                 cardText += `\nTry saying:\n"Tell me about <product>"\nor\n"Buy <product>"`;
+
                 const prods = helpers.sayArray(purchasableProducts.map(item => item.name), 'or');
 
                 speakOutput = `Products available for purchase at this time are ${prods}` +
@@ -77,10 +78,10 @@ module.exports = {
                 }
 
                 const theProduct = await module.exports.getProducts(handlerInput, helpers.capitalize(productName));  // helper function below
+
                 slotStatus += `This is a, ${helpers.capitalize(theProduct.type.toLowerCase())} product. `;
                 slotStatus += `${theProduct.summary} `;
                 slotStatus += `If you would like to buy it, just say, Buy ${theProduct.name}`;
-
 
             }
 
@@ -288,8 +289,9 @@ module.exports = {
                 const request = handlerInput.requestEnvelope.request;
                 const locale = request.locale;
 
-                // const data = constants.getPurchasableProductsTestData();
+                const testProducts = constants.getPurchasableProductsTestData();
                 // resolve(data);
+                // console.log(`in getProducts(handlerInput, ${filterExp})`);
 
                 const ms = handlerInput.serviceClientFactory.getMonetizationServiceClient();
 
@@ -308,13 +310,17 @@ module.exports = {
                         products = result.inSkillProducts;
 
                     }
+                    // console.log(`*** got products: ${JSON.stringify(products, null, 2)}`);
 
                   resolve(products);
 
                 }).catch((err) => {
                     if(err.name === 'ServiceError' && err.statusCode === 403) {
+                        // console.log(`error: ${JSON.stringify(err, 2, null)}`);
+                        // console.log(`using local test data for products`);
+                        // resolve(['product one', 'product two']);
+                        resolve(testProducts);
 
-                        resolve(['product one', 'product two']);
                     } else {
                         console.log(`Caught error ${JSON.stringify(err, null, 2)}`);
                     }

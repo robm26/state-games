@@ -2,6 +2,7 @@
 
 
 PROJECT_NAME="StateGames"
+LAMBDA_NAME="ask-state-games"
 
 OBJECT_NAME="state-games.zip"
 
@@ -14,7 +15,7 @@ rm -rf node_modules/aws-sdk # unnecessary within Lambda, smaller size enables co
 
 zip  ../$OBJECT_NAME * –X -r
 cd ..
-aws lambda update-function-code --function-name ask-custom-StateGames --zip-file fileb://$OBJECT_NAME
+aws lambda update-function-code --function-name $LAMBDA_NAME --zip-file fileb://$OBJECT_NAME
 
 cd ../sam
 

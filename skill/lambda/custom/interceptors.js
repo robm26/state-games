@@ -72,15 +72,15 @@ module.exports = {
                             // console.log(`about to save sessionAttributes: ${JSON.stringify(sessionAttributes, null, 2)}`);
                             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
-                            // resolve();
+                            resolve();
 
-                            handlerInput.attributesManager.savePersistentAttributes()
-                                .then(() => {
-                                    resolve();
-                                })
-                                .catch((err) => {
-                                    reject(err);
-                                });
+                            // handlerInput.attributesManager.savePersistentAttributes()
+                            //     .then(() => {
+                            //         resolve();
+                            //     })
+                            //     .catch((err) => {
+                            //         reject(err);
+                            //     });
 
                         })
                         .catch((error) => {
@@ -98,54 +98,89 @@ module.exports = {
 
     'RequestGameContinueInterceptor': {
         process(handlerInput) {
-            if(!handlerInput.requestEnvelope.session) {
-                handlerInput.requestEnvelope['session'] = {"new": true};  // for Skill Events
-            }
+            // if(!handlerInput.requestEnvelope.session) {
+            //     handlerInput.requestEnvelope['session'] = {"new": true};  // for Skill Events
+            // }
+            //console.log(`in RequestGameContinueInterceptor`);
+            // console.log(handlerInput.requestEnvelope.session['new']);
 
             if(handlerInput.requestEnvelope.session['new']) {
+                console.log(`new!`);
+                let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-                return new Promise((resolve, reject) => {
+                if(Object.keys(sessionAttributes).length > 0) { // user has been here
+                    const lastUseTimestamp = sessionAttributes['lastUseTimestamp'];
+                    const gameState = sessionAttributes['gameState'];
+                    const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
 
-                    handlerInput.attributesManager.getPersistentAttributes()
+                    const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
 
-                        .then((sessionAttributes) => {
-                            sessionAttributes = sessionAttributes || {};
+                    console.log(`${span.timeSpanSEC}`);
+                    console.log(`${constants.getSecondsToAbandonGame()}`);
 
-                            // console.log(JSON.stringify(sessionAttributes, null, 2));
+                    if(span.timeSpanSEC > constants.getSecondsToAbandonGame() && gameState === 'playing' ){
+                        console.log(`force stop`);
+                        sessionAttributes['gameState'] = `stopped`;
+                        sessionAttributes['stateList'] = [];
 
-                            if(Object.keys(sessionAttributes).length > 0) { // user has been here
-                                const lastUseTimestamp = sessionAttributes['lastUseTimestamp'];
-                                const gameState = sessionAttributes['gameState'];
-                                const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
+                    }
 
-                                const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
+                }
 
-                                if(span.timeSpanSEC > constants.getSecondsToAbandonGame() ){
-                                    sessionAttributes['gameState'] = `stopped`;
-                                    sessionAttributes['stateList'] = [];
-                                } else {
-                                    // allow game to resume
-                                }
+                handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
-                            }
+                // -------
 
-                            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-
-                            handlerInput.attributesManager.savePersistentAttributes()
-                                .then(() => {
-                                    resolve();
-                                })
-                                .catch((err) => {
-                                    reject(err);
-                                });
-
-                        })
-                        .catch((error) => {
-                            console.log(`requires DynamoDB table`);
-                            reject(error);
-                        });
-
-                });
+                //
+                // return new Promise((resolve, reject) => {
+                //
+                //     handlerInput.attributesManager.getPersistentAttributes()
+                //
+                //         .then((sessionAttributes) => {
+                //             sessionAttributes = sessionAttributes || {};
+                //
+                //             console.log(`sessionAttrs: ${JSON.stringify(sessionAttributes, null, 2)}`);
+                //
+                //             if(Object.keys(sessionAttributes).length > 0) { // user has been here
+                //                 const lastUseTimestamp = sessionAttributes['lastUseTimestamp'];
+                //                 const gameState = sessionAttributes['gameState'];
+                //                 const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
+                //
+                //                 const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
+                //
+                //                 console.log(`${span.timeSpanSEC}`);
+                //                 console.log(`${constants.getSecondsToAbandonGame()}`);
+                //
+                //                 if(span.timeSpanSEC > constants.getSecondsToAbandonGame() ){
+                //                     console.log(`force stop`);
+                //                     sessionAttributes['gameState'] = `stopped`;
+                //                     sessionAttributes['stateList'] = [];
+                //
+                //                 } else {
+                //                     console.log(`resume`);
+                //                     // allow game to resume
+                //                 }
+                //
+                //             }
+                //
+                //             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+                //
+                //             handlerInput.attributesManager.savePersistentAttributes()
+                //                 .then(() => {
+                //                     resolve();
+                //                 })
+                //                 .catch((err) => {
+                //                     reject(err);
+                //                 });
+                //
+                //         })
+                //         .catch((error) => {
+                //             console.log(`requires DynamoDB table`);
+                //             reject(error);
+                //         });
+                //
+                // });
+                // -------
 
             } // end session['new']
 
@@ -165,7 +200,7 @@ module.exports = {
 
                 handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
 
-                // console.log(`about to save sessionAttributes: ${JSON.stringify(sessionAttributes, null, 2)}`);
+                // console.log(`about to save persistent attributes: ${JSON.stringify(sessionAttributes, null, 2)}`);
 
                 return new Promise((resolve, reject) => {
                     handlerInput.attributesManager.savePersistentAttributes()
@@ -290,7 +325,6 @@ module.exports = {
                     };
                 });
 
-
                 let speechOutput = ``;
                 if(responseOutput &&  responseOutput.outputSpeech && responseOutput.outputSpeech.ssml) {
                     speechOutput = stripTags(responseOutput.outputSpeech.ssml);
@@ -311,7 +345,7 @@ module.exports = {
                     Object.keys(slots).forEach(function(key) {
                         let slot = slots[key];
 
-                        console.log(`${slot.name} : ${slot.value ? slot.value : ""}`);
+                        // console.log(`${slot.name} : ${slot.value ? slot.value : ""}`);
                         let slotNameStyle = "textSlotNameStyle";
                         if(!slot.value) {
                             slotNameStyle = "textSlotEmptyStyle";
@@ -369,7 +403,7 @@ module.exports = {
                             "productsAvailable": productListAvailableItems
                         }
                     };
-                    console.log(`eventData:\n${JSON.stringify(eventData, null, 2)}`);
+                    // console.log(`eventData:\n${JSON.stringify(eventData, null, 2)}`);
 
                     handlerInput.responseBuilder.addDirective({
                         type: 'Alexa.Presentation.APL.RenderDocument',

@@ -42,15 +42,18 @@ module.exports = {
 
             const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
 
+            say = helpers.randomArrayElement([`Greetings`, `Hello`,`Hi there`]) + `, `;
+
             if (launchCount == 1) {
-                say = `welcome new user! `;
+                say += `new user! `;
                    //  + ` You are the <say-as interpret-as="ordinal">${joinRank}</say-as> user to join!`;
             } else {
-
-                say = `Welcome back! This is session ${launchCount} `
-                    + ` and it has been ${span.timeSpanDesc}. `
-                    + `There are now ${recordCount} skill users. `;
+                say += `and welcome back! `
+                    // + `This is session ${launchCount}, `
+                    // + `and it has been ${span.timeSpanDesc}. `
+                    // + `Did you know there are ${recordCount-1} other skill users. `
                     // + ` You joined as the <say-as interpret-as="ordinal">${joinRank}</say-as> user. `;
+                    + ``;
             }
             const stateList = sessionAttributes['stateList'] || [];
 
@@ -60,7 +63,9 @@ module.exports = {
                 say += `Your state list so far is ${helpers.sayArray(stateList)}.  Say the name of another state.`;
             }  else {
                 sessionAttributes['gameState'] = `stopped`;
-                say += `welcome to the state games.  Which game would you like to play?  I recommend coast to coast.`;
+
+
+                say += `This is state games.  Which game would you like to play?  I recommend, coast to coast.`;
                 // say = `${JSON.stringify(gameNames)}`;
             }
 
@@ -205,9 +210,10 @@ module.exports = {
                         say += `Your score is ${stateList.length}. `;
                         say += `Would you like to play again? `;
 
-                        const leaderboardResult = await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+                        await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+                        // sessionAttributes['stateList'] = [];
 
-                        say += `${leaderboardResult} `;
+                        // say += `${leaderboardResult} `;
 
                     } else {
                         if (validNextStates.length === 0) {
@@ -235,20 +241,21 @@ module.exports = {
                 } else {
 
                     say = `${myState} is not valid, `;
+                    sessionAttributes['hintCounter'] += 1;
+
 
                     if(stateList.length > 0) {
                         say += `try again,  starting from ${stateList[stateList.length-1]}? `;
                     }
-                    say += `hint, try one of these: ${helpers.sayArray(validCurrentStates,'or')}`;
+                    // say += `hint, try one of these: ${helpers.sayArray(validCurrentStates,'or')}`;
                 }
-
 
             }
             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
             return responseBuilder
                 .speak(say)
-                .reprompt(`Try again. Would you like to play again?`)
+                .reprompt(say)
                 .getResponse();
         }
     },
@@ -286,10 +293,10 @@ module.exports = {
             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
             let history = sessionAttributes['history'] || [];
 
-            if (!handlerInput.requestEnvelope.session.new) {
-                say += `Your last intent was ${history[history.length-2].IntentRequest}. `;
-                // prepare context-sensitive help messages here
-            }
+            // if (!handlerInput.requestEnvelope.session.new) {
+            //     say += `Your last intent was ${history[history.length-2].IntentRequest}. `;
+            //     // prepare context-sensitive help messages here
+            // }
             say += `You can say stop, or, play coast to coast `;
 
             return handlerInput.responseBuilder
@@ -300,16 +307,30 @@ module.exports = {
     },
     'ExitHandler' : {
         canHandle(handlerInput) {
-            return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
-                    && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-                    || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent'
-                    || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NoIntent'
+            const request = handlerInput.requestEnvelope.request;
+
+            return (request.type === 'IntentRequest'
+                    && (request.intent.name === 'AMAZON.CancelIntent'
+                    || request.intent.name === 'AMAZON.StopIntent'
+                    || request.intent.name === 'AMAZON.PauseIntent'
+                    || request.intent.name === 'AMAZON.NoIntent'
                     )
-                ) || handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+                ) || request.type === 'SessionEndedRequest';
 
         },
         async handle(handlerInput) {
             const responseBuilder = handlerInput.responseBuilder;
+            const request = handlerInput.requestEnvelope.request;
+            let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+            if(request.type === 'SessionEndedRequest' || request.intent.name === 'AMAZON.PauseIntent') {
+                // skill timed out, or was paused
+                // let session attributes remain and be persisted by interceptor
+
+            } else {
+                sessionAttributes['gameState'] = 'stopped';
+
+            }
 
             return responseBuilder
                 .speak(`Talk to you later!`)

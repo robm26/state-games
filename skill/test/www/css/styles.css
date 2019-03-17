@@ -29,9 +29,9 @@
 .historyTableCustom {padding:3px; background-color:orange}
 .historyTableStop {padding:3px; border-bottom: 1px solid grey}
 
-.dateTableRow {font-size:smaller; width:20%}
-
-.userIdTableRow {width: 20%; background-color: gainsboro; border: 1px solid darkgrey}
+.mainTable      {table-layout: fixed}
+.dateTableRow   {width: 100px; vertical-align: top; font-size:smaller; }
+.userIdTableRow {width: 100px; background-color: gainsboro; border: 1px solid darkgrey; vertical-align: top}
 
 .lookuppanel {padding:10px; background-color:lightyellow}
 .lookupkey {font-size:larger; padding:5px; width:80px}
@@ -42,5 +42,6 @@
 
 .leaderboardTable  {background-color: gainsboro; width:800px; font-family:Verdana; }
 
-.resultList {color:grey; font-size:smaller;}
+.resultList {color:grey; font-size:smaller; border-bottom: 1px solid darkgray}
+
 .tblTitleVal {color: mediumseagreen; font-size:larger; font-weight:bold}

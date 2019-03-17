@@ -1,0 +1,120 @@
+@ -30m
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Florida
+GuessIntent usstate=Alabama
+GuessIntent usstate=Mississippi
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Texas
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=california
+AMAZON.StopIntent
+@ -20m
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Georgia
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Oklahoma
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=california
+AMAZON.StopIntent
+@ -10m
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Georgia
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Texas
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=california
+AMAZON.StopIntent
+~ 222
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Virginia
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Oklahoma
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=california
+AMAZON.StopIntent
+~ 777
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Florida
+GuessIntent usstate=Alabama
+GuessIntent usstate=Mississippi
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Texas
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=Nevada
+GuessIntent usstate=california
+AMAZON.StopIntent
+
+
+~ 333
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Virginia
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Texas
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=california
+AMAZON.StopIntent
+
+~ 444
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=South%20Carolina
+GuessIntent usstate=Georgia
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Texas
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=california
+AMAZON.StopIntent
+
+
+
+~ 666
+LaunchRequest
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Florida
+GuessIntent usstate=Alabama
+GuessIntent usstate=Mississippi
+GuessIntent usstate=Tennessee
+GuessIntent usstate=Arkansas
+GuessIntent usstate=Texas
+GuessIntent usstate=New%20Mexico
+GuessIntent usstate=Arizona
+GuessIntent usstate=Nevada
+GuessIntent usstate=Oregon
+AMAZON.StopIntent
+
+~ 900
+LaunchRequest
+ChooseGameIntent gameName=bigger%20pop
+GuessIntent usstate=North%20Dakota
+GuessIntent usstate=South%20Dakota
+GuessIntent usstate=Nebraska
+GuessIntent usstate=Colorado
+AMAZON.StopIntent
+
+~ 920
+LaunchRequest
+ChooseGameIntent gameName=bigger%20pop
+GuessIntent usstate=South%20Dakota
+GuessIntent usstate=Nebraska
+GuessIntent usstate=Colorado
+AMAZON.StopIntent

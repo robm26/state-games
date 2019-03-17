@@ -12,33 +12,8 @@ module.exports = {
         }
 
     },
-    // 'getProducts' : function() {
-    //
-    //     const gameProducts = gamelist.map((game) => {
-    //         return game.name;
-    //     });
-    //     const otherProducts = productlist.map((product) => {
-    //         return product.name;
-    //     });
-    //     return gameProducts.concat(otherProducts);
-    //
-    // },
-    'getData' : function() {
 
-        // const stateList = [
-        //                     'Massachusetts',
-        //                     'Connecticut',
-        //                     'Rhode Island',
-        //                     'Vermont',
-        //                     'New Hampshire',
-        //                     'Maine', 'New York',
-        //                     'New Jersey',
-        //                     'Delaware', 'Maryland', 'Virginia', 'West Virginia', 'Kentucky',
-        //                     'Pennsylvania', 'Ohio', 'Indiana', 'Illinois',
-        //                     'Missouri', 'Kansas', 'Colorado', 'Utah', 'Nevada', 'California', 'Oregon'
-        // ];
-        //
-        // return stateData.filter((state) => { return stateList.includes(state.Name)});
+    'getData' : function() {
 
         return stateData;
     }
