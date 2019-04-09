@@ -1,7 +1,7 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "amzn1.ask.skill.26f1570c-6b4b-4da3-b648-5d7d5c6eaf81",
+      "skill_id": "amzn1.ask.skill.fb7fb82e-f5cc-4ed9-808f-d9c6bdac3c64",
       "was_cloned": false,
       "merge": {
         "manifest": {
@@ -18,20 +18,20 @@
         {
           "deploy_status": "Update",
           "filePath": "isps/consumable/hints_pack.json",
-          "productId": "amzn1.adg.product.c0db9c7f-7489-49eb-88dd-12432a554c80",
-          "eTag": "436bdd4a5b3db447c07e53bb0481256c"
+          "productId": "amzn1.adg.product.3cbbcd90-e0fe-4263-97ec-60b76c424b81",
+          "eTag": "90d83bec06e6defc2d4c625531278e11"
         },
         {
           "deploy_status": "Update",
           "filePath": "isps/entitlement/bigger_pop.json",
-          "productId": "amzn1.adg.product.946ba1c5-3db8-44c2-909e-4f59b3355e2c",
-          "eTag": "c36b762e870489aaabe94433af0905af"
+          "productId": "amzn1.adg.product.9f40096e-90e4-479c-a5e8-229bc3c56d64",
+          "eTag": "e0f253a811190d19eb36cf1a580b77bb"
         },
         {
           "deploy_status": "Update",
           "filePath": "isps/subscription/leaderboard.json",
-          "productId": "amzn1.adg.product.8724455c-478a-4485-a113-edbd7f1dc186",
-          "eTag": "f52e98b0ed7813cc36928725f3ad2b05"
+          "productId": "amzn1.adg.product.02037d29-cf12-4dd4-959f-6370b212c6b1",
+          "eTag": "2d4ee2a729ccb476c158d3c3810c14fe"
         }
       ],
       "resources": {
@@ -40,7 +40,7 @@
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "90705a96ed1d4c6702d81850c8eb829d"
+            "eTag": "ec329485c601fdda78f62c4548efd238"
           }
         },
         "lambda": [
@@ -53,7 +53,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-state-games",
             "handler": "index.handler",
-            "revisionId": "51712ae7-26fc-4acf-a3f3-11398e3ad519",
+            "revisionId": "1d567680-08eb-43a6-b873-bd512816d8b9",
             "runtime": "nodejs8.10"
           }
         ]

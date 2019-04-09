@@ -17,11 +17,14 @@ module.exports = {
                 && handlerInput.requestEnvelope.request.intent.name === 'LeaderboardIntent';
         },
         async handle(handlerInput) {
-            let intent = handlerInput.requestEnvelope.request.intent;
+            const request = handlerInput.requestEnvelope.request;
+            const session = handlerInput.requestEnvelope.session;
+            const intent = request.intent;
             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
             let say = ``;
             let gameName = ``;
             let cardText = ``;
+            const userId = session.user.userId;
 
             const gamelist = games.map(a => a.name);
 
@@ -45,7 +48,8 @@ module.exports = {
                 let lb = await module.exports.getLeaderBoard(gameName);
 
                 const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
-                cardText = module.exports.prepareLbCard(lb, thisTimeStamp);
+                cardText = module.exports.prepareLbCard(lb, thisTimeStamp, userId);
+
 
                 if(lb && lb.scores && lb.scores.length > 0) {
                     say += `Here is the leaderboard.`;
@@ -80,7 +84,7 @@ module.exports = {
             "timestamp": Math.floor(new Date(timestamp).getTime() / 1000),  // unix Int format
             "result":result
         };
-        console.log(`\n*** addNewScore with ts: ${newScore.timestamp}`);
+        // console.log(`\n*** addNewScore with ts: ${newScore.timestamp}`);
 
         const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -210,8 +214,9 @@ module.exports = {
         } );
 
     },
-    'prepareLbCard': function(lb, timestamp) {
+    'prepareLbCard': function(lb, timestamp, userId) {
         // console.log(`prepareLbCard: ${JSON.stringify(lb)}`);
+        const userIdShort = userId.slice(-6);
 
         let cardText = `Score  User   Date\n`;
 
@@ -220,8 +225,15 @@ module.exports = {
 
             const timeSince = helpers.timeDelta(item.timestamp * 1000, timestamp).timeSpanDesc;
             const score = (` ` + item.result.length.toString()).slice(-2);  // justify single and double digit scores
+            let scoreUserIdShort = item.userId.slice(-6);
 
-            cardText = `${cardText}\n  ${score}   ${item.userId.slice(-6)}  ${timeSince} ago`;
+            if(userIdShort === scoreUserIdShort) {
+                scoreUserIdShort = `*${scoreUserIdShort}*`;
+            } else {
+                scoreUserIdShort = ` ${scoreUserIdShort} `;
+            }
+
+            cardText = `${cardText}\n  ${score}  ${scoreUserIdShort} ${timeSince} ago`;
             cardText = `${cardText}`;
         });
         if(lb.scores.length > 0) {

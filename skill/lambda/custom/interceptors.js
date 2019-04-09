@@ -18,28 +18,7 @@ module.exports = {
             console.log(handlerInput.requestEnvelope.request);
         }
     },
-    'RequestJoinRankInterceptor': {
-        process(handlerInput) {
-            if(handlerInput.requestEnvelope.session['new']) {
 
-                // return new Promise((resolve) => {
-                //     leaderboard.getUserRecordCount(skillUserCount => {
-                //         console.log(`****** ${skillUserCount}`);
-                //         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-                //
-                //         if(sessionAttributes['launchCount'] === 1) {
-                //             sessionAttributes['joinRank'] = skillUserCount;
-                //         }
-                //         sessionAttributes['skillUserCount'] = skillUserCount;
-                //         resolve();
-                //
-                //     });
-                // });
-
-            }
-
-        }
-    },
 
     'RequestPersistenceInterceptor': {
         process(handlerInput) {
@@ -95,6 +74,22 @@ module.exports = {
 
         }
     },
+    'IspStatusInterceptor': {
+        async process(handlerInput) {
+            if(handlerInput.requestEnvelope.session['new']) {
+
+                let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+                const AvailableItems = await producthandlers.getProducts(handlerInput, 'purchasable');
+                const PurchasedItems = await producthandlers.getProducts(handlerInput, 'purchased');
+
+                sessionAttributes['AvailableItems'] = AvailableItems;
+                sessionAttributes['PurchasedItems'] = PurchasedItems;
+
+                handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+            }
+        }
+    },
 
     'RequestGameContinueInterceptor': {
         process(handlerInput) {
@@ -105,7 +100,7 @@ module.exports = {
             // console.log(handlerInput.requestEnvelope.session['new']);
 
             if(handlerInput.requestEnvelope.session['new']) {
-                console.log(`new!`);
+                // console.log(`new!`);
                 let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
                 if(Object.keys(sessionAttributes).length > 0) { // user has been here
@@ -115,8 +110,8 @@ module.exports = {
 
                     const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
 
-                    console.log(`${span.timeSpanSEC}`);
-                    console.log(`${constants.getSecondsToAbandonGame()}`);
+                    // console.log(`${span.timeSpanSEC}`);
+                    // console.log(`${constants.getSecondsToAbandonGame()}`);
 
                     if(span.timeSpanSEC > constants.getSecondsToAbandonGame() && gameState === 'playing' ){
                         console.log(`force stop`);
@@ -128,59 +123,6 @@ module.exports = {
                 }
 
                 handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-
-                // -------
-
-                //
-                // return new Promise((resolve, reject) => {
-                //
-                //     handlerInput.attributesManager.getPersistentAttributes()
-                //
-                //         .then((sessionAttributes) => {
-                //             sessionAttributes = sessionAttributes || {};
-                //
-                //             console.log(`sessionAttrs: ${JSON.stringify(sessionAttributes, null, 2)}`);
-                //
-                //             if(Object.keys(sessionAttributes).length > 0) { // user has been here
-                //                 const lastUseTimestamp = sessionAttributes['lastUseTimestamp'];
-                //                 const gameState = sessionAttributes['gameState'];
-                //                 const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
-                //
-                //                 const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
-                //
-                //                 console.log(`${span.timeSpanSEC}`);
-                //                 console.log(`${constants.getSecondsToAbandonGame()}`);
-                //
-                //                 if(span.timeSpanSEC > constants.getSecondsToAbandonGame() ){
-                //                     console.log(`force stop`);
-                //                     sessionAttributes['gameState'] = `stopped`;
-                //                     sessionAttributes['stateList'] = [];
-                //
-                //                 } else {
-                //                     console.log(`resume`);
-                //                     // allow game to resume
-                //                 }
-                //
-                //             }
-                //
-                //             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-                //
-                //             handlerInput.attributesManager.savePersistentAttributes()
-                //                 .then(() => {
-                //                     resolve();
-                //                 })
-                //                 .catch((err) => {
-                //                     reject(err);
-                //                 });
-                //
-                //         })
-                //         .catch((error) => {
-                //             console.log(`requires DynamoDB table`);
-                //             reject(error);
-                //         });
-                //
-                // });
-                // -------
 
             } // end session['new']
 
@@ -301,118 +243,113 @@ module.exports = {
             return new Promise(async (resolve, reject) => {
                 const request = handlerInput.requestEnvelope.request;
 
-                let IntentRequest = (request.type === "IntentRequest" ? request.intent.name : request.type);
+                const IntentRequest = (request.type === "IntentRequest" ? request.intent.name : request.type);
 
-                const purchasableProducts = await producthandlers.getProducts(handlerInput, 'purchasable');  // helper function below
-                const purchasedProducts = await producthandlers.getProducts(handlerInput, 'purchased');  // helper function below
+                const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+                const AvailableItems = sessionAttributes['AvailableItems'];
+                const PurchasedItems = sessionAttributes['PurchasedItems'];
+
 
                 //
-                // const productListPurchased = [`apples`, `bananas`, `grapes`];
-                // const productListAvailable = [`pears`, `coconuts`, `limes`];
-
-                const productListPurchasedItems = purchasedProducts.map((item) => {
-                    return {
-                        "type": "Text",
-                        "text": `${item.name}`,
-                        "style": "purchasedStyle"
-                    };
-                });
-                const productListAvailableItems = purchasableProducts.map((item) => {
-                    return {
-                        "type": "Text",
-                        "text": `${item.name}`,
-                        "style": "availableStyle"
-                    };
-                });
-
-                let speechOutput = ``;
-                if(responseOutput &&  responseOutput.outputSpeech && responseOutput.outputSpeech.ssml) {
-                    speechOutput = stripTags(responseOutput.outputSpeech.ssml);
-                } else {
-                    speechOutput = `buying..`;
-                }
-
-                // console.log(`*****\n${JSON.stringify(speechOutput, null, 2)}`);
-
-                let slotArrayFilled = [];
-                let slotArrayEmpty = [];
-                let slotArray = [];
-
-                if(request.type === "IntentRequest" && request.intent.slots && Object.keys(request.intent.slots).length > 0) {
-                    // console.log(`^^^^^ slots\n${JSON.stringify(request.intent.slots, null, 2)}`);
-                    let slots = request.intent.slots;
-
-                    Object.keys(slots).forEach(function(key) {
-                        let slot = slots[key];
-
-                        // console.log(`${slot.name} : ${slot.value ? slot.value : ""}`);
-                        let slotNameStyle = "textSlotNameStyle";
-                        if(!slot.value) {
-                            slotNameStyle = "textSlotEmptyStyle";
-                        }
-                        const slotDisplayName = {
-                            "type": "Text",
-                            "text": `${slot.name}:`,
-                            "style": slotNameStyle
-                        };
-
-                        const slotDisplayValue = {
-                            "type": "Text",
-                            "text": `&nbsp;${slot.value ? slot.value : ""}`,
-                            "style": "textSlotValueStyle"
-                        };
-
-                        if(slot.value) {
-                            slotArrayFilled.push(slotDisplayName);
-                            slotArrayFilled.push(slotDisplayValue);
-                        } else {
-                            slotArrayEmpty.push(slotDisplayName);
-                            slotArrayEmpty.push(slotDisplayValue);
-                        }
-
-                    });
-                }
-
-                slotArray = slotArrayFilled;
-                slotArray = slotArray.concat(slotArrayEmpty);
-
-                // "slots": [
-                //     {
+                // const purchasableProducts = await producthandlers.getProducts(handlerInput, 'purchasable');  // helper function below
+                // const purchasedProducts = await producthandlers.getProducts(handlerInput, 'purchased');  // helper function below
+                //
+                //
+                // const productListPurchasedItems = purchasedProducts.map((item) => {
+                //     return {
                 //         "type": "Text",
-                //         "text": "Danielle",
-                //         "style": "textSlotStyle"
-                //     },
-                //     {
+                //         "text": `${item.name}`,
+                //         "style": "purchasedStyle"
+                //     };
+                // });
+                // const productListAvailableItems = purchasableProducts.map((item) => {
+                //     return {
                 //         "type": "Text",
-                //         "text": "Leah",
-                //         "style": "textSlotStyle"
-                //     }
-                // ],
-
-                if (helpers.supportsDisplayAPL(handlerInput) || true) {
-
-                    const myDocument = require('./apl/main.json');
-
-                    const eventData = {
-                        "liveData": {
-                            "type": "object",
-                            "textIntent": IntentRequest,
-                            "slots": slotArray,
-                            "textResponse": speechOutput,
-                            "productsPurchased": productListPurchasedItems,
-                            "productsAvailable": productListAvailableItems
-                        }
-                    };
-                    // console.log(`eventData:\n${JSON.stringify(eventData, null, 2)}`);
-
-                    handlerInput.responseBuilder.addDirective({
-                        type: 'Alexa.Presentation.APL.RenderDocument',
-                        version: '1.0',
-                        document: myDocument,
-                        datasources: eventData
-                    })
-
-                }
+                //         "text": `${item.name}`,
+                //         "style": "availableStyle"
+                //     };
+                // });
+                //
+                // let speechOutput = ``;
+                // if(responseOutput &&  responseOutput.outputSpeech && responseOutput.outputSpeech.ssml) {
+                //     speechOutput = stripTags(responseOutput.outputSpeech.ssml);
+                // } else {
+                //     speechOutput = `buying..`;
+                // }
+                //
+                // // console.log(`*****\n${JSON.stringify(speechOutput, null, 2)}`);
+                //
+                // let slotArrayFilled = [];
+                // let slotArrayEmpty = [];
+                // let slotArray = [];
+                //
+                // if(request.type === "IntentRequest" && request.intent.slots && Object.keys(request.intent.slots).length > 0) {
+                //     // console.log(`^^^^^ slots\n${JSON.stringify(request.intent.slots, null, 2)}`);
+                //     let slots = request.intent.slots;
+                //
+                //     Object.keys(slots).forEach(function(key) {
+                //         let slot = slots[key];
+                //
+                //         // console.log(`${slot.name} : ${slot.value ? slot.value : ""}`);
+                //         let slotNameStyle = "textSlotNameStyle";
+                //         if(!slot.value) {
+                //             slotNameStyle = "textSlotEmptyStyle";
+                //         }
+                //         const slotDisplayName = {
+                //             "type": "Text",
+                //             "text": `${slot.name}:`,
+                //             "style": slotNameStyle
+                //         };
+                //
+                //         const slotDisplayValue = {
+                //             "type": "Text",
+                //             "text": `&nbsp;${slot.value ? slot.value : ""}`,
+                //             "style": "textSlotValueStyle"
+                //         };
+                //
+                //         if(slot.value) {
+                //             slotArrayFilled.push(slotDisplayName);
+                //             slotArrayFilled.push(slotDisplayValue);
+                //         } else {
+                //             slotArrayEmpty.push(slotDisplayName);
+                //             slotArrayEmpty.push(slotDisplayValue);
+                //         }
+                //
+                //     });
+                // }
+                //
+                // slotArray = slotArrayFilled;
+                // slotArray = slotArray.concat(slotArrayEmpty);
+                //
+                //
+                // if (helpers.supportsDisplayAPL(handlerInput)) {
+                //
+                //     const myDocument = require('./apl/main.json');
+                //
+                //     const eventData = {
+                //         "liveData": {
+                //             "type": "object",
+                //             "textIntent": IntentRequest,
+                //             "slots": slotArray,
+                //             "textResponse": speechOutput,
+                //             "productsPurchased": productListPurchasedItems,
+                //             "productsAvailable": productListAvailableItems
+                //         }
+                //     };
+                //     console.log(`productListPurchasedItems: ${productListPurchasedItems.map(item => `\n - ` + item.text)}`);
+                //     console.log(`productListAvailableItems: ${productListAvailableItems.map(item => `\n - ` + item.text)}`);
+                //
+                //     // console.log(`eventData:\n${JSON.stringify(eventData, null, 2)}`);
+                //
+                //     handlerInput.responseBuilder.addDirective({
+                //         type: 'Alexa.Presentation.APL.RenderDocument',
+                //         version: '1.0',
+                //         document: myDocument,
+                //         datasources: eventData
+                //     })
+                //
+                // }
 
                 resolve();
             });

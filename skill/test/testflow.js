@@ -33,12 +33,13 @@ if (process.argv[3]) {
 const options = {
     delay        : 0,     // seconds between requests
     stdout       : true,    // standard output, show any errors or console.log() messages
-    attributes   : 'stateList',   // true, false, or a string with the name of an attribute such as 'history' or 'favoriteColor'
+    attributes   : false,   // true, false, or a string with the name of an attribute such as 'history' or 'favoriteColor'
     speechOutput : true,
     reprompt     : false,
     slots        : true,
     cards        : true,
     display      : true,
+    APL          : true,
     userId       : '123',  // final 3 chars of test user Id, can be overridden
     timestamp    : ''      // defaults to now, can set via '2018-04-03T21:47:49Z'
     // , requestEvent : false,    // show the request JSON sent to your code
@@ -84,6 +85,14 @@ let timeOffset = '0m'; // run test by adding a span, time formats like 3m, 3h, o
 let context = { // lambda functions may finish by calling context.succeed OR the callback function passed as the third argument
     'succeed': function (data) {
         // console.log('context.succeed:\n' + JSON.stringify(data,null, 2));
+        if (data.response.directives && data.response.directives[0].type === 'Connections.SendRequest') {
+            const directiveType = 'Connections.SendRequest';
+            const directiveName = data.response.directives[0].name;
+            const InSkillProductId = data.response.directives[0].payload.InSkillProduct.productId;
+            console.log(`  Directive Type : ${directiveType}\n  Directive Name : ${directiveName}\n  InSkill Product: ${InSkillProductId}`);
+
+            // process.exit();
+        }
 
         if (data.response.shouldEndSession || typeof data.response.shouldEndSession === 'undefined') {
             sa = {};
@@ -182,7 +191,6 @@ let context = { // lambda functions may finish by calling context.succeed OR the
         // =====================
 
         if (current_line < lineArray.length ) {
-
 
             // blocking pause
             let waitTill = new Date(new Date().getTime() + options.delay * 1000);
@@ -386,9 +394,14 @@ function prepareTestRequest(sa, newSession, request){
             "templateVersion": "1.0",
             "markupVersion": "1.0"
         };
-
     }
-
+    if (options.APL) {
+        supportedInterfaces['Alexa.Presentation.APL'] = {
+            "runtime": {
+                "maxVersion": "1.0"
+            }
+        };
+    }
     const eventJSON =
         {
 

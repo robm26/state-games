@@ -3,4 +3,4 @@ ChooseGameIntent gameName=coast%20to%20coast
 GuessIntent usstate=Iowa
 GuessIntent usstate=Georgia
 GuessIntent usstate=Tennessee
-AMAZON.StopIntent
+AMAZON.PauseIntent

@@ -12,8 +12,8 @@
         "name": "Leader Board",
         "summary": "The leaderboard is a listing of the top all time scores for each game.  You are charged a monthly subscription to gain access.",
         "description": "The leaderboard is a listing of the top all time scores for each game.  You can see how you rank if you have one of the top scores.",
-        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a97b/5097ca956c004f519961e3497ed6d629/APP_ICON?versionId=NqwyVrENlgZCNs.h3MKafmd.ZoCq.zYI&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582553&Signature=FB%2BntNz2ygnDkNwXljDkYPGdJhU%3D",
-        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/9b54/a6308004ca2047f3a9e2d8e5b87873e8/APP_ICON_LARGE?versionId=klivdWg0N1qQWIit8VYCA.yFbM2Tt3wU&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1552582553&Signature=L4fy4DqZLtb0Vw0lJYZbtWXJ2D4%3D",
+        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/7436/8015049000a145f6813527adcb8f5556/APP_ICON?versionId=LUeh99bPS8lDFfJM5KE1zNQkU6.joe9V&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019906&Signature=45zTHrkWs6D8ogGCi0fZ7iAyKIA%3D",
+        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/d7a4/e62c24817a8c41f7be9bced796dd16e8/APP_ICON_LARGE?versionId=IKESC5qUbeCHQNY3Y0vnxQNjwenbtJsB&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019906&Signature=HCclXXgZnoD1ZHInaSxvO%2FYG0WI%3D",
         "examplePhrases": [
           "buy leaderboard",
           "subscribe to the leaderboard"

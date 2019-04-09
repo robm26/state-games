@@ -14,40 +14,57 @@ module.exports = {
         async handle(handlerInput) {
             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-            const request = handlerInput.requestEnvelope.request;
+            const AvailableItems = sessionAttributes['AvailableItems'] || [];
+            const PurchasedItems = sessionAttributes['PurchasedItems'] || [];
 
-            const purchasableProducts = await module.exports.getProducts(handlerInput, 'purchasable');  // helper function below
+            let say = ``;
+            let cardText = ``;
 
-            if (purchasableProducts.length > 0) {
-                // console.log(`~~~\n${JSON.stringify(purchasableProducts, null, 2)}\n~~~`);
+            if(PurchasedItems.length > 0) {
+                const PurchasedItemsCardList = PurchasedItems.map((item) => {
+                    return `\n * ${item.name} : ${item.type}`
+                }).join('');
 
-                const cardList = purchasableProducts.map((item) => {
-                    return `${item.name} : ${item.type}`
-                });
+                const PurchasedItemsSayList = helpers.sayArray(PurchasedItems.map(item => item.name));
 
-                let cardText = helpers.displayListFormatter(cardList, `card`);
-                cardText += `\nTry saying:\n"Tell me about <product>"\nor\n"Buy <product>"`;
+                say += `You own ${PurchasedItemsSayList}. `;
 
-                const prods = helpers.sayArray(purchasableProducts.map(item => item.name), 'or');
-
-                speakOutput = `Products available for purchase at this time are ${prods}` +
-
-                    `. To learn more about a product, say "Tell me about", followed by the product name. ` +
-                    ` If you are ready to buy say "Buy", followed by the product name, such as, ${prods}`;
-
-                repromptOutput = `I didn't catch that. What can I help you with?`;
-
-                return handlerInput.responseBuilder
-                    .speak(speakOutput)
-                    .reprompt(repromptOutput)
-                    .withSimpleCard(`Products`, cardText)
-                    .getResponse();
-            } else {
-                return handlerInput.responseBuilder
-                    .speak('You are fully stocked with products')
-                    .reprompt('Sorry, try again?  Say help to hear some options.')
-                    .getResponse();
+                cardText += `You own:\n${PurchasedItemsCardList}\n\n`;
             }
+
+            if(AvailableItems.length > 0) {
+                const AvailableItemsCardList = AvailableItems.map((item) => {
+                    return `\n * ${item.name} : ${item.type}`
+                }).join('');
+
+                const AvailableItemsSayList = helpers.sayArray(AvailableItems.map(item => item.name), `or`);
+
+                say += `You can purchase ${AvailableItemsSayList}. `;
+
+                cardText += `You can buy:\n${AvailableItemsCardList}\n\n`;
+
+                cardText += `Try saying:"Tell me about <product>" or "Buy <product>" `;
+
+            }
+
+            repromptOutput = `I didn't catch that. What can I help you with?`;
+
+
+            const DisplayImg1 = constants.getDisplayImg1();
+
+            return handlerInput.responseBuilder
+                .speak(say)
+                .reprompt(repromptOutput)
+                .withSimpleCard('Skill Products', cardText)
+                .getResponse();
+
+
+            // else {
+            //     return handlerInput.responseBuilder
+            //         .speak('You are fully stocked with products')
+            //         .reprompt('Sorry, try again?  Say help to hear some options.')
+            //         .getResponse();
+            // }
 
         }
     },
@@ -187,17 +204,18 @@ module.exports = {
 
             return ms.getInSkillProducts(locale).then(function handlePurchaseResponse(result) {
                 const product = result.inSkillProducts.filter(record => record.productId === productId);
-                console.log(`PRODUCT = ${JSON.stringify(product)}`);
+                // console.log(`PRODUCT = ${JSON.stringify(product)}`);
                 if (handlerInput.requestEnvelope.request.status.code === '200') {
                     let speakOutput;
                     let repromptOutput;
-
 
                     switch (handlerInput.requestEnvelope.request.payload.purchaseResult) {
                         case 'ACCEPTED':
                             // if (product[0].referenceName !== 'all_access') categoryFacts = ALL_FACTS.filter(record => record.type === product[0].referenceName.replace('_pack', ''));
 
-                            speakOutput = `You now own, ${product[0].name}. `;
+                            speakOutput = `You now have, ${product[0].name}. `;
+
+
                             repromptOutput = speakOutput;
                             break;
                         case 'DECLINED':
@@ -213,7 +231,6 @@ module.exports = {
                             repromptOutput = speakOutput;
                             break;
                         case 'ALREADY_PURCHASED':
-                            // may have access to more than what was asked for, but give them a random
 
                             speakOutput = `you already have this.`;
                             repromptOutput = speakOutput;
@@ -316,8 +333,8 @@ module.exports = {
 
                 }).catch((err) => {
                     if(err.name === 'ServiceError' && err.statusCode === 403) {
-                        // console.log(`error: ${JSON.stringify(err, 2, null)}`);
-                        // console.log(`using local test data for products`);
+                        console.log(`error: ${JSON.stringify(err, 2, null)}`);
+                        console.log(`using local test data for products`);
                         // resolve(['product one', 'product two']);
                         resolve(testProducts);
 

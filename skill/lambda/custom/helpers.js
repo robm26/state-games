@@ -1,3 +1,4 @@
+const Alexa = require('ask-sdk');
 
 const constants = require('./constants.js');
 const helpers = require('./helpers.js');

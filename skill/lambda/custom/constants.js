@@ -49,6 +49,8 @@ module.exports = {
             "currentQuestion": null,
             "joinRank": 1,
             "skillUserCount": 1,
+            "PurchasedItems":[],
+            "AvailableItems":[],
 
             "hintCounter": 0,
             "hintOfferTimestamp":0

@@ -135,8 +135,9 @@ exports.handler = skillBuilder
     // .addRequestInterceptors(interceptors.RequestLogInterceptor)
     .addRequestInterceptors(interceptors.RequestPersistenceInterceptor) // ###
 
+    //// .addRequestInterceptors(interceptors.IspStatusInterceptor)
 
-    // .addRequestInterceptors(interceptors.RequestJoinRankInterceptor)
+    .addRequestInterceptors(interceptors.RequestGameContinueInterceptor)
 
     .addRequestInterceptors(interceptors.RequestHistoryInterceptor)
 
@@ -144,10 +145,17 @@ exports.handler = skillBuilder
 
     // .addResponseInterceptors(interceptors.SpeechOutputInterceptor)
 
-    .addResponseInterceptors(interceptors.AplInterceptor) // ***
+    // .addResponseInterceptors(interceptors.AplInterceptor) // ***
 
     .withTableName(DYNAMODB_TABLE_USERS)
     .withAutoCreateTable(false)  // created by SAM deploy
     .withDynamoDbClient(constants.DynamoDbClient)
 
     .lambda();
+
+
+    // "card": {
+    //     "type": "Simple",
+    //         "title": "Products",
+    //         "content": "You own:\n\n - Hints Pack : CONSUMABLE\n\nYou can buy:\n\nLeader Board : SUBSCRIPTION\nBigger Pop : ENTITLEMENT\n\nTry saying:\"Tell me about <product>\" or \"Buy <product>\" "
+    // },

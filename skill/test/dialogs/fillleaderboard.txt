@@ -11,7 +11,7 @@ GuessIntent usstate=New%20Mexico
 GuessIntent usstate=Arizona
 GuessIntent usstate=california
 AMAZON.StopIntent
-@ -20m
+@ -25m
 LaunchRequest
 ChooseGameIntent gameName=coast%20to%20coast
 GuessIntent usstate=Georgia
@@ -22,7 +22,7 @@ GuessIntent usstate=New%20Mexico
 GuessIntent usstate=Arizona
 GuessIntent usstate=california
 AMAZON.StopIntent
-@ -10m
+@ -3h
 LaunchRequest
 ChooseGameIntent gameName=coast%20to%20coast
 GuessIntent usstate=Georgia

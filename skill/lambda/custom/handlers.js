@@ -4,8 +4,10 @@ const constants = require('./constants.js');
 const helpers = require('./helpers.js');
 const gamehelpers = require('./gamehelpers.js');
 const data = require('./data.js');
+const producthandlers = require('./producthandlers.js');
 const leaderboard = require('./leaderboard.js');
 const games = data.getGames();
+
 
 module.exports = {
     'LaunchHandler': {
@@ -43,6 +45,10 @@ module.exports = {
             const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
 
             say = helpers.randomArrayElement([`Greetings`, `Hello`,`Hi there`]) + `, `;
+
+            const supportedInterfaces = Alexa.getSupportedInterfaces(handlerInput.requestEnvelope);
+
+            // console.log(`supportedInterfaces : ${JSON.stringify(supportedInterfaces, null, 2)}`);
 
             if (launchCount == 1) {
                 say += `new user! `;
@@ -97,7 +103,7 @@ module.exports = {
             return handlerInput.responseBuilder
                 .speak(say)
                 .reprompt(say)
-                .withStandardCard('State Games', say, DisplayImg1.url)
+                // .withStandardCard('State Games', say, DisplayImg1.url)
                 .getResponse();
 
         }
@@ -109,7 +115,6 @@ module.exports = {
             return (
                 request.type === 'IntentRequest'
                 && (request.intent.name === 'ChooseGameIntent'
-                    // || request.intent.name === 'AMAZON.YesIntent'
                 )
             );
         },
@@ -117,6 +122,9 @@ module.exports = {
             const responseBuilder = handlerInput.responseBuilder;
             const intent = handlerInput.requestEnvelope.request.intent;
             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+            const AvailableItems = sessionAttributes['AvailableItems'];
+            const PurchasedItems = sessionAttributes['PurchasedItems'];
 
             let gameName = ``;
             let say = ``;
@@ -128,31 +136,51 @@ module.exports = {
 
             } else {
                 if (!gamelist.includes(intent.slots.gameName.value.toLowerCase())) {
-                    say = `Sorry I don't have a game called ${intent.slots.gameName.value}. you can ask me to play ${helpers.sayArray(gamelist,'or')}`;
+                    say += `Sorry I don't have a game called ${intent.slots.gameName.value}. you can ask me to play ${helpers.sayArray(gamelist,'or')}`;
 
                 } else {
 
                     gameName = intent.slots.gameName.value;
                     const game = games.find((a) => a.name === gameName);
 
-                    const scoring = game.lowScoreBetter === 'true' ? 'fewer' : 'more';
+                    // say += `You said ${game.name}. You can purchase from ${AvailableItemsList}. `;
 
-                    say = `Great, let's review the rules of ${game.name}. `;
-                    say += `${game.intro}. The ${scoring} states you can name, the better. `;
-                    say += `Tell me your first state. `;
+                    // ****************** ADD ISP
+                    const AvailableItemsList = AvailableItems.map(item => item.name.toLowerCase());
 
-                    let nextStates = gamehelpers.validNextStates([], gameName);
+                    if(AvailableItemsList.includes(game.name.toLowerCase())) {
+                        say += `${game.name} is a premium game you can purchase. `;
 
-                    let nextStatesHint = helpers.sayArray(helpers.shuffleArray(nextStates).slice(0,3), 'or');
+                        // const theProduct = await producthandlers.getProducts(handlerInput, helpers.capitalize(game.name));  // helper function below
 
-                    say += `you could try ${nextStatesHint} `;
+                        // say += `${game.intro} `;
+                        say += `If you would like to buy it, just say, Buy ${game.name}`;
 
-                    // console.log(`game: ${JSON.stringify(game, null, 2)}`);
-                    sessionAttributes['game'] = game;
+                    } else {
 
-                    // sessionAttributes['gameName'] = gameName;
-                    sessionAttributes['gameState'] = 'playing';
-                    sessionAttributes['stateList'] = [];
+                        // ******************** ISP
+
+                        const scoring = game.lowScoreBetter ? 'fewer' : 'more';
+
+                        say += `Great, let's review the rules of ${game.name}. `;
+                        say += `${game.intro}. The ${scoring} states you can name, the better. `;
+                        say += `Tell me your first state. `;
+
+                        let nextStates = gamehelpers.validNextStates([], gameName);
+
+                        let nextStatesHint = helpers.sayArray(helpers.shuffleArray(nextStates).slice(0,3), 'or');
+
+                        say += `you could try ${nextStatesHint} `;
+
+                        // console.log(`game: ${JSON.stringify(game, null, 2)}`);
+                        sessionAttributes['game'] = game;
+
+                        // sessionAttributes['gameName'] = gameName;
+                        sessionAttributes['gameState'] = 'playing';
+                        sessionAttributes['stateList'] = [];
+
+                    }
+
 
                 }
             }
@@ -322,10 +350,12 @@ module.exports = {
             const responseBuilder = handlerInput.responseBuilder;
             const request = handlerInput.requestEnvelope.request;
             let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+            let say = `Talk to you later! `;
 
             if(request.type === 'SessionEndedRequest' || request.intent.name === 'AMAZON.PauseIntent') {
                 // skill timed out, or was paused
                 // let session attributes remain and be persisted by interceptor
+                say = `Bye for now, open the skill again soon to resume. `;
 
             } else {
                 sessionAttributes['gameState'] = 'stopped';
@@ -333,7 +363,7 @@ module.exports = {
             }
 
             return responseBuilder
-                .speak(`Talk to you later!`)
+                .speak(say)
                 .withShouldEndSession(true)
                 .getResponse();
         }
