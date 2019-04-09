@@ -31,7 +31,7 @@ if (process.argv[3]) {
 
 // Toggle on or off various debugging outputs
 const options = {
-    delay        : 0,     // seconds between requests
+    delay        : 1.5,     // seconds between requests
     stdout       : true,    // standard output, show any errors or console.log() messages
     attributes   : false,   // true, false, or a string with the name of an attribute such as 'history' or 'favoriteColor'
     speechOutput : true,

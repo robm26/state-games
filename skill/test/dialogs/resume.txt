@@ -1,8 +1,11 @@
 LaunchRequest
-ChooseGameIntent gameName=bigger%20pop
-GuessIntent usstate=Connecticut
-GuessIntent usstate=Massachusetts
+ChooseGameIntent gameName=coast%20to%20coast
+GuessIntent usstate=Florida
+? GuessIntent usstate=Alabama
 AMAZON.PauseIntent
 LaunchRequest
-GuessIntent usstate=New%20York
+? GuessIntent usstate=Texas
+GuessIntent usstate=Mississippi
 AMAZON.StopIntent
+ChooseGameIntent gameName=coast%20to%20coast
+
