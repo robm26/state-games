@@ -1,58 +1,39 @@
 {
-  "version": "1.0",
   "type": "APL",
+  "version": "1.0",
+  "theme": "light",
   "import": [
     {
       "name": "alexa-layouts",
       "version": "1.0.0"
+    },
+    {
+      "name": "alexa-styles",
+      "version" : "1.0.0"
+    },
+    {
+      "name": "alexa-viewport-profiles",
+      "version": "1.0.0"
+    }
+  ],
+  "resources": [
+    {
+      "colors": {
+        "myBlue": "#0022f3",
+        "myDarkBlue": "#0012e3",
+        "myBrightBlue": "#1e90ff",
+        "myPanelGrey": "#eeeeee",
+        "myPanelGrey2": "#e0e0e0"
+      }
     }
   ],
   "styles": {
-    "textIntentStyle": {
+    "textBlockStyle": {
       "values": [
         {
           "fontSize": 24,
-          "color": "black",
-          "fontWeight": "bold",
-          "paddingRight": "15dp"
-        }
-      ]
-    },
-    "textSlotNameStyle": {
-      "values": [
-        {
-          "fontSize": 24,
-          "color": "steelblue",
-          "paddingLeft": "15dp"
-        }
-      ]
-    },
-    "textSlotValueStyle": {
-      "values": [
-        {
-          "fontSize": 24,
-          "color": "green",
-          "fontWeight": "bold",
-          "paddingLeft": "5dp"
-        }
-      ]
-    },
-    "textSlotEmptyStyle": {
-      "values": [
-        {
-          "fontSize": 24,
-          "color": "gray",
-          "paddingLeft": "5dp"
-        }
-      ]
-    },
-    "textResponseStyle": {
-      "values": [
-        {
-          "fontSize": 24,
-          "color": "cyan"
-        }
-      ]
+          "color": "@myBlue"
+        }]
     },
     "mainFrameStyle": {
       "values": [
@@ -61,247 +42,214 @@
         }
       ]
     },
-    "intentFrameStyle": {
+    "titleBannerText": {
       "values": [
         {
-          "backgroundColor": "#FFFAEC"
-        }
-      ]
+          "fontSize": 44,
+          "color": "@myBlue"
+        }]
     },
-    "responseFrameStyle": {
-      "values": [
-        {
-          "backgroundColor": "steelblue"
-        }
-      ]
-    },
-    "SplashStyle": {
-      "values": [
-        {
-          "align": "left",
-          "backgroundColor": "gainsboro",
 
-          "borderColor": "gray",
-          "borderRadius": 20,
-          "borderWidth": 2
-        }
-      ]
-    },
-    "purchasedStyle": {
+    "statsTitle1": {
       "values": [
         {
           "fontSize": 24,
-          "color": "green",
-          "fontWeight": "bold",
-          "numbering": "normal"
-        }
-      ]
+          "color": "@myDarkBlue",
+          "": ""
+        }]
     },
-    "availableStyle": {
+    "statsTitle2": {
       "values": [
         {
           "fontSize": 24,
-          "color": "blue",
-          "fontWeight": "bold",
-          "numbering": "normal"
-        }
-      ]
+          "color": "@myDarkBlue"
+        }]
     },
-    "SplashContainer": {
-      "values": [
-        {
-          "backgroundColor": "yellow",
-          "align": "left"
-        }
-      ]
-    },
-    "ProductListStyle": {
+    "statsText1": {
       "values": [
         {
           "fontSize": 24,
-          "color": "hotpink",
-          "fontWeight": "bold"
-        }
-      ]
+          "color": "@myBrightBlue"
+        }]
     },
-    "ProductListTitle": {
-      "values": [
-        {
-          "fontSize": 32,
-          "color": "dimgray",
-          "fontWeight": "bold"
-        }
-      ]
-    },
-    "ProductListItems": {
+    "statsText2": {
       "values": [
         {
           "fontSize": 24,
-          "color": "dimgray",
-          "fontWeight": "bold",
-          "left":"10dp"
+          "color": "@myBrightBlue"
+        }]
+    },
+    "statsMainContainer": {
+      "values": [
+        {}
+      ]
+    },
+    "statsSubContainer": {
+      "values": [
+        {}
+      ]
+    },
+    "StatsFrame": {
+      "values": [
+        {
+          "align": "center",
+          "backgroundColor": "@myPanelGrey",
+          "width": "420dp",
+
+          "borderColor": "gainsboro",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "paddingLeft":   "20dp",
+          "paddingRight":  "10dp",
+          "paddingTop":    "10dp",
+          "paddingBottom": "10dp"
+
+        }
+      ]
+    },
+    "StatsFrame1": {
+      "values": [
+        {
+          "align": "center",
+          "backgroundColor": "@myPanelGrey2",
+          "borderColor": "gainsboro",
+          "borderRadius": 15,
+          "borderWidth": 2,
+          "paddingLeft":   "20dp",
+          "paddingRight":  "10dp",
+          "paddingTop":    "10dp",
+          "paddingBottom": "20dp",
+          "fontColor": "red",
+          "fontSize": 24
+
+        }
+      ]
+    },
+    "StatsFrame2": {
+      "values": [
+        {
+          "align": "center",
+          "backgroundColor": "@myPanelGrey2",
+          "borderColor": "gainsboro",
+          "borderRadius": 15,
+          "borderWidth": 2,
+          "paddingLeft":   "20dp",
+          "paddingRight":  "10dp",
+          "paddingTop":    "20dp",
+          "paddingBottom": "10dp"
+
         }
       ]
     }
   },
-  "layouts": {},
+  "layouts": {
+  },
   "mainTemplate": {
     "parameters": [
       "payload"
     ],
+    "type": "Container",
+    "direction": "column",
+    "style": "statsMainContainer",
     "items": [
+
       {
         "type": "Frame",
         "width": "100vw",
-        "height": "100vh",
-        "paddingLeft": "10dp",
-        "paddingRight": "20dp",
-        "paddingTop": "20dp",
-        "paddingBottom": "20dp",
+
+        "paddingLeft": "5dp",
+        "paddingRight": "5dp",
+        "paddingTop": "5dp",
+        "paddingBottom": "5dp",
         "style": "mainFrameStyle",
+
         "item": {
           "when": "${@viewportProfile == @hubLandscapeMedium || @viewportProfile == @hubLandscapeLarge || @viewportProfile == @tvLandscapeXLarge}",
           "type": "Container",
           "direction": "column",
-          "width": "98vw",
-          "height": "98vh",
-          "alignItems": "left",
+          "width": "99vw",
+          "height": "99vh",
+          "alignItems": "center",
           "items": [
             {
-              "type": "Frame",
-              "width": "98vw",
-              "height": "10vh",
-              "paddingLeft": "20dp",
-              "paddingRight": "20dp",
-              "paddingTop": "20dp",
-              "paddingBottom": "20dp",
-              "style": "intentFrameStyle",
-              "item": {
-                "type": "Container",
-                "direction": "row",
-                "paddingLeft": "20dp",
-                "paddingRight": "20dp",
-                "height": "100vh",
-                "alignItems":"stretch",
-                "firstItem": [{
-                  "type": "Text",
-                  "text": "${payload.liveData.textIntent}",
-                  "style": "textIntentStyle"
-                }],
-                "items": ["${payload.liveData.slots}"]
-              }
+              "type": "Text",
+              "style": "titleBannerText",
+              "text": "${payload.liveData.title}"
             },
             {
-              "type": "Frame",
-              "width": "98vw",
-              "height": "22vh",
-              "paddingLeft": "20dp",
-              "paddingRight": "20dp",
-              "paddingTop": "20dp",
-              "paddingBottom": "20dp",
-              "style": "responseFrameStyle",
-              "item": {
-                "type": "Container",
-                "direction": "row",
-                "paddingLeft": "20dp",
-                "paddingRight": "20dp",
-                "height": "100vh",
-                "items": [
-                  {
-                    "type": "ScrollView",
-                    "height": "100%",
-                    "grow": 1,
-                    "shrink": 1,
-                    "items": [
-                      {
-                        "type": "Text",
-                        "text": "${payload.liveData.textResponse}",
-                        "style": "textResponseStyle"
-                      }
-                    ]
-                  }
-                ]
-              }
-            },
+              "type": "Container",
+              "direction": "row",
+              "width": "99vw",
 
-            {
-              "type": "Frame",
-              "width": "98vw",
-              "height": "65vh",
-              "paddingLeft": "10dp",
-              "paddingRight": "10dp",
-              "paddingTop": "10dp",
-              "paddingBottom": "10dp",
-              "style": "SplashStyle",
-              "item": {
-                "type": "Container",
-                "direction": "row",
-                "numbered": "true",
-                "paddingLeft": "20dp",
-                "paddingRight": "20dp",
-                "height": "100vh",
-                "style": "SplashContainer",
-                "items": [
+              "alignItems": "left",
+              "style": "statsSubContainer",
+              "items": [
 
-                  {
-                    "type": "Image",
-                    "source": "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/gaming/state_games_1200_800._TTH_.png",
-                    "scale": "fill",
-                    "width": 720,
-                    "height": 480,
-                    "align": "left"
-                  },
+                {
+                  "type": "Image",
+                  "source": "${payload.liveData.img}",
+                  "scale": "fill",
+                  "width": 720,
+                  "height": 480,
+                  "align": "left",
+                  "paddingLeft": "5dp",
+                  "paddingRight": "10dp"
+                },
 
-                  {
+                {
+                  "type": "Frame",
+                  "style": "StatsFrame",
+                  "item": {
                     "type": "Container",
                     "direction": "column",
-                    "paddingLeft": "20dp",
-                    "paddingRight": "20dp",
-                    "height": "100vh",
-                    "style": "SplashContainer",
+                    "scale": "fill",
+                    "grow": 1,
                     "items": [
+
                       {
-                        "type": "Container",
-                        "direction":"column",
-                        "paddingLeft": "20dp",
-                        "paddingRight": "20dp",
-                        "paddingBottom": "30dp",
-                        "grow": 0,
-                        "shrink": 1,
-                        "firstItem": [{
-                          "type": "Text",
-                          "text": "<u>Purchased</u>",
-                          "style": "ProductListTitle"
-                        }],
-                        "items": ["${payload.liveData.productsPurchased}"]
+                        "type": "Frame",
+                        "style": "StatsFrame1",
+                        "item": {
+                          "type": "Container",
+                          "direction": "column",
+                          "scale": "fill",
+                          "grow": 1,
+                          "firstItem": [{
+                            "type": "Text",
+                            "text": "${payload.liveData.statsTitle1}",
+                            "style": "statsTitle1"
+                          }],
+                          "items": ["${payload.liveData.statsArray1}"]
+                        }
                       },
+
                       {
-                        "type": "Container",
-                        "direction":"column",
-                        "paddingLeft": "20dp",
-                        "paddingRight": "20dp",
-                        "height": "20vh",
-                        "grow": 1,
-                        "shrink": 1,
-                        "firstItem": [{
-                          "type": "Text",
-                          "text": "<u>Available</u>",
-                          "style": "ProductListTitle"
-                        }],
-                        "items": ["${payload.liveData.productsAvailable}"]
+                        "type": "Frame",
+                        "style": "StatsFrame2",
+                        "item": {
+                          "type": "Container",
+                          "direction": "column",
+                          "scale": "fill",
+                          "grow": 1,
+                          "firstItem": [{
+                            "type": "Text",
+                            "text": "${payload.liveData.statsTitle2}",
+                            "style": "statsTitle2"
+                          }],
+                          "items": ["${payload.liveData.statsArray2}"]
+                        }
                       }
+
                     ]
                   }
+                }
 
-
-                ]
-              }
+              ]
             }
-
-
           ]
         }
       }
     ]
   }
+
 }

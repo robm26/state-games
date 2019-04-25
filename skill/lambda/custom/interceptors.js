@@ -1,6 +1,4 @@
-/**
- * Created by mccaul on 5/11/18.
- */
+
 const constants = require('./constants.js');
 const helpers = require('./helpers.js');
 const producthandlers = require('./producthandlers.js');
@@ -19,7 +17,70 @@ module.exports = {
         }
     },
 
+    'RequestPersistenceInterceptorOrig': {
+        process(handlerInput) {
+            if(!handlerInput.requestEnvelope.session) {
+                handlerInput.requestEnvelope['session'] = {"new": true};  // for Skill Events
+            }
 
+            if(handlerInput.requestEnvelope.session['new']) {
+
+                return new Promise((resolve, reject) => {
+
+                    handlerInput.attributesManager.getPersistentAttributes()
+
+                        .then((sessionAttributes) => {
+                            sessionAttributes = sessionAttributes || {};
+
+                            // console.log(`in RequestPersistenceInterceptor! `);
+
+                            // console.log(JSON.stringify(sessionAttributes, null, 2));
+
+                            if(Object.keys(sessionAttributes).length === 0) {
+                                console.log('--- First Ever Visit for userId ' + handlerInput.requestEnvelope.session.user.userId);
+
+                                const initialAttributes = constants.getMemoryAttributes();
+                                // console.log(`constants.getMemoryAttributes()\n${JSON.stringify(initialAttributes, null, 2)}`);
+
+                                // Object.keys(initialAttributes).forEach(function(key) {
+                                //     sessionAttributes[key] = initialAttributes[key];
+                                // });
+
+                                sessionAttributes = initialAttributes;
+
+
+                            } else {
+                                console.log(`--- Return visit`);
+                            }
+                            sessionAttributes['launchCount'] += 1;
+                            // sessionAttributes['gameState'] = 'pc';
+
+                            console.log(`about to save sessionAttributes: ${JSON.stringify(sessionAttributes, null, 2)}`);
+                            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+                            // resolve();
+
+                            handlerInput.attributesManager.savePersistentAttributes()
+                                .then(() => {
+                                    resolve();
+                                })
+                                .catch((err) => {
+                                    reject(err);
+                                });
+
+                        })
+                        .catch((error) => {
+                            console.log(`requires DynamoDB table`);
+                            reject(error);
+                        });
+
+                });
+
+            } // end session['new']
+
+
+        }
+    },
     'RequestPersistenceInterceptor': {
         process(handlerInput) {
             if(!handlerInput.requestEnvelope.session) {
@@ -41,25 +102,23 @@ module.exports = {
                                 // console.log('--- First Ever Visit for userId ' + handlerInput.requestEnvelope.session.user.userId);
 
                                 const initialAttributes = constants.getMemoryAttributes();
-                                // console.log(`constants.getMemoryAttributes()\n${JSON.stringify(initialAttributes)}`);
+                                // console.log(`constants.getMemoryAttributes()\n${JSON.stringify(initialAttributes, null, 2)}`);
                                 sessionAttributes = initialAttributes;
 
                             }
-                            sessionAttributes['launchCount'] += 1;
-                            // sessionAttributes['gameState'] = 'pc';
 
-                            // console.log(`about to save sessionAttributes: ${JSON.stringify(sessionAttributes, null, 2)}`);
+                            sessionAttributes['launchCount'] = sessionAttributes['launchCount'] + 1 || 1;
+
                             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+                            handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
 
-                            resolve();
-
-                            // handlerInput.attributesManager.savePersistentAttributes()
-                            //     .then(() => {
-                            //         resolve();
-                            //     })
-                            //     .catch((err) => {
-                            //         reject(err);
-                            //     });
+                            handlerInput.attributesManager.savePersistentAttributes()
+                                .then(() => {
+                                    resolve();
+                                })
+                                .catch((err) => {
+                                    reject(err);
+                                });
 
                         })
                         .catch((error) => {
@@ -126,11 +185,11 @@ module.exports = {
 
             } // end session['new']
 
-
         }
     },
     'ResponsePersistenceInterceptor': {
         process(handlerInput, responseOutput) {
+            // console.log(`R P I`);
 
             const ses = (typeof responseOutput.shouldEndSession == "undefined" ? true : responseOutput.shouldEndSession);
 
@@ -159,7 +218,6 @@ module.exports = {
 
         }
     },
-
 
     'RequestHistoryInterceptor': {
         process(handlerInput) {
@@ -207,6 +265,7 @@ module.exports = {
 
             // }
 
+
         }
     },
     'SpeechOutputInterceptor': {
@@ -238,123 +297,7 @@ module.exports = {
 
         }
     },
-    'AplInterceptor' :  {
-        process(handlerInput, responseOutput) {
-            return new Promise(async (resolve, reject) => {
-                const request = handlerInput.requestEnvelope.request;
 
-                const IntentRequest = (request.type === "IntentRequest" ? request.intent.name : request.type);
-
-                const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-                const AvailableItems = sessionAttributes['AvailableItems'];
-                const PurchasedItems = sessionAttributes['PurchasedItems'];
-
-
-                //
-                // const purchasableProducts = await producthandlers.getProducts(handlerInput, 'purchasable');  // helper function below
-                // const purchasedProducts = await producthandlers.getProducts(handlerInput, 'purchased');  // helper function below
-                //
-                //
-                // const productListPurchasedItems = purchasedProducts.map((item) => {
-                //     return {
-                //         "type": "Text",
-                //         "text": `${item.name}`,
-                //         "style": "purchasedStyle"
-                //     };
-                // });
-                // const productListAvailableItems = purchasableProducts.map((item) => {
-                //     return {
-                //         "type": "Text",
-                //         "text": `${item.name}`,
-                //         "style": "availableStyle"
-                //     };
-                // });
-                //
-                // let speechOutput = ``;
-                // if(responseOutput &&  responseOutput.outputSpeech && responseOutput.outputSpeech.ssml) {
-                //     speechOutput = stripTags(responseOutput.outputSpeech.ssml);
-                // } else {
-                //     speechOutput = `buying..`;
-                // }
-                //
-                // // console.log(`*****\n${JSON.stringify(speechOutput, null, 2)}`);
-                //
-                // let slotArrayFilled = [];
-                // let slotArrayEmpty = [];
-                // let slotArray = [];
-                //
-                // if(request.type === "IntentRequest" && request.intent.slots && Object.keys(request.intent.slots).length > 0) {
-                //     // console.log(`^^^^^ slots\n${JSON.stringify(request.intent.slots, null, 2)}`);
-                //     let slots = request.intent.slots;
-                //
-                //     Object.keys(slots).forEach(function(key) {
-                //         let slot = slots[key];
-                //
-                //         // console.log(`${slot.name} : ${slot.value ? slot.value : ""}`);
-                //         let slotNameStyle = "textSlotNameStyle";
-                //         if(!slot.value) {
-                //             slotNameStyle = "textSlotEmptyStyle";
-                //         }
-                //         const slotDisplayName = {
-                //             "type": "Text",
-                //             "text": `${slot.name}:`,
-                //             "style": slotNameStyle
-                //         };
-                //
-                //         const slotDisplayValue = {
-                //             "type": "Text",
-                //             "text": `&nbsp;${slot.value ? slot.value : ""}`,
-                //             "style": "textSlotValueStyle"
-                //         };
-                //
-                //         if(slot.value) {
-                //             slotArrayFilled.push(slotDisplayName);
-                //             slotArrayFilled.push(slotDisplayValue);
-                //         } else {
-                //             slotArrayEmpty.push(slotDisplayName);
-                //             slotArrayEmpty.push(slotDisplayValue);
-                //         }
-                //
-                //     });
-                // }
-                //
-                // slotArray = slotArrayFilled;
-                // slotArray = slotArray.concat(slotArrayEmpty);
-                //
-                //
-                // if (helpers.supportsDisplayAPL(handlerInput)) {
-                //
-                //     const myDocument = require('./apl/main.json');
-                //
-                //     const eventData = {
-                //         "liveData": {
-                //             "type": "object",
-                //             "textIntent": IntentRequest,
-                //             "slots": slotArray,
-                //             "textResponse": speechOutput,
-                //             "productsPurchased": productListPurchasedItems,
-                //             "productsAvailable": productListAvailableItems
-                //         }
-                //     };
-                //     console.log(`productListPurchasedItems: ${productListPurchasedItems.map(item => `\n - ` + item.text)}`);
-                //     console.log(`productListAvailableItems: ${productListAvailableItems.map(item => `\n - ` + item.text)}`);
-                //
-                //     // console.log(`eventData:\n${JSON.stringify(eventData, null, 2)}`);
-                //
-                //     handlerInput.responseBuilder.addDirective({
-                //         type: 'Alexa.Presentation.APL.RenderDocument',
-                //         version: '1.0',
-                //         document: myDocument,
-                //         datasources: eventData
-                //     })
-                //
-                // }
-
-                resolve();
-            });
-        }
-    }
 
 
 };
@@ -366,13 +309,11 @@ function stripTags(str) {
 function flattenRequest(obj) { // maximum of 6 levels of JSON for IOT shadow
     if ( obj.type === 'IntentRequest' && obj.intent.slots ) {
 
-        // console.log(getSlotValues(obj.intent.slots));
-        // console.log(`flattening ${JSON.stringify(obj, null, 2)}`);
 
         let flatter = Object.assign({}, obj);
 
         flatter.intent.slots = helpers.getSlotValues(obj.intent.slots);
-        // console.log(flatter.intent.slots);
+
 
         return flatter;
 

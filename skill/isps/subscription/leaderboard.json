@@ -12,8 +12,8 @@
         "name": "Leader Board",
         "summary": "The leaderboard is a listing of the top all time scores for each game.  You are charged a monthly subscription to gain access.",
         "description": "The leaderboard is a listing of the top all time scores for each game.  You can see how you rank if you have one of the top scores.",
-        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/7436/8015049000a145f6813527adcb8f5556/APP_ICON?versionId=LUeh99bPS8lDFfJM5KE1zNQkU6.joe9V&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019906&Signature=45zTHrkWs6D8ogGCi0fZ7iAyKIA%3D",
-        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/d7a4/e62c24817a8c41f7be9bced796dd16e8/APP_ICON_LARGE?versionId=IKESC5qUbeCHQNY3Y0vnxQNjwenbtJsB&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019906&Signature=HCclXXgZnoD1ZHInaSxvO%2FYG0WI%3D",
+        "smallIconUri": "https://s3.amazonaws.com/skill-images-789/icons/icon_108_A2Z.png",
+        "largeIconUri": "https://s3.amazonaws.com/skill-images-789/icons/icon_512_A2Z.png",
         "examplePhrases": [
           "buy leaderboard",
           "subscribe to the leaderboard"

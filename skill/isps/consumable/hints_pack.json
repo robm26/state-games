@@ -8,8 +8,8 @@
         "name": "Hints Pack",
         "summary": "A five pack of hints you can use during the game.",
         "description": "A five pack of hints you can use if you get stuck during the game.  Each time you use a hint, your inventory of hints will be reduced.  You can say help to hear your inventory.",
-        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/e8cf/480fee87c7c842edb6995c9b0c0ab069/APP_ICON?versionId=OgoUk.rjqlEBHg.2pd4W_q3iIcHoNazP&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019904&Signature=keL8acqAboicFUl2EB1IhBVZEZ8%3D",
-        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/583b/84dfff17ee304cb787e8e846a0341bd5/APP_ICON_LARGE?versionId=8Zx8przU6YvqnNco2vnR_k96N8ctLQmQ&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019904&Signature=5hze%2Bx9ble%2F43bE9XCvBCh7x8O8%3D",
+        "smallIconUri": "https://s3.amazonaws.com/skill-images-789/icons/icon_108_A2Z.png",
+        "largeIconUri": "https://s3.amazonaws.com/skill-images-789/icons/icon_512_A2Z.png",
         "examplePhrases": [
           "buy hint pack"
         ],

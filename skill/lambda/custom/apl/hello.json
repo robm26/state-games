@@ -1,0 +1,39 @@
+{
+  "type": "APL",
+  "version": "1.0",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.0.0"
+    },
+    {
+      "name": "alexa-styles",
+      "version" : "1.0.0"
+    },
+    {
+      "name": "alexa-viewport-profiles",
+      "version": "1.0.0"
+    }
+  ],
+  "styles": {
+    "mainFrameStyle": {
+      "values": [
+        {
+          "backgroundColor": "whitesmoke"
+        }
+      ]
+    }
+  },
+  "layouts": {},
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "type": "Text",
+        "text": "Hello there !"
+      }
+    ]
+  }
+}

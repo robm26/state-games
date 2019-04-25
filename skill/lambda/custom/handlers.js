@@ -40,7 +40,7 @@ module.exports = {
             const recordCount = await leaderboard.getUserRecordCount();
 
             const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
-            // console.log('thisTimeStamp: ' + thisTimeStamp);
+            // console.log('LaunchRequest:: thisTimeStamp: ' + thisTimeStamp);
 
             const span = helpers.timeDelta(lastUseTimestamp, thisTimeStamp);
 
@@ -75,35 +75,10 @@ module.exports = {
                 // say = `${JSON.stringify(gameNames)}`;
             }
 
-            const DisplayImg1 = constants.getDisplayImg1();
-            const DisplayImg2 = constants.getDisplayImg2();
-
-            // if (helpers.supportsDisplayAPL(handlerInput)) {
-            //
-            //     const myDocument = require('./apl/main.json');
-            //
-            //     const eventData = {
-            //         "liveData": {
-            //             "type": "object",
-            //             "textIntent": IntentRequest,
-            //             "slots": slotArray,
-            //             "textResponse": speechOutput
-            //         }
-            //     };
-            //
-            //     handlerInput.responseBuilder.addDirective({
-            //         type: 'Alexa.Presentation.APL.RenderDocument',
-            //         version: '1.0',
-            //         document: myDocument,
-            //         datasources: eventData
-            //     })
-            //
-            // }
-
             return handlerInput.responseBuilder
                 .speak(say)
                 .reprompt(say)
-                // .withStandardCard('State Games', say, DisplayImg1.url)
+                // .withSimpleCard('State Games', 'Welcome!')
                 .getResponse();
 
         }
@@ -177,6 +152,7 @@ module.exports = {
 
                         // sessionAttributes['gameName'] = gameName;
                         sessionAttributes['gameState'] = 'playing';
+                        sessionAttributes['validNextStates'] = nextStates;
                         sessionAttributes['stateList'] = [];
 
                     }
@@ -234,7 +210,12 @@ module.exports = {
                     if(validNextStates[0] === 'endsWhen') {
                         sessionAttributes['gameState'] = 'stopped';
 
-                        say = `${helpers.randomArrayElement(['Awesome','Well done','Hooray'])}, ${myState} ends the game. `;
+                        say = `${helpers.randomArrayElement([
+                            '<say-as interpret-as="interjection">voila</say-as>',
+                            '<say-as interpret-as="interjection">ta da</say-as>',
+                            '<say-as interpret-as="interjection">hip hip hooray</say-as>',
+                            '<say-as interpret-as="interjection">hip hip hooray</say-as>'
+                        ])}, ${myState} ends the game. `;
                         say += `Your score is ${stateList.length}. `;
                         say += `Would you like to play again? `;
 
@@ -263,7 +244,7 @@ module.exports = {
                             console.log(`${helpers.sayArray(validNextStates,'or')}`);
                         }
                     }
-
+                    sessionAttributes['validNextStates'] = validNextStates;
                     sessionAttributes['stateList'] = stateList;
 
                 } else {

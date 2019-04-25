@@ -90,6 +90,8 @@
             }
           ],
           "samples": [
+            "show the leaderboard",
+            "show the leader board",
             "leaderboard",
             "leader board",
             "leaderboard {gameName}",
@@ -102,19 +104,8 @@
             "high scores {gameName}",
             "top scores {gameName}",
             "top ten {gameName}"
-
           ]
         },
-        {
-          "name": "HintIntent",
-          "slots": [],
-          "samples": [
-            "hint",
-            "tell me a hint",
-            "give me a hint"
-          ]
-        },
-
         {
           "name": "AMAZON.YesIntent",
           "samples": []
@@ -123,7 +114,6 @@
           "name": "AMAZON.NoIntent",
           "samples": []
         },
-
         {
           "name": "AMAZON.FallbackIntent",
           "samples": []
@@ -144,7 +134,6 @@
           "name": "AMAZON.NavigateHomeIntent",
           "samples": []
         },
-
         {
           "name": "AMAZON.MoreIntent",
           "samples": []
@@ -188,6 +177,15 @@
         {
           "name": "AMAZON.PauseIntent",
           "samples": []
+        },
+        {
+          "name": "IDontKnowIntent",
+          "slots": [],
+          "samples": [
+            "no idea",
+            "not sure",
+            "I don't know"
+          ]
         }
       ],
       "types": [

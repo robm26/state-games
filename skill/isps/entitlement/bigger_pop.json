@@ -8,8 +8,8 @@
         "name": "Bigger Pop",
         "summary": "Bigger Pop is a super fun game where you have to name a series of US states.  Each new state you name must have a larger population than the previous state.",
         "description": "Bigger Pop is a super fun game where you have to name a series of US states.  Each new state you name must have a larger population than the previous state.  Your score is the number of states you can name correctly.",
-        "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/cd53/e02e69f6122e4d12811f2d4200ccc0f5/APP_ICON?versionId=_M1jVhPRw59kkXBkUaAbGe6NsLR1VW0P&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019905&Signature=3oVzGBuXcrBF7exQ5UuVBWLjxks%3D",
-        "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/d1dd/29a01028b07a4d48a2050ce537603157/APP_ICON_LARGE?versionId=ia_vgT2_nwCwkonhJ0NUlpY0nfnauqLv&AWSAccessKeyId=AKIAJFEYRBGIHK2BBYKA&Expires=1553019905&Signature=KiInEtULXTVzvJHsTwoMdTMZy6c%3D",
+        "smallIconUri": "https://s3.amazonaws.com/skill-images-789/icons/icon_108_A2Z.png",
+        "largeIconUri": "https://s3.amazonaws.com/skill-images-789/icons/icon_512_A2Z.png",
         "examplePhrases": [
           "buy bigger pop"
         ],

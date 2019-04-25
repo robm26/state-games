@@ -7,6 +7,6 @@
   "author": "me",
   "license": "Apache-2.0",
   "dependencies": {
-    "ask-sdk": "^2.3.0"
+    "ask-sdk": "^2.5.1"
   }
 }

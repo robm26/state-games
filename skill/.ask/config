@@ -1,63 +1,33 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "amzn1.ask.skill.fb7fb82e-f5cc-4ed9-808f-d9c6bdac3c64",
+      "skill_id": "",
       "was_cloned": false,
       "merge": {
         "manifest": {
           "apis": {
             "custom": {
               "endpoint": {
-                "uri": "arn:aws:lambda:us-east-1:589662381973:function:ask-state-games"
+                "uri": "ask-state-games"
               }
             }
           }
         }
       },
       "in_skill_products": [
-        {
-          "deploy_status": "Update",
-          "filePath": "isps/consumable/hints_pack.json",
-          "productId": "amzn1.adg.product.3cbbcd90-e0fe-4263-97ec-60b76c424b81",
-          "eTag": "90d83bec06e6defc2d4c625531278e11"
-        },
-        {
-          "deploy_status": "Update",
-          "filePath": "isps/entitlement/bigger_pop.json",
-          "productId": "amzn1.adg.product.9f40096e-90e4-479c-a5e8-229bc3c56d64",
-          "eTag": "e0f253a811190d19eb36cf1a580b77bb"
-        },
-        {
-          "deploy_status": "Update",
-          "filePath": "isps/subscription/leaderboard.json",
-          "productId": "amzn1.adg.product.02037d29-cf12-4dd4-959f-6370b212c6b1",
-          "eTag": "2d4ee2a729ccb476c158d3c3810c14fe"
-        }
-      ],
-      "resources": {
-        "manifest": {
-          "eTag": "991dc2d8ca721be324e1cda3084f9e71"
-        },
-        "interactionModel": {
-          "en-US": {
-            "eTag": "ec329485c601fdda78f62c4548efd238"
-          }
-        },
-        "lambda": [
-          {
-            "alexaUsage": [
-              "custom/default"
-            ],
-            "arn": "arn:aws:lambda:us-east-1:589662381973:function:ask-state-games",
-            "awsRegion": "us-east-1",
-            "codeUri": "lambda/custom",
-            "functionName": "ask-state-games",
-            "handler": "index.handler",
-            "revisionId": "1d567680-08eb-43a6-b873-bd512816d8b9",
-            "runtime": "nodejs8.10"
-          }
+             {
+               "deploy_status": "Add",
+               "filePath": "isps/consumable/hints_pack.json"
+             },
+             {
+               "deploy_status": "Add",
+               "filePath": "isps/entitlement/bigger_pop.json"
+             },
+             {
+               "deploy_status": "Add",
+               "filePath": "isps/subscription/leaderboard.json"
+             }
         ]
-      }
     }
   }
 }

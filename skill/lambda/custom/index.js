@@ -10,6 +10,8 @@ const producthandlers  = require('./producthandlers.js');
 const helpers          = require('./helpers.js');
 const leaderboard      = require('./leaderboard.js');
 const interceptors     = require('./interceptors.js');
+const apl              = require('./apl.js');
+
 
 const AWS = constants.AWS;
 const AWS_REGION = constants.AWS_REGION;
@@ -24,7 +26,7 @@ const ErrorHandler = {
 
         const debug = true;
         const stack = error.stack.split('\n');
-        let speechOutput = 'Sorry, an error occurred. ';
+        let speechOutput = 'So sorry, an error occurred. ';
 
         console.log(stack[0]);
         console.log(stack[1]);
@@ -39,22 +41,27 @@ const ErrorHandler = {
         // console.log(stack[10]);
         // console.log(stack[11]);
         // console.log(stack[12]);
-
-        if(debug && stack[0].slice(0, 33) === `AskSdk.DynamoDbPersistenceAdapter`) {
-            speechOutput = 'Dynamo DB error.  Be sure your table and IAM execution role are setup. ';
-        } else {
-            let errorLoc = stack[1].substring(stack[1].lastIndexOf('/') + 1, 900);
-
-            errorLoc = errorLoc.slice(0, -1);
-
-            const file = errorLoc.substring(0, errorLoc.indexOf(':'));
-            let line = errorLoc.substring(errorLoc.indexOf(':') + 1, 900);
-            line = line.substring(0, line.indexOf(':'));
-        }
+        let file = '';
+        let line = 0;
 
         if(debug) {
-            speechOutput +=  error.message + ' in ' + file + ', line ' + line;
+            if (stack[0].slice(0, 33) === `AskSdk.DynamoDbPersistenceAdapter`) {
+                speechOutput = 'Error Saving User Profile. ';
+
+            } else {
+                let errorLoc = stack[1].substring(stack[1].lastIndexOf('/') + 1, 900);
+
+                errorLoc = errorLoc.slice(0, -1);
+
+                file = errorLoc.substring(0, errorLoc.indexOf(':'));
+                line = errorLoc.substring(errorLoc.indexOf(':') + 1, 900);
+                line = line.substring(0, line.indexOf(':'));
+
+                speechOutput +=  error.message + ' in ' + file + ', line ' + line;
+
+            }
         }
+
         return handlerInput.responseBuilder
             .speak(speechOutput)
             .reprompt(speechOutput)
@@ -131,31 +138,21 @@ exports.handler = skillBuilder
 
     .addErrorHandlers(ErrorHandler)
 
-
     // .addRequestInterceptors(interceptors.RequestLogInterceptor)
-    .addRequestInterceptors(interceptors.RequestPersistenceInterceptor) // ###
-
-    //// .addRequestInterceptors(interceptors.IspStatusInterceptor)
+    .addRequestInterceptors(interceptors.RequestPersistenceInterceptor)
 
     .addRequestInterceptors(interceptors.RequestGameContinueInterceptor)
 
     .addRequestInterceptors(interceptors.RequestHistoryInterceptor)
 
-    .addResponseInterceptors(interceptors.ResponsePersistenceInterceptor) // ***
+    .addRequestInterceptors(interceptors.IspStatusInterceptor)
 
-    // .addResponseInterceptors(interceptors.SpeechOutputInterceptor)
+    .addResponseInterceptors(interceptors.ResponsePersistenceInterceptor)
 
-    // .addResponseInterceptors(interceptors.AplInterceptor) // ***
+    .addResponseInterceptors(apl.AplInterceptor) // ***
 
     .withTableName(DYNAMODB_TABLE_USERS)
     .withAutoCreateTable(false)  // created by SAM deploy
     .withDynamoDbClient(constants.DynamoDbClient)
 
     .lambda();
-
-
-    // "card": {
-    //     "type": "Simple",
-    //         "title": "Products",
-    //         "content": "You own:\n\n - Hints Pack : CONSUMABLE\n\nYou can buy:\n\nLeader Board : SUBSCRIPTION\nBigger Pop : ENTITLEMENT\n\nTry saying:\"Tell me about <product>\" or \"Buy <product>\" "
-    // },

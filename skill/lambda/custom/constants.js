@@ -22,6 +22,7 @@ if(
     epDetails = {apiVersion : 'latest', endpointAddress : 'http://localhost:8000', endpoint : 'http://localhost:8000'};
     console.log(`Using local DynamoDB at localhost:8000`);
 }
+console.log(`epDetails ${JSON.stringify(epDetails)}` );
 const DynamoDbClient = new AWS.DynamoDB(epDetails);
 
 // const localDynamoDbClient = new AWS.DynamoDB({apiVersion : 'latest', endpointAddress : 'http://localhost:8000', endpoint : 'http://localhost:8000'});
@@ -45,6 +46,7 @@ module.exports = {
             "lastUseTimestamp":0,
             "gameState": "stopped",
             "stateList": [],
+            "validNextStates" : [],
             "game": {},
             "currentQuestion": null,
             "joinRank": 1,
@@ -60,6 +62,203 @@ module.exports = {
         };
 
         return memoryAttributes;
+    },
+    'getModel' : function() {
+        return {
+            "interactionModel": {
+                "languageModel": {
+                    "invocationName": "state purchase",
+                    "intents": [
+                        {
+                            "name": "ChooseGameIntent",
+                            "slots": [
+                                {
+                                    "name": "gameName",
+                                    "type": "gameName"
+                                }
+                            ],
+                            "samples": [
+                                "{gameName}",
+                                "lets play {gameName}",
+                                "play {gameName}"
+                            ]
+                        },
+                        {
+                            "name": "GuessIntent",
+                            "slots": [
+                                {
+                                    "name": "usstate",
+                                    "type": "AMAZON.US_STATE"
+                                }
+                            ],
+                            "samples": [
+                                "{usstate}",
+                                "go to {usstate}"
+                            ]
+                        },
+                        {
+                            "name": "ShoppingIntent",
+                            "slots": [],
+                            "samples": [
+                                "I want to purchase",
+                                "I want to buy",
+                                "what could i buy",
+                                "can i buy something",
+                                "i want to buy something",
+                                "what is available to buy",
+                                "what can i buy"
+                            ]
+                        },
+                        {
+                            "name": "ProductDetailIntent",
+                            "slots": [
+                                {
+                                    "name": "productName",
+                                    "type": "productNames"
+                                }
+                            ],
+                            "samples": [
+                                "tell me about {productName}"
+                            ]
+                        },
+                        {
+                            "name": "BuyIntent",
+                            "slots": [
+                                {
+                                    "name": "productName",
+                                    "type": "productNames"
+                                }
+                            ],
+                            "samples": [
+                                "subscribe to {productName}",
+                                "buy {productName}",
+                                "buy the {productName} pack"
+                            ]
+                        },
+                        {
+                            "name": "CancelSubscriptionIntent",
+                            "slots": [
+                                {
+                                    "name": "productName",
+                                    "type": "productNames"
+                                }
+                            ],
+                            "samples": [
+                                "cancel {productName}"
+                            ]
+                        },
+                        {
+                            "name": "LeaderboardIntent",
+                            "slots": [
+                                {
+                                    "name": "gameName",
+                                    "type": "gameName"
+                                }
+                            ],
+                            "samples": [
+                                "show the leaderboard",
+                                "show the leader board",
+                                "leaderboard",
+                                "leader board",
+                                "leaderboard {gameName}",
+                                "leaderboard for {gameName}",
+                                "leader board {gameName}",
+                                "leader board for {gameName}",
+                                "high scores",
+                                "top scores",
+                                "top ten",
+                                "high scores {gameName}",
+                                "top scores {gameName}",
+                                "top ten {gameName}"
+                            ]
+                        },
+                        {
+                            "name": "AMAZON.YesIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.NoIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.FallbackIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.CancelIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.HelpIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.StopIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.NavigateHomeIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "AMAZON.PauseIntent",
+                            "samples": []
+                        },
+                        {
+                            "name": "IDontKnowIntent",
+                            "slots": [],
+                            "samples": [
+                                "no idea",
+                                "not sure",
+                                "I don't know"
+                            ]
+                        }
+                    ],
+                    "types": [
+                        {
+                            "name": "gameName",
+                            "values": [
+                                {
+                                    "name": {
+                                        "value": "bigger pop"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "value": "coast to coast"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "productNames",
+                            "values": [
+                                {
+                                    "name": {
+                                        "value": "leader board"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "value": "hints pack"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "value": "bigger pop"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "value": "coast to coast"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        };
     },
 
     'getMaxHistorySize': function() {  // number of intent/request events to store

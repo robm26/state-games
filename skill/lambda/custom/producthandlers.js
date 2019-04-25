@@ -196,7 +196,7 @@ module.exports = {
                 handlerInput.requestEnvelope.request.name === 'Upsell');
         },
         handle(handlerInput) {
-            console.log('IN: BuyResponseHandler.handle');
+            // console.log('IN: BuyResponseHandler.handle');
 
             const locale = handlerInput.requestEnvelope.request.locale;
             const ms = handlerInput.serviceClientFactory.getMonetizationServiceClient();
@@ -213,7 +213,8 @@ module.exports = {
                         case 'ACCEPTED':
                             // if (product[0].referenceName !== 'all_access') categoryFacts = ALL_FACTS.filter(record => record.type === product[0].referenceName.replace('_pack', ''));
 
-                            speakOutput = `You now have, ${product[0].name}. `;
+
+                            speakOutput = ` Congrats! Just say, play ${product[0].name}.`;
 
 
                             repromptOutput = speakOutput;
@@ -262,7 +263,7 @@ module.exports = {
                 handlerInput.requestEnvelope.request.name === 'Cancel';
         },
         handle(handlerInput) {
-            console.log('IN: CancelResponseHandler.handle');
+            // console.log('IN: CancelResponseHandler.handle');
 
             const locale = handlerInput.requestEnvelope.request.locale;
             const ms = handlerInput.serviceClientFactory.getMonetizationServiceClient();
@@ -333,13 +334,14 @@ module.exports = {
 
                 }).catch((err) => {
                     if(err.name === 'ServiceError' && err.statusCode === 403) {
-                        console.log(`error: ${JSON.stringify(err, 2, null)}`);
-                        console.log(`using local test data for products`);
+                        // console.log(`error: ${JSON.stringify(err, 2, null)}`);
+                        console.log(`no ISP service, using local test data for products`);
                         // resolve(['product one', 'product two']);
                         resolve(testProducts);
 
                     } else {
-                        console.log(`Caught error ${JSON.stringify(err, null, 2)}`);
+                        console.log(`Caught error ${err} \n ${JSON.stringify(err, null, 2)}`);
+
                     }
 
                 });
