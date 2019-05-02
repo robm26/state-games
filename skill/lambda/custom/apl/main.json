@@ -152,7 +152,6 @@
     "direction": "column",
     "style": "statsMainContainer",
     "items": [
-
       {
         "type": "Frame",
         "width": "100vw",

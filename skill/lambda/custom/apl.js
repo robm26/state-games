@@ -16,7 +16,6 @@ module.exports = {
 
             return new Promise(async (resolve, reject) => {
 
-
                 if (helpers.supportsDisplayAPL(handlerInput)) {
                     const myDocument = require('./apl/main.json');
 
@@ -52,6 +51,7 @@ module.exports = {
                     }
 
                     if (sessionAttributes['gameState'] === 'playing') {
+
                         title = `Playing: ${helpers.capitalize(sessionAttributes['game'].name)}`;
                         title1 = 'Path';
                         array1 = sessionAttributes['stateList'].map((item, index) => { return `${index + 1}. ${item}`});
@@ -61,17 +61,69 @@ module.exports = {
 
                     }
 
-                    if (request.type === 'IntentRequest'
-                        && request.intent.name === 'ShoppingIntent'
-                    ) {
 
+                    if (request.type === 'IntentRequest' && request.intent.name === 'ShoppingIntent')
+                    {
+                        title = `Shopping Status`;
+
+                        title1 = 'Own';
+                        array1 = sessionAttributes['PurchasedItems'].map((item) => { return ` ${item.name}`});
+
+                        title2 = 'Available';
+                        array2 = sessionAttributes['AvailableItems'].map((item) => { return ` ${item.name}`});
+
+                    }
+
+                    if (request.type === 'IntentRequest' && request.intent.name === 'AMAZON.HelpIntent')
+                    {
+                        title = `HELP`;
+
+                        title1 = 'UserID';
+                        array1 = [handlerInput.requestEnvelope.session.user.userId.slice(-6)];
+
+                        title2 = 'Options';
+                        array2 = ['play coast to coast', 'stop', 'leaderboard'];
 
 
                     }
 
-                    const launchCount = sessionAttributes['launchCount'];
+                    if (request.type === 'IntentRequest' && request.intent.name === 'LeaderboardIntent'
+                    ) {
 
-                    // const eventData = {"name": "Robert"};
+                        let gameName = ``;
+                        let intent = request.intent;
+                        if  (!intent.slots.gameName || !intent.slots.gameName.value || intent.slots.gameName.value === '') {
+
+                            gameName = sessionAttributes['game'].name || `coast to coast`;
+
+                        } else {
+                            gameName = request.intent.slots.gameName.value;
+
+                        }
+
+                        let lb = await leaderboard.getLeaderBoard(gameName);
+
+                        title = `Leaderboard for ${gameName}`;
+
+                        title1 = 'Score : User';
+
+                        array1 = lb.scores.slice(0,5).map((item) => {
+                            let userId = item.userId.slice(-6);
+
+                            if(handlerInput.requestEnvelope.session.user.userId.slice(-6) === userId) {
+
+                                userId = `<u>${userId}</u>`;
+                            }
+
+                            return `${item.result.length} : ${userId} `;
+                        });
+
+                        title2 = `Best Path`;
+                        array2 = lb.scores[0].result;
+
+                    }
+
+
                     const eventData = {
                         "liveData": {
                             "type": "object",
@@ -110,157 +162,7 @@ module.exports = {
             });
 
         }
-    },
-
-    'AplInterceptor2': {
-        process(handlerInput, responseOutput) {
-            return new Promise(async (resolve, reject) => {
-                const request = handlerInput.requestEnvelope.request;
-
-                const IntentRequest = (request.type === "IntentRequest" ? request.intent.name : request.type);
-                const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-                const history = sessionAttributes['history'].map((item) => {
-                    return {
-                        "type": "Text",
-                        "text": `${item.IntentRequest}`,
-                        "style": "historyStyle"
-                    };
-                });
-
-                let prompts =  [
-                    {
-                        "type": "Text",
-                        "text": `Help`,
-                        "style": "promptStyle"
-                    },
-                    {
-                        "type": "Text",
-                        "text": `Stop`,
-                        "style": "promptStyle"
-                    }
-                ];
-
-                if(sessionAttributes.gameState !== "stopped") {
-                    //sessionAttributes.foo
-                    let nextStates = gamehelpers.validNextStates([], gameName);
-                    let nextStatesHint = helpers.sayArray(helpers.shuffleArray(nextStates).slice(0,3), 'or');
-
-                }
-
-
-                // constants.getModel();
-
-                const AvailableItems = sessionAttributes['AvailableItems'];
-                const PurchasedItems = sessionAttributes['PurchasedItems'];
-
-
-                const purchasableProducts = await producthandlers.getProducts(handlerInput, 'purchasable');  // helper function below
-                const purchasedProducts = await producthandlers.getProducts(handlerInput, 'purchased');  // helper function below
-
-
-                const productListPurchasedItems = purchasedProducts.map((item) => {
-                    return {
-                        "type": "Text",
-                        "text": `${item.name}`,
-                        "style": "purchasedStyle"
-                    };
-                });
-                const productListAvailableItems = purchasableProducts.map((item) => {
-                    return {
-                        "type": "Text",
-                        "text": `${item.name}`,
-                        "style": "availableStyle"
-                    };
-                });
-
-                let speechOutput = ``;
-                if (responseOutput && responseOutput.outputSpeech && responseOutput.outputSpeech.ssml) {
-                    speechOutput = helpers.stripTags(responseOutput.outputSpeech.ssml);
-                } else {
-                    speechOutput = `buying..`;
-                }
-
-                // console.log(`*****\n${JSON.stringify(speechOutput, null, 2)}`);
-
-                let slotArrayFilled = [];
-                let slotArrayEmpty = [];
-                let slotArray = [];
-
-                if (request.type === "IntentRequest" && request.intent.slots && Object.keys(request.intent.slots).length > 0) {
-                    // console.log(`^^^^^ slots\n${JSON.stringify(request.intent.slots, null, 2)}`);
-                    let slots = request.intent.slots;
-
-                    Object.keys(slots).forEach(function (key) {
-                        let slot = slots[key];
-
-                        // console.log(`${slot.name} : ${slot.value ? slot.value : ""}`);
-                        let slotNameStyle = "textSlotNameStyle";
-                        if (!slot.value) {
-                            slotNameStyle = "textSlotEmptyStyle";
-                        }
-                        const slotDisplayName = {
-                            "type": "Text",
-                            "text": `${slot.name}:`,
-                            "style": slotNameStyle
-                        };
-
-                        const slotDisplayValue = {
-                            "type": "Text",
-                            "text": `&nbsp;${slot.value ? slot.value : ""}`,
-                            "style": "textSlotValueStyle"
-                        };
-
-                        if (slot.value) {
-                            slotArrayFilled.push(slotDisplayName);
-                            slotArrayFilled.push(slotDisplayValue);
-                        } else {
-                            slotArrayEmpty.push(slotDisplayName);
-                            slotArrayEmpty.push(slotDisplayValue);
-                        }
-
-                    });
-                }
-
-                slotArray = slotArrayFilled;
-                slotArray = slotArray.concat(slotArrayEmpty);
-
-
-                if (helpers.supportsDisplayAPL(handlerInput)) {
-
-                    const myDocument = require('./apl/main2.json');
-                    console.log(`productListAvailableItems:\n${JSON.stringify(productListAvailableItems)}`);
-
-                    const eventData = {
-                        "liveData": {
-                            "type": "object",
-                            "textIntent": IntentRequest,
-                            "slots": slotArray,
-                            "textResponse": speechOutput,
-                            "productsPurchased": productListPurchasedItems,
-                            "productsAvailable": productListAvailableItems,
-                            "imgTitle": "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/gaming/state_games_1200_800._TTH_.png",
-                            "imgBlank": "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/gaming/usa._TTH_.png",
-                            "prompts": prompts,
-                            "history": history
-                        }
-                    };
-                    console.log(`productListPurchasedItems: ${productListPurchasedItems.map(item => `\n - ` + item.text)}`);
-                    console.log(`productListAvailableItems: ${productListAvailableItems.map(item => `\n - ` + item.text)}`);
-
-                    // console.log(`eventData:\n${JSON.stringify(eventData, null, 2)}`);
-
-                    handlerInput.responseBuilder.addDirective({
-                        type: 'Alexa.Presentation.APL.RenderDocument',
-                        version: '1.0',
-                        document: myDocument,
-                        datasources: eventData
-                    })
-
-                }
-
-                resolve();
-            });
-        }
     }
+
 }
+

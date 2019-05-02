@@ -308,13 +308,13 @@ module.exports = {
                 const locale = request.locale;
 
                 const testProducts = constants.getPurchasableProductsTestData();
-                // resolve(data);
-                // console.log(`in getProducts(handlerInput, ${filterExp})`);
 
                 const ms = handlerInput.serviceClientFactory.getMonetizationServiceClient();
 
                 ms.getInSkillProducts(locale).then(function fetchProductDetails(result) {
+
                     products = [];
+
                     if(filterExp === 'purchasable') {
                         products = result.inSkillProducts.filter(record => record.entitled === 'NOT_ENTITLED' && record.purchasable === 'PURCHASABLE');
 

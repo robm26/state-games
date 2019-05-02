@@ -32,7 +32,6 @@ module.exports = {
                 // show default LB
 
                 gameName = sessionAttributes['game'].name || `coast to coast`;
-                // game = `coast to coast`;
 
             } else {
                 gameName = intent.slots.gameName.value;
@@ -54,21 +53,11 @@ module.exports = {
                 if(lb && lb.scores && lb.scores.length > 0) {
                     say += `Here is the leaderboard.`;
 
-                    // cardText += lb.scores.map((item) => {return item.result.map((node) => {return `\n ${node}`})});
-
-
                 } else {
                     say += `This leaderboard is empty. Get the high score by saying, play ${gameName}! `;
                 }
 
             }
-
-            // const userRecordCount = await module.exports.getUserRecordCount();
-            // say += `There are now ${userRecordCount} skill users. `;
-
-            // say += `lb: ${lb}`;
-            // say += `The available games are, ${helpers.sayArray(lb)}. `;
-            // say += `Here is the leader board for ${lb[0]}. `;
 
             return handlerInput.responseBuilder
                 .speak(say)
@@ -84,14 +73,8 @@ module.exports = {
             "timestamp": Math.floor(new Date(timestamp).getTime() / 1000),  // unix Int format
             "result":result
         };
-        // console.log(`\n*** addNewScore with ts: ${newScore.timestamp}`);
 
         const docClient = new AWS.DynamoDB.DocumentClient();
-
-        // console.log(`in leaderboard.addNewScore()\n game: ${JSON.stringify(game)} \nresult: ${result}`);
-        // const recordCount = await docClient.scan(params).promise();
-
-        // return recordCount.Count; // recordCount.ScannedCount
 
         const gameData = await data.getGames(game)[0]; //
 
@@ -101,10 +84,10 @@ module.exports = {
 
         let lb = await module.exports.getLeaderBoard(game);
 
-        // console.log(`----> lb:\n${JSON.stringify(lb, null, 2)}`);
+        console.log(`----> lb:\n${JSON.stringify(lb, null, 2)}`);
 
         let scoreList = [];
-
+        // console.log(`\n*** addNewScore with ts: ${newScore.timestamp}`);
 
         if(lb && lb.scores && lb.scores.length > 0) {
             resultSummary += `Someone else has played. `;
@@ -130,17 +113,28 @@ module.exports = {
             }
         };
 
-        await docClient.update(paramsUpdate, function(err, data) {
+        await docClient.update(paramsUpdate, async function(err, data) {
             if (err) {
                 console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
                 return 'error';
 
             } else {
-                // console.log("UpdateItem succeeded:", JSON.stringify(paramsUpdate, null, 2));
+
+                let lb = await module.exports.getLeaderBoard(gameName);
+                // say += ``;
+
+                // const thisTimeStamp = new Date(handlerInput.requestEnvelope.request.timestamp).getTime();
+
+                // cardText = module.exports.prepareLbCard(lb, thisTimeStamp, userId);
+
                 return resultSummary;
 
             }
         }).promise();
+
+    },
+    'prepareLeaderboardSpeech' : function(game, lb, user) {
+
 
     },
     'getUserRecordCount': async function() {
@@ -156,7 +150,6 @@ module.exports = {
     },
 
     'getLeaderBoard': async function(game) {
-        // console.log(`you called getLeaderBoard(${game})`);
 
         const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -214,6 +207,9 @@ module.exports = {
         } );
 
     },
+
+
+
     'prepareLbCard': function(lb, timestamp, userId) {
         // console.log(`prepareLbCard: ${JSON.stringify(lb)}`);
         const userIdShort = userId.slice(-6);

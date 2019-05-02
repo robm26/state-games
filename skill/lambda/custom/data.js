@@ -30,6 +30,7 @@ const gamelist = [
         'intro':'Start by naming an Atlantic Ocean state.  Continue naming states until you get to the Pacific.',
         'author':'robm'
     },
+
     {
         'name':'bigger pop',
         'rules': [
@@ -40,6 +41,18 @@ const gamelist = [
         'endsWhen': null,
         'lowScoreBetter':false,
         'intro':'Start by naming any state.  Continue naming states, each must have a larger population than the last.',
+        'author':'robm'
+    },
+
+    {
+        'name':'small states',
+        'rules': [
+             'state.Population < 4000000'
+        ],
+        'startsOn': null,
+        'endsWhen': null,
+        'lowScoreBetter':false,
+        'intro':'Start by naming any state.  Continue naming states, each must have a population under four million.',
         'author':'robm'
     }
 

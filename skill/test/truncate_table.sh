@@ -2,9 +2,8 @@
 # ################# WARNING! This script will delete all items in the table you specify
 
 TABLE_NAME=askStateGames
-# TABLE_NAME=$1
-ENDPOINT_URL="--endpoint-url http://localhost:8000"
-# ENDPOINT_URL=""
+# ENDPOINT_URL="--endpoint-url http://localhost:8000"
+ENDPOINT_URL=""
 KEY=id
 
 aws dynamodb scan \

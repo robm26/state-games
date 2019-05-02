@@ -61,6 +61,8 @@ module.exports = {
                     // + ` You joined as the <say-as interpret-as="ordinal">${joinRank}</say-as> user. `;
                     + ``;
             }
+
+
             const stateList = sessionAttributes['stateList'] || [];
 
             if(gameState == `playing` && stateList.length > 0){
@@ -206,6 +208,7 @@ module.exports = {
                     // say += `your score is ${stateList.length}`;
                     stateList.push(myState);
                     const validNextStates = gamehelpers.validNextStates(stateList, game.name);
+                    let leaderboardResult;
 
                     if(validNextStates[0] === 'endsWhen') {
                         sessionAttributes['gameState'] = 'stopped';
@@ -219,7 +222,9 @@ module.exports = {
                         say += `Your score is ${stateList.length}. `;
                         say += `Would you like to play again? `;
 
-                        await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+                        leaderboardResult = await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+                        console.log(`leaderboardResult: ${leaderboardResult}`);
+                        say += `${leaderboardResult} `;
                         // sessionAttributes['stateList'] = [];
 
                         // say += `${leaderboardResult} `;
@@ -233,9 +238,10 @@ module.exports = {
                                 say += `Unfortunately, you didn't reach your target. `;
                             } else {
                                 say += `your score is ${stateList.length}. `;
-                                const leaderboardResult = await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
-                                say += `${leaderboardResult} `;
                             }
+                            leaderboardResult = await leaderboard.addNewScore(game.name, userId, timestamp, stateList);
+                            console.log(`leaderboardResult: ${leaderboardResult}`);
+                            say += `${leaderboardResult} `;
 
                             say += `would you like to play again?`;
 
