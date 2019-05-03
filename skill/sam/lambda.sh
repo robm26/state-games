@@ -2,7 +2,7 @@
 
 
 PROJECT_NAME="StateGames"
-LAMBDA_NAME="ask-state-games"
+LAMBDA_NAME="ask-custom-StateGames"
 
 OBJECT_NAME="state-games.zip"
 

@@ -14,8 +14,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub 'ask-custom-${ProjectName}'
-      CodeUri: ../lambda/state-games.zip
-       # s3://ask-samples-resources/code-packages/proactive-events-skill.zip
+      CodeUri: s3://alexaconsole789/state-games-demo/state-games.zip
       Description: Alexa Skill Lambda function
       Handler: index.handler
       MemorySize: 128
@@ -53,16 +52,16 @@ Resources:
          ReadCapacityUnits: 5
          WriteCapacityUnits: 5
 
-#  DatabaseTableLeaderboard:
-#     Type: AWS::Serverless::SimpleTable
-#     Properties:
-#       TableName: !Sub 'ask${ProjectName}Leaderboard'
-#       PrimaryKey:
-#         Name: game
-#         Type: String
-#       ProvisionedThroughput:
-#         ReadCapacityUnits: 5
-#         WriteCapacityUnits: 5
+  DatabaseTableLeaderboard:
+     Type: AWS::Serverless::SimpleTable
+     Properties:
+       TableName: !Sub 'ask${ProjectName}Leaderboard'
+       PrimaryKey:
+         Name: id
+         Type: String
+       ProvisionedThroughput:
+         ReadCapacityUnits: 5
+         WriteCapacityUnits: 5
 
 Outputs:
   AlexaSkillFunctionARN:

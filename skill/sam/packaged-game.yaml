@@ -1,65 +1,76 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Alexa State Games Stack
-Metadata:
-  Name: alexa-state-games
-Outputs:
-  AlexaSkillFunctionARN:
-    Description: Paste this Lambda ARN into your skill endpoint
-    Value:
-      Fn::GetAtt:
-      - askLambdaFunction
-      - Arn
-  DynamoDbTable:
-    Value:
-      Fn::Sub: ask${ProjectName}
-  DynamoDbTableLeaderboard:
-    Value:
-      Fn::Sub: ask${ProjectName}Leaderboard
+Transform: AWS::Serverless-2016-10-31
 Parameters:
   ProjectName:
-    Default: StateGames
     Type: String
+    Default: StateGames
+Metadata:
+  Name: alexa-state-games
 Resources:
-  DatabaseTable:
-    Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-      TableName:
-        Fn::Sub: ask${ProjectName}
-    Type: AWS::Serverless::SimpleTable
   askLambdaFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://alexaconsole789/state-games-demo/f60174cfdafae6233fcc7b03c6a33205
+      FunctionName:
+        Fn::Sub: ask-custom-${ProjectName}
+      CodeUri: s3://alexaconsole789/state-games-demo/state-games.zip
       Description: Alexa Skill Lambda function
+      Handler: index.handler
+      MemorySize: 128
+      Runtime: nodejs8.10
+      Timeout: 7
+      Events:
+        AlexaTrigger:
+          Type: AlexaSkill
       Environment:
         Variables:
           DYNAMODB_TABLE:
             Fn::Sub: ask${ProjectName}
           DYNAMODB_TABLE_LEADERBOARD:
             Fn::Sub: ask${ProjectName}Leaderboard
-      Events:
-        AlexaTrigger:
-          Type: AlexaSkill
-      FunctionName:
-        Fn::Sub: ask-custom-${ProjectName}
-      Handler: index.handler
-      MemorySize: 128
       Policies:
-      - Statement:
-        - Action:
+      - Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
           - dynamodb:GetItem
           - dynamodb:PutItem
           - dynamodb:UpdateItem
           - dynamodb:DeleteItem
-          Effect: Allow
           Resource:
           - Fn::Sub: arn:aws:dynamodb:*:*:table/ask${ProjectName}
-        Version: '2012-10-17'
-      Runtime: nodejs8.10
-      Timeout: 7
-    Type: AWS::Serverless::Function
-Transform: AWS::Serverless-2016-10-31
+  DatabaseTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName:
+        Fn::Sub: ask${ProjectName}
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  DatabaseTableLeaderboard:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName:
+        Fn::Sub: ask${ProjectName}Leaderboard
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+Outputs:
+  AlexaSkillFunctionARN:
+    Value:
+      Fn::GetAtt:
+      - askLambdaFunction
+      - Arn
+    Description: Paste this Lambda ARN into your skill endpoint
+  DynamoDbTable:
+    Value:
+      Fn::Sub: ask${ProjectName}
+  DynamoDbTableLeaderboard:
+    Value:
+      Fn::Sub: ask${ProjectName}Leaderboard
