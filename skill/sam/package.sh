@@ -15,7 +15,7 @@ rm -rf node_modules/aws-sdk # unnecessary within Lambda, smaller size enables co
 zip  ../$OBJECT_NAME * –X -r
 cd ..
 # aws lambda update-function-code --function-name ask-custom-PingMe --zip-file fileb://index.zip
-aws s3 cp $OBJECT_NAME s3://$S3_BUCKET/$BUCKET_FOLDER/$OBJECT_NAME # --profile vde
+aws s3 cp $OBJECT_NAME s3://$S3_BUCKET/$BUCKET_FOLDER/$OBJECT_NAME --acl public-read  # --profile vde
 cd ../sam
 #
 aws cloudformation package --template-file ./game.yaml --s3-bucket $S3_BUCKET --s3-prefix $BUCKET_FOLDER --output-template-file ./packaged-game.yaml
